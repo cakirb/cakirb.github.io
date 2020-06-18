@@ -28,7 +28,7 @@ I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.y
 
 <h2>Languages</h2>
 
-		R:			⭐⭐⭐⭐
+		R:		⭐⭐⭐⭐
 		MATLAB:		⭐⭐⭐
 		Unix: 		⭐⭐
 		Python: 	⭐

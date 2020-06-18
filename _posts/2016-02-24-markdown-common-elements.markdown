@@ -7,6 +7,7 @@ headerImage: false
 tag:
 - markdown
 - elements
+gidden: true
 star: true
 category: blog
 author: johndoe
