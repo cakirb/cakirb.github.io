@@ -101,6 +101,12 @@
         </a>
     {% endif %}
 
+    {% if site.orcid %}
+    <a class="link" data-title="{{ site.orcid }}" href="https://orcid.org/{{ site.orcid }}" target="_blank">
+        <svg class="icon icon-orcid"><use xlink:href="#icon-orcid"></use></svg>
+    </a>
+    {% endif %}
+
     {% if site.email %}
         <a class="link" data-title="{{ site.email }}" href="mailto:{{ site.email }}">
             <svg class="icon icon-mail"><use xlink:href="#icon-mail"></use></svg>

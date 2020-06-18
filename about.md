@@ -4,43 +4,32 @@ layout: page
 ---
 ![Profile Image]({% if site.external-image %}{{ site.picture }}{% else %}{{ site.url }}/{{ site.picture }}{% endif %})
 
-<p>Lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.yildiz.edu.tr/en/) at [Yıldız Technical University](http://www.yildiz.edu.tr/). In my thesis, I prepared a literature review on effects of radiation on a human body. Later, I continued to study computationally and started my MSc in [Bioinformatics and Systems Biology](http://www.gtu.edu.tr/bioeng) at [Gebze Technical University](http://www.gtu.edu.tr/?languageId=2). During my masters, I had an Erasmus internship at Wellcome Sanger Institute in [Cellular Genetics Informatics](https://www.sanger.ac.uk/science/groups/cellular-genetics-informatics) to work on benchmarking of single-cell visualization tools. Since January 2020, I am working as a research assistant in Department of Bioengineering at Gebze Technical University. Currently I am working on single-cell analyses of differentiation and reprogramming processes of stem cells.
 
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h2>Education</h2>
+<ul class="skill-list">
+	<li>MSc: Bioinformatics and Systems Biology, Gebze Technical University  
+	<br><i>Proposed Graduation in January 2021</i></li>
+<ul class="skill-list">
+	<li>Single-cell analysis </li>
+	<li>Single-cell data visualization</li>
+</ul>
+	<li>BSc: Bioengineering, Yildiz Technical University
+	<br><i>Graduated in July 2016</i></li>
+</ul>
 
 <h2>Skills</h2>
 
 <ul class="skill-list">
-	<li>HTML - Jade - Haml - Erb</li>
-	<li>Responsive (Mobile First)</li>
-	<li>CSS (Stylus, Sass, Less)</li>
-	<li>Css Frameworks (Bootstrap, Foundation)</li>
-	<li>Javascript (Design Patterns, Testes)</li>
-	<li>NodeJS</li>
-	<li>AngularJS - ReactJS</li>
-	<li>Grunt - Gulp - Yeoman</li>
-	<li>Git</li>
-	<li>PHP</li>
-	<li>Python</li>
-	<li>MySQL - MongoDB</li>
-	<li>Scrum and Kanban</li>
-	<li>TDD e Continuous Integration</li>
+	<li>NGS analysis</li>
+	<li>Single-cell analysis</li>
+	<li>Single-cell data visualization</li>
 </ul>
 
-<h2>Projects</h2>
+<h2>Languages</h2>
 
-<ul>
-	<li><a href="https://github.com/">Lorem Lorem</a></li>
-	<li><a href="https://github.com/">Ipsum Dolor</a></li>
-	<li><a href="https://github.com/">Dolor Lorem</a></li>
-</ul>
+		R:			⭐⭐⭐⭐
+		MATLAB:		⭐⭐⭐
+		Unix: 		⭐⭐
+		Python: 	⭐
+	
