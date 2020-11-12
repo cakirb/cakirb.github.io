@@ -4,7 +4,10 @@ layout: page
 ---
 ![Profile Image]({% if site.external-image %}{{ site.picture }}{% else %}{{ site.url }}/{{ site.picture }}{% endif %})
 
-I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.yildiz.edu.tr/en/) at [Yıldız Technical University](http://www.yildiz.edu.tr/). In my thesis, I prepared a literature review on effects of radiation on a human body. Later, I continued to study computationally and started my MSc in [Bioinformatics and Systems Biology](http://www.gtu.edu.tr/bioeng) at [Gebze Technical University](http://www.gtu.edu.tr/?languageId=2). During my masters, I had an Erasmus internship at Wellcome Sanger Institute in [Cellular Genetics Informatics](https://www.sanger.ac.uk/science/groups/cellular-genetics-informatics) to work on benchmarking of single-cell visualization tools. Since January 2020, I am working as a research assistant in Department of Bioengineering at Gebze Technical University. Currently I am working on single-cell analyses of differentiation and reprogramming processes of stem cells.
+I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.yildiz.edu.tr/en/) at [Yıldız Technical University](http://www.yildiz.edu.tr/). In my thesis, I prepared a literature review on effects of radiation on a human body. Later, I continued to study computationally and started my MSc in [Bioinformatics and Systems Biology](http://www.gtu.edu.tr/bioeng) at [Gebze Technical University](http://www.gtu.edu.tr/?languageId=2). During my masters, I had an Erasmus internship at Wellcome Sanger Institute in [Cellular Genetics Informatics](https://www.sanger.ac.uk/science/groups/cellular-genetics-informatics) to work on [benchmarking of single-cell visualization tools](https://doi.org/10.1093/nargab/lqaa052). Since January 2020, I am working as a research assistant in Department of Bioengineering at Gebze Technical University. Currently I am working on single-cell analyses of differentiation and reprogramming processes of stem cells.
+
+<h2>Publications</h2>
+1. Batuhan Cakir, Martin Prete, Ni Huang, Stijn van Dongen, Pinar Pir, Vladimir Yu Kiselev, Comparison of visualization tools for single-cell RNAseq data, NAR Genomics and Bioinformatics, Volume 2, Issue 3, September 2020, lqaa052, https://doi.org/10.1093/nargab/lqaa052
 
 <h2>Education</h2>
 <ul class="skill-list">
@@ -29,7 +32,7 @@ I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.y
 <h2>Languages</h2>
 
 		R:		⭐⭐⭐⭐
-		MATLAB:		⭐⭐⭐
+		MATLAB:		⭐⭐
 		Unix: 		⭐⭐
 		Python: 	⭐
 	
