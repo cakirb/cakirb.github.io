@@ -36,7 +36,7 @@ analytics-google: 'UA-149930039-1'
 # if you don't have any of social below, comment the line
 #facebook: myfacebook
 twitter: cakirb_
-# google: mygoogl
+google: https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en
 # instagram: myinstagram
 # pinterest: mypinterest
 linkedin: batuhancakir
@@ -52,7 +52,7 @@ github: cakirb
 # vimeo: myvimeo
 orcid: 0000-0003-4513-606X
 # lanyrd: mylanyrd
-email: myemail@gmail.com
+email: bcakir@gtu.edu.tr
 
 authors:
   batuhancakir:
