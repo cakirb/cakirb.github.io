@@ -11,8 +11,9 @@ I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.y
 
 <h2>Education</h2>
 <ul class="skill-list">
-	<li>MSc: Bioinformatics and Systems Biology, Gebze Technical University  
-	<br><i>Proposed Graduation in January 2021</i></li>
+	<li>PhD: Bioinformatics and Systems Biology, Gebze Technical University</li>
+<ul class="skill-list">
+	<li>MSc: Bioinformatics and Systems Biology, Gebze Technical University</li>
 <ul class="skill-list">
 	<li>Single-cell analysis </li>
 	<li>Single-cell data visualization</li>
