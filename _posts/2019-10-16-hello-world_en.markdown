@@ -19,5 +19,4 @@ So...
 
 **HELLO WORLD!!**
 
-I am Batuhan Çakır. I completed my BSc in [Bioengineering](http://www.bioeng.yildiz.edu.tr/en/) at [Yıldız Technical University](http://www.yildiz.edu.tr/). In my thesis, I prepared a literature review on effects of radiation on a human body. Later, I decided to study computationally and started my MSc in [Bioinformatics and Systems Biology](http://www.gtu.edu.tr/bioeng) at [Gebze Technical University](http://www.gtu.edu.tr/?languageId=2). During my masters, I had an Erasmus internship at Wellcome Sanger Institute in [Cellular Genetics Informatics](https://www.sanger.ac.uk/science/groups/cellular-genetics-informatics) to work on benchmarking of single-cell visualization tools. Currently I am working on single-cell analyses of differentiation and reprogramming processes of stem cells.
-
+To learn more about me, check [About page](https://cakirb.github.io/about/)

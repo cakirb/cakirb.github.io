@@ -1,6 +1,6 @@
 # main text of home
 name: Batuhan Cakir
-bio: research assistant, master's student, bioengineer...
+bio: research assistant, PhD student, bioinformatician and bioengineer
 
 # twitter summary info
 description: My space for following recent scientific news
@@ -57,7 +57,7 @@ email: bcakir@gtu.edu.tr
 authors:
   batuhancakir:
     name: cakirb
-    bio: master's student, bioinformatician and bioengineer...
+    bio: research assistant, PhD student, bioinformatician and bioengineer...
     external-image: false
     picture: assets/images/profile.jpg
     twitter: cakirb_
