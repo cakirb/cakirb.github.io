@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="20" fill="#124559" />
+  <text x="50" y="80" font-family="'Space Grotesk', system-ui, sans-serif" font-size="76" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="-4">BC</text>
+</svg>

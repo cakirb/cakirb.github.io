@@ -1,0 +1,466 @@
+:root {
+  /* Lifted Cyber-Bio Palette (Mostly Dark) */
+  --background: #111518;
+  --foreground: #eef2f5;
+
+  /* Liquid Glass (Restored Original Opacity) */
+  --glass-bg: rgba(30, 38, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  --glass-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+
+  /* Solid Theme Background (Restored 75% Opacity) */
+  --section-bg: rgba(17, 21, 24, 0.50);
+
+  /* Cyber-Bio Accents (Slate Muted Palette) */
+  --accent-cyan: #598392;
+  --accent-magenta: #c4879d;
+  --accent-glow: 0 0 15px rgba(89, 131, 146, 0.4), 0 0 30px rgba(18, 69, 89, 0.3);
+
+  /* ASCII Animation Colors */
+  --ascii-color: rgba(89, 131, 146, 0.15);
+  --ascii-highlight: #598392;
+}
+
+/* Absolute Scroll Lock Class for Modals */
+.no-scroll,
+.no-scroll body {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+}
+
+/* Readable Solid Sections */
+.section-solid-bg {
+  background-color: var(--section-bg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background-color 0.4s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 115%;
+}
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  /* Extremely tight tracking for premium vibe */
+  margin-bottom: 1rem;
+}
+
+p,
+li,
+span,
+a {
+  letter-spacing: -0.01em;
+  /* Subtle modern clean-up for body text */
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-cyan);
+  text-shadow: var(--accent-glow);
+}
+
+/* Content Containers (Formerly Glass Panels) */
+/* We have completely removed borders/backgrounds to ensure the typography floats elegantly above the UMAP canvas */
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* 3D hover effect disabled for pure editorial look */
+.glass-panel:hover {
+  border-left-color: var(--accent-cyan);
+}
+
+/* Scroll Reveal Utilities - V2 Native Vertical */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.0s cubic-bezier(0.19, 1, 0.22, 1), transform 1.0s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.keyword-highlight {
+  font-family: var(--font-jetbrains-mono);
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: rgba(89, 131, 146, 0.25);
+  border: 1px solid rgba(89, 131, 146, 0.3);
+  color: var(--accent-magenta);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* 
+  Marker Pen Highlight Animation 
+  Simulates a temporary physical high-lighter swiping across text
+*/
+@keyframes markerSwipe {
+  0% {
+    width: 0%;
+    opacity: 0;
+  }
+
+  15% {
+    width: 100%;
+    opacity: 1;
+  }
+
+  80% {
+    width: 100%;
+    opacity: 1;
+  }
+
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+.marker-highlight {
+  position: relative;
+  z-index: 1;
+}
+
+/* The actual "ink" of the marker */
+.marker-highlight::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: -2%;
+  width: 0%;
+  height: 90%;
+  background-color: rgba(89, 131, 146, 0.4);
+  /* Translucent secondary color */
+  z-index: -1;
+  /* Slight rotation for that hand-drawn feel */
+  transform: rotate(-1deg);
+  border-radius: 2px;
+  animation: markerSwipe 4s ease-in-out forwards;
+  /* Delay start to wait for hero to reveal */
+  animation-delay: 0.8s;
+}
+
+/* 
+  Scroll-Triggered Frosted Background Overlay 
+  Sits between the UMAP canvas and text to improve readability
+*/
+.frosted-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Very dark translucent base tinted with primary #124559 hue */
+  background-color: rgba(9, 36, 46, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+/* 
+  Pill Badges (BSc, MSc, PhD) 
+  Sleek floating tags to highlight degree types.
+*/
+.pill-badge {
+  display: inline-block;
+  margin-left: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-jetbrains-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background-color: var(--accent-cyan);
+  color: var(--background);
+  /* Inverted for high contrast */
+  border-radius: 9999px;
+  /* Pill shape */
+  vertical-align: middle;
+  transform: translateY(-2px);
+}
+
+/* 
+  Subtle Highlights
+  A middle ground between plain text and heavy pills
+*/
+.subtle-highlight {
+  font-weight: 600;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-size: 0.95em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.subtle-highlight.cyan {
+  color: var(--accent-cyan);
+  background-color: rgba(89, 131, 146, 0.15);
+}
+
+.subtle-highlight.magenta {
+  color: var(--accent-magenta);
+  background-color: rgba(196, 135, 157, 0.15);
+}
+
+/* 
+  Hero Social Icons 
+  Delicate upward translation with an expanding cyan aura.
+*/
+.social-icon-hover {
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  color: var(--foreground);
+  opacity: 0.7;
+}
+
+.social-icon-hover:hover {
+  transform: translateY(-4px);
+  color: var(--accent-cyan);
+  opacity: 1;
+  filter: drop-shadow(0 4px 12px rgba(18, 69, 89, 0.4));
+}
+
+/* 
+  Easter Egg Glitch Effects
+*/
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: var(--accent-cyan);
+  transition: all 0.2s ease;
+}
+
+.glitch-text:hover {
+  animation: ps-glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+  color: #fff;
+  text-shadow: 2px 0 #3b82f6, -2px 0 #ef4444;
+  /* blue cross and red circle */
+}
+
+@keyframes ps-glitch-anim {
+  0% {
+    transform: translate(0);
+    text-shadow: 1px 0 #3b82f6, -1px 0 #ef4444;
+    color: #4ade80;
+    /* green */
+  }
+
+  20% {
+    transform: translate(-1px, 1px);
+    text-shadow: -1px 0 #f472b6, 1px 0 #3b82f6;
+    color: #ef4444;
+    /* pink/red */
+  }
+
+  40% {
+    transform: translate(-1px, -1px);
+    text-shadow: 1px 0 #4ade80, -1px 0 #f472b6;
+    color: #3b82f6;
+    /* green/blue */
+  }
+
+  60% {
+    transform: translate(1px, 1px);
+    text-shadow: -1px 0 #ef4444, 1px 0 #4ade80;
+    color: #f472b6;
+    /* red/pink */
+  }
+
+  80% {
+    transform: translate(1px, -1px);
+    text-shadow: 1px 0 #3b82f6, -1px 0 #ef4444;
+    color: #4ade80;
+  }
+
+  100% {
+    transform: translate(0);
+    text-shadow: -1px 0 #f472b6, 1px 0 #3b82f6;
+    color: #ef4444;
+  }
+}
+
+@keyframes cyberpunkSlideIn {
+  0% {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  50% {
+    filter: blur(0px);
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes destinyMaterialize {
+  0% {
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transform: translateY(-10px);
+  }
+
+  50% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  }
+
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: translateY(0);
+  }
+}
+
+@keyframes ps2Materialize {
+  0% {
+    opacity: 0;
+    transform: scale(1.1) perspective(1000px) rotateX(10deg);
+    filter: blur(20px) contrast(150%);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(0.98) perspective(1000px) rotateX(-2deg);
+    filter: blur(5px) contrast(120%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) perspective(1000px) rotateX(0deg);
+    filter: blur(0px) contrast(100%);
+  }
+}
+
+@keyframes ps2BlockFloat {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.1;
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 0.1;
+  }
+}
+
+@keyframes ps2GlowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(0, 150, 255, 0.4), inset 0 0 40px rgba(0, 150, 255, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 10px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.1);
+  }
+}
+
+.cyber-text-container {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.cyber-text-base {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.cyber-text-scan {
+  grid-column: 1;
+  grid-row: 1;
+  /* keep rest the same */
+}
+
+.badge-icon-container svg {
+  width: 1.2em;
+  height: 1.2em;
+  display: block;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center !important;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-separator {
+    display: none;
+  }
+
+  .footer-vibe {
+    display: block;
+    margin-top: 0.5rem;
+  }
+}
