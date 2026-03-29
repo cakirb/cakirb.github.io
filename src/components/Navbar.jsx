@@ -1,6 +1,25 @@
 "use client";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
+    const [activeSection, setActiveSection] = useState("");
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        }, { rootMargin: "-30% 0px -30% 0px" });
+
+        const sections = document.querySelectorAll("section[id]");
+        sections.forEach((section) => observer.observe(section));
+
+        return () => {
+            sections.forEach((section) => observer.unobserve(section));
+        };
+    }, []);
 
     const navLinks = [
         { name: "About Me", href: "#about" },
@@ -36,26 +55,43 @@ export default function Navbar() {
                 </a>
 
                 <div className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center", fontSize: "0.9rem", fontWeight: "500" }}>
-                    {navLinks.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.href}
-                            className="social-icon-hover"
-                            style={{
-                                color: "inherit",
-                                textDecoration: "none",
-                                fontFamily: "inherit",
-                                fontSize: "inherit",
-                                fontWeight: "600",
-                                opacity: 0.8,
-                                transition: "all 0.2s ease"
-                            }}
-                            onMouseOver={(e) => { e.target.style.opacity = 1; e.target.style.color = "var(--accent-cyan)"; }}
-                            onMouseOut={(e) => { e.target.style.opacity = 0.8; e.target.style.color = "inherit"; }}
-                        >
-                            {item.name}
-                        </a>
-                    ))}
+                    {navLinks.map((item) => {
+                        const isActive = activeSection === item.href.substring(1);
+                        return (
+                            <a
+                                key={item.name}
+                                href={item.href}
+                                className="social-icon-hover"
+                                style={{
+                                    position: "relative",
+                                    color: isActive ? "var(--accent-cyan)" : "inherit",
+                                    textDecoration: "none",
+                                    fontFamily: "inherit",
+                                    fontSize: "inherit",
+                                    fontWeight: "600",
+                                    opacity: isActive ? 1 : 0.8,
+                                    transition: "all 0.2s ease"
+                                }}
+                                onMouseOver={(e) => { e.currentTarget.style.opacity = 1; e.currentTarget.style.color = "var(--accent-cyan)"; }}
+                                onMouseOut={(e) => { 
+                                    e.currentTarget.style.opacity = isActive ? 1 : 0.8; 
+                                    e.currentTarget.style.color = isActive ? "var(--accent-cyan)" : "inherit"; 
+                                }}
+                            >
+                                {item.name}
+                                <span style={{ 
+                                    position: "absolute", 
+                                    left: 0, 
+                                    bottom: "-4px", 
+                                    height: "2px", 
+                                    width: isActive ? "100%" : "0%", 
+                                    backgroundColor: "var(--accent-cyan)", 
+                                    transition: "width 0.3s ease-out",
+                                    borderRadius: "2px"
+                                }} />
+                            </a>
+                        );
+                    })}
                 </div>
             </div>
         </nav>

@@ -134,7 +134,7 @@ export default function Home() {
             }}
           >
             <div className="glass-panel reveal" style={{ maxWidth: "1000px" }}>
-              <h1 style={{ fontSize: "max(8vw, 5rem)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem", color: "var(--accent-cyan)" }}>
+              <h1 style={{ fontSize: "max(3.5rem, 8vw)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem", color: "var(--accent-cyan)" }}>
                 <span className="marker-highlight" style={{ fontFamily: "inherit" }}>Batu</span>han Çakır
               </h1>
 

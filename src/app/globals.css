@@ -139,27 +139,14 @@ a:hover {
 
 /* 
   Marker Pen Highlight Animation 
-  Simulates a temporary physical high-lighter swiping across text
+  Simulates a physical high-lighter swiping across text realistically
 */
 @keyframes markerSwipe {
   0% {
     width: 0%;
-    opacity: 0;
   }
-
-  15% {
-    width: 100%;
-    opacity: 1;
-  }
-
-  80% {
-    width: 100%;
-    opacity: 1;
-  }
-
   100% {
-    width: 100%;
-    opacity: 0;
+    width: 105%;
   }
 }
 
@@ -172,18 +159,25 @@ a:hover {
 .marker-highlight::after {
   content: "";
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: -2%;
   width: 0%;
-  height: 90%;
-  background-color: rgba(89, 131, 146, 0.4);
-  /* Translucent secondary color */
+  height: 80%;
+  /* Gradient makes ink darker in center and softer on edges, simulating paper absorption */
+  background: linear-gradient(
+    to bottom,
+    rgba(89, 131, 146, 0.1) 0%,
+    rgba(89, 131, 146, 0.5) 20%,
+    rgba(89, 131, 146, 0.5) 80%,
+    rgba(89, 131, 146, 0.2) 100%
+  );
   z-index: -1;
-  /* Slight rotation for that hand-drawn feel */
-  transform: rotate(-1deg);
-  border-radius: 2px;
-  animation: markerSwipe 4s ease-in-out forwards;
-  /* Delay start to wait for hero to reveal */
+  /* Slight rotation and asymmetrical borders for hand-drawn feel */
+  transform: rotate(-1.5deg);
+  border-radius: 3px 8px 4px 6px;
+  box-shadow: 0 0 6px rgba(89, 131, 146, 0.3);
+  /* Smooth human-like stroke easing */
+  animation: markerSwipe 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-delay: 0.8s;
 }
 
@@ -440,17 +434,57 @@ a:hover {
 
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+  html {
+    font-size: 100%;
+  }
+
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Prevent tight viewports from pushing centered Hero text under the nav */
+  #home {
+    justify-content: flex-start !important;
+    padding-top: 11rem !important;
+  }
+
+  .glass-panel {
+    padding-left: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  nav {
+    border-radius: 40px !important;
+    padding: 1rem 1.5rem !important;
+    top: 1rem !important;
+    width: calc(100% - 1.5rem) !important;
+  }
+
   .nav-container {
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.8rem !important;
     justify-content: center !important;
   }
 
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    justify-content: flex-start !important;
+    gap: 1.5rem !important;
+    padding-bottom: 0.2rem; /* Buffer for touch */
     width: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Prevent texts like About Me from splitting onto two lines inside the scroll row */
+  .nav-links a {
+    white-space: nowrap !important;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
   }
 }
 
