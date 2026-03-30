@@ -70,10 +70,10 @@ const ParticleMaterial = {
       vec2 coord = gl_PointCoord - vec2(0.5);
       if (length(coord) > 0.5) discard;
       
-      // Boost color intensity for light mode, otherwise just normal colors
       vec3 finalColor = vColor * uModeContrast;
       
-      gl_FragColor = vec4(finalColor, vOpacity * 0.8);
+      // Soften master opacity significantly to allow text to punch through
+      gl_FragColor = vec4(finalColor, vOpacity * 0.45);
     }
   `,
   transparent: true,
@@ -83,28 +83,30 @@ const ParticleMaterial = {
 
 // --- Topologies & Colors ---
 const CLUSTERS = [
-  { x: 0.45, y: 0.15, spreadX: 0.03, spreadY: 0.03, colorType: 3 },
-  { x: 0.42, y: 0.17, spreadX: 0.02, spreadY: 0.02, colorType: 3 },
-  { x: 0.55, y: 0.14, spreadX: 0.03, spreadY: 0.04, colorType: 2 },
-  { x: 0.53, y: 0.18, spreadX: 0.02, spreadY: 0.04, colorType: 2 },
-  { x: 0.15, y: 0.3, spreadX: 0.01, spreadY: 0.01, colorType: 5 },
-  { x: 0.25, y: 0.29, spreadX: 0.01, spreadY: 0.01, colorType: 4 },
-  { x: 0.2, y: 0.38, spreadX: 0.01, spreadY: 0.01, colorType: 6 },
-  { x: 0.25, y: 0.85, spreadX: 0.04, spreadY: 0.06, colorType: 1 },
-  { x: 0.22, y: 0.75, spreadX: 0.04, spreadY: 0.07, colorType: 1 },
-  { x: 0.16, y: 0.6, spreadX: 0.03, spreadY: 0.03, colorType: 6 },
-  { x: 0.18, y: 0.65, spreadX: 0.02, spreadY: 0.04, colorType: 6 },
-  { x: 0.28, y: 0.6, spreadX: 0.01, spreadY: 0.04, colorType: 5 },
-  { x: 0.45, y: 0.45, spreadX: 0.03, spreadY: 0.04, colorType: 4 },
-  { x: 0.48, y: 0.52, spreadX: 0.02, spreadY: 0.03, colorType: 4 },
-  { x: 0.58, y: 0.55, spreadX: 0.04, spreadY: 0.03, colorType: 0 },
-  { x: 0.55, y: 0.58, spreadX: 0.03, spreadY: 0.02, colorType: 0 },
-  { x: 0.72, y: 0.65, spreadX: 0.05, spreadY: 0.08, colorType: 2 },
-  { x: 0.68, y: 0.75, spreadX: 0.04, spreadY: 0.06, colorType: 2 },
-  { x: 0.78, y: 0.8, spreadX: 0.03, spreadY: 0.06, colorType: 2 },
+  // Heavy re-mapping to keep the left side (0.0 to 0.5) almost completely clear of tight clusters.
+  // This physically opens up the left alignment for foreground HTML text.
+  { x: 0.75, y: 0.15, spreadX: 0.03, spreadY: 0.03, colorType: 3 },
+  { x: 0.72, y: 0.17, spreadX: 0.02, spreadY: 0.02, colorType: 3 },
+  { x: 0.65, y: 0.14, spreadX: 0.03, spreadY: 0.04, colorType: 2 },
+  { x: 0.63, y: 0.18, spreadX: 0.02, spreadY: 0.04, colorType: 2 },
+  { x: 0.75, y: 0.3, spreadX: 0.01, spreadY: 0.01, colorType: 5 },
+  { x: 0.85, y: 0.29, spreadX: 0.01, spreadY: 0.01, colorType: 4 },
+  { x: 0.8, y: 0.38, spreadX: 0.01, spreadY: 0.01, colorType: 6 },
+  { x: 0.75, y: 0.85, spreadX: 0.04, spreadY: 0.06, colorType: 1 },
+  { x: 0.72, y: 0.75, spreadX: 0.04, spreadY: 0.07, colorType: 1 },
+  { x: 0.66, y: 0.6, spreadX: 0.03, spreadY: 0.03, colorType: 6 },
+  { x: 0.68, y: 0.65, spreadX: 0.02, spreadY: 0.04, colorType: 6 },
+  { x: 0.78, y: 0.6, spreadX: 0.01, spreadY: 0.04, colorType: 5 },
+  { x: 0.95, y: 0.45, spreadX: 0.03, spreadY: 0.04, colorType: 4 },
+  { x: 0.88, y: 0.52, spreadX: 0.02, spreadY: 0.03, colorType: 4 },
+  { x: 0.88, y: 0.55, spreadX: 0.04, spreadY: 0.03, colorType: 0 },
+  { x: 0.85, y: 0.58, spreadX: 0.03, spreadY: 0.02, colorType: 0 },
+  { x: 0.92, y: 0.65, spreadX: 0.05, spreadY: 0.08, colorType: 2 },
+  { x: 0.88, y: 0.75, spreadX: 0.04, spreadY: 0.06, colorType: 2 },
+  { x: 0.98, y: 0.8, spreadX: 0.03, spreadY: 0.06, colorType: 2 },
   { x: 0.88, y: 0.75, spreadX: 0.03, spreadY: 0.04, colorType: 1 },
-  { x: 0.83, y: 0.6, spreadX: 0.02, spreadY: 0.04, colorType: 5 },
-  { x: 0.58, y: 0.68, spreadX: 0.02, spreadY: 0.02, colorType: 4 }
+  { x: 0.93, y: 0.6, spreadX: 0.02, spreadY: 0.04, colorType: 5 },
+  { x: 0.88, y: 0.68, spreadX: 0.02, spreadY: 0.02, colorType: 4 }
 ];
 
 const COLORS = [
@@ -222,31 +224,42 @@ const UmapParticles = ({ isDark }) => {
   );
 };
 
-const PipelineSubComponent = ({ comp, localTime }) => {
-  // 1 tick = ~0.016s in original canvas. Start time = delayMin * 0.016
-  const startSec = comp.delayMin * 0.016;
-  if (localTime < startSec) return null;
+const PipelineSubComponent = ({ comp, timeRef }) => {
+  const textRef = useRef();
+  
+  useFrame(() => {
+    if (!textRef.current || timeRef.current === undefined) return;
+    
+    const localTime = timeRef.current;
+    const startSec = comp.delayMin * 0.016;
 
-  // Orig canvas rendered 1 char per 2 ticks. 1 tick = 0.016s -> 1 char per 0.032s -> 31 chars/sec
-  const charsToShow = Math.floor((localTime - startSec) * 31);
-  const visibleText = comp.text.substring(0, charsToShow);
+    let visibleText = "";
+    if (localTime > startSec) {
+      const charsToShow = Math.floor((localTime - startSec) * 31);
+      visibleText = comp.text.substring(0, charsToShow);
+    }
 
-  if (!visibleText) return null;
+    // Only trigger Troika geometry worker if the string actually physically changed!
+    // This absolutely saves WebGL from crashing by preventing 60FPS spam.
+    if (textRef.current.text !== visibleText) {
+      textRef.current.text = visibleText;
+      textRef.current.sync(); // Force Troika geometry update to WebGL immediately
+    }
+  });
 
   // Convert pixel offsets (x, y) to a relative 3D scale. Screen 1400px mapped to viewport ~12 units.
   // Using divisor 65 mathematically maps the old pixel coordinates precisely to the physical
   // width of the 3D text font geometry elements so they connect without gaps or overlaps.
   return (
     <Text
+      ref={textRef}
       position={[comp.x / 65, -comp.y / 65, 0]}
       color="#0fc09d"
       fontSize={0.2}
       anchorX="left"
       anchorY="middle"
       fillOpacity={0.9} // Slight opacity for bloom interaction
-    >
-      {visibleText}
-    </Text>
+    />
   );
 };
 
@@ -281,14 +294,14 @@ const AsciiPipeline = ({ startPos, direction, pipelineType }) => {
   });
 
   const startTime = useRef(0);
-  const [localTime, setLocalTime] = useState(0);
+  const timeRef = useRef(0);
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     if (startTime.current === 0) startTime.current = state.clock.getElapsedTime();
     
-    const currLocalTime = state.clock.getElapsedTime() - startTime.current;
-    setLocalTime(currLocalTime);
+    // Store in mutable ref to passively provide it to children without triggering React render storms
+    timeRef.current = state.clock.getElapsedTime() - startTime.current;
     
     // Smooth 3D Translation
     groupRef.current.position.x += direction * delta * 0.15;
@@ -296,14 +309,14 @@ const AsciiPipeline = ({ startPos, direction, pipelineType }) => {
     groupRef.current.position.y += Math.sin(state.clock.elapsedTime) * delta * 0.1;
 
     // Slight dynamic rotation for 3D presence
-    groupRef.current.rotation.x = Math.sin(currLocalTime * 0.5) * 0.05;
-    groupRef.current.rotation.y = Math.cos(currLocalTime * 0.5) * 0.05;
+    groupRef.current.rotation.x = Math.sin(timeRef.current * 0.5) * 0.05;
+    groupRef.current.rotation.y = Math.cos(timeRef.current * 0.5) * 0.05;
   });
 
   return (
     <group ref={groupRef} position={startPos}>
        {componentsArray.map((comp, idx) => (
-         <PipelineSubComponent key={idx} comp={comp} localTime={localTime} />
+         <PipelineSubComponent key={idx} comp={comp} timeRef={timeRef} />
        ))}
     </group>
   );
@@ -319,8 +332,8 @@ const PipelineManager = () => {
             setPipelines((curr) => {
                 const active = curr.slice(-3); // Keep only max 4 to prevent memory leaks over time
                 
-                // Random position on screen bounds, left side mainly
-                const vpX = (Math.random() - 0.8) * viewport.width;
+                // Since the left is now dark for reading text, span pipelines uniformly across the whole screen.
+                const vpX = (Math.random() - 0.5) * viewport.width;
                 const vpY = (Math.random() - 0.5) * viewport.height * 0.8;
                 return [...active, { 
                     id: Math.random(), 
@@ -375,12 +388,12 @@ export default function ThreeBackground() {
         <PipelineManager />
         <UmapParticles isDark={isDark} />
         
-        {/* Post Processing Glow / Bloom */}
+        {/* Post Processing Glow & Optical Blur */}
         <EffectComposer disableNormalPass>
             <Bloom 
               luminanceThreshold={0.2} 
               mipmapBlur 
-              intensity={isDark ? 0.8 : 0.3} // Subtle bloom in light mode, stronger in dark
+              intensity={isDark ? 0.7 : 0.25} // Subdued slightly to aid readability further
             />
         </EffectComposer>
       </Canvas>
