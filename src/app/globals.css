@@ -102,14 +102,33 @@ a:hover {
 .glass-panel {
   position: relative;
   overflow: hidden;
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: 1px solid transparent;
   padding-left: 2rem;
   margin-bottom: 2rem;
+}
+
+/* Animated vertical accent line that draws itself downward */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 0%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(89,131,146,0.6));
+  animation: lineGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.0s both;
 }
 
 /* 3D hover effect disabled for pure editorial look */
 .glass-panel:hover {
   border-left-color: var(--accent-cyan);
+}
+
+/* Project cards: dark semi-transparent background, no left accent line */
+.project-card {
+  background-color: rgba(10, 15, 20, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 /* Scroll Reveal Utilities - V2 Native Vertical */
@@ -508,3 +527,16 @@ a:hover {
     margin-top: 0.5rem;
   }
 }
+
+@keyframes heroCascadeFade {
+  0% { opacity: 0; transform: translateY(30px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+}
+@keyframes lineGrow {
+  0% { height: 0%; }
+  100% { height: 100%; }
+}
+.hero-stagger-1 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.0s both; }
+.hero-stagger-2 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
+.hero-stagger-3 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.6s both; }
+.hero-stagger-4 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.9s both; }

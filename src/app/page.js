@@ -133,24 +133,26 @@ export default function Home() {
               paddingTop: "5rem"
             }}
           >
-            <div className="glass-panel reveal" style={{ maxWidth: "1000px" }}>
-              <h1 style={{ fontSize: "max(3.5rem, 8vw)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem", color: "var(--accent-cyan)" }}>
+            <div className="glass-panel" style={{ maxWidth: "1000px" }}>
+              <h1 className="hero-stagger-1" style={{ fontSize: "max(3.5rem, 8vw)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem", color: "var(--accent-cyan)" }}>
                 <span className="marker-highlight" style={{ fontFamily: "inherit" }}>Batu</span>han Çakır
               </h1>
 
               {/* Subdued, highly designed subheaders */}
-              <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "0.2rem", letterSpacing: "-0.02em" }}>
-                Senior Bioinformatician &mdash; <span style={{ color: "var(--accent-magenta)" }}>Wellcome Sanger Institute</span>
-              </h2>
-              <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "4rem", letterSpacing: "-0.02em" }}>
-                PhD Candidate &mdash; <span style={{ color: "var(--accent-magenta)" }}>Gebze Technical University</span>
-              </h2>
+              <div className="hero-stagger-2">
+                <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "0.2rem", letterSpacing: "-0.02em" }}>
+                  Senior Bioinformatician &mdash; <span style={{ color: "var(--accent-magenta)" }}>Wellcome Sanger Institute</span>
+                </h2>
+                <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "4rem", letterSpacing: "-0.02em" }}>
+                  PhD Candidate &mdash; <span style={{ color: "var(--accent-magenta)" }}>Gebze Technical University</span>
+                </h2>
+              </div>
 
-              <p style={{ fontSize: "1.35rem", background: "linear-gradient(90deg, var(--accent-cyan) 0%, #8282ff 50%, var(--accent-magenta) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "3rem", maxWidth: "800px", lineHeight: "1.6", fontWeight: "600", letterSpacing: "-0.01em" }}>
+              <p className="hero-stagger-3" style={{ fontSize: "1.35rem", background: "linear-gradient(90deg, var(--accent-cyan) 0%, #8282ff 50%, var(--accent-magenta) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "3rem", maxWidth: "800px", lineHeight: "1.6", fontWeight: "600", letterSpacing: "-0.01em" }}>
                 Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline development. Interested in trajectories, cell-fate transitions, and reproducible workflows.
               </p>
 
-              <div style={{ display: "flex", gap: "1.8rem", marginTop: "1rem", flexWrap: "wrap" }}>
+              <div className="hero-stagger-4" style={{ display: "flex", gap: "1.8rem", marginTop: "1rem", flexWrap: "wrap" }}>
                 <a href="https://x.com/cakirb_" target="_blank" rel="noopener noreferrer" className="social-icon-hover" title="X (Twitter)">
                   <XIcon />
                 </a>
@@ -507,7 +509,7 @@ export default function Home() {
             </div>
           </section>
           {/* --- PROJECTS / PUBLICATIONS SECTION --- */}
-          <section id="projects" className="section-solid-bg" style={{ minHeight: "100vh", paddingTop: "8rem", paddingBottom: "4rem", paddingLeft: "2rem", paddingRight: "2rem" }}>
+          <section id="projects" style={{ minHeight: "100vh", paddingTop: "8rem", paddingBottom: "4rem", paddingLeft: "2rem", paddingRight: "2rem" }}>
             <h2 className="reveal" style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "2.5rem", color: "var(--foreground)", marginBottom: "3rem", fontWeight: "700", letterSpacing: "-0.02em" }}>
               Selected Work
             </h2>
@@ -515,7 +517,7 @@ export default function Home() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "2rem", fontSize: "0.87rem" }}>
 
               {/* nf-scautoqc */}
-              <div id="nf-scautoqc-card" className="glass-panel reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div id="nf-scautoqc-card" className="project-card reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", fontFamily: "var(--font-jetbrains-mono)", color: "#0fc09d", fontSize: "0.85em", marginBottom: "1rem", fontWeight: "600" }}>
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
@@ -530,7 +532,7 @@ export default function Home() {
               </div>
 
               {/* nf-larry */}
-              <div id="nf-larry-card" className="glass-panel reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.1s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div id="nf-larry-card" className="project-card reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.1s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", fontFamily: "var(--font-jetbrains-mono)", color: "#0fc09d", fontSize: "0.85em", marginBottom: "1rem", fontWeight: "600" }}>
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
@@ -545,7 +547,7 @@ export default function Home() {
               </div>
 
               {/* nf-cellsnplite */}
-              <div id="nf-cellsnplite-card" className="glass-panel reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.15s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div id="nf-cellsnplite-card" className="project-card reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.15s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#0fc09d"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", fontFamily: "var(--font-jetbrains-mono)", color: "#0fc09d", fontSize: "0.85em", marginBottom: "1rem", fontWeight: "600" }}>
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
@@ -560,7 +562,7 @@ export default function Home() {
               </div>
 
               {/* CELLxGENE Discover Curation */}
-              <div id="curation-card" className="glass-panel reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.2s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#8282ff"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div id="curation-card" className="project-card reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.2s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#8282ff"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", fontFamily: "var(--font-jetbrains-mono)", color: "#8282ff", fontSize: "0.85em", marginBottom: "1rem", fontWeight: "600" }}>
                   <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16px" height="16px" style={{ transform: "translateY(-1px)" }}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                   RESOURCE
@@ -580,7 +582,7 @@ export default function Home() {
               </div>
 
               {/* Benchmarking scRNA-seq */}
-              <div id="benchmarking-card" className="glass-panel reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.3s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#f97316"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div id="benchmarking-card" className="project-card reveal" style={{ padding: "2rem", display: "flex", flexDirection: "column", borderRadius: "24px", border: "1px solid rgba(150,150,150,0.1)", transition: "border-color 0.3s ease, box-shadow 0.3s ease", transitionDelay: "0.3s" }} onMouseOver={(e) => e.currentTarget.style.borderColor = "#f97316"} onMouseOut={(e) => { e.currentTarget.style.borderColor = "rgba(150,150,150,0.1)"; e.currentTarget.style.boxShadow = "none"; }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", fontFamily: "var(--font-jetbrains-mono)", color: "#f97316", fontSize: "0.85em", marginBottom: "1rem", fontWeight: "600" }}>
                   <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16px" height="16px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                   BENCHMARKING
@@ -597,7 +599,7 @@ export default function Home() {
             </div>
           </section>
           {/* --- CONTACT SECTION --- */}
-          <section id="contact" className="section-solid-bg" style={{ minHeight: "80vh", paddingTop: "8rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", paddingLeft: "2rem", paddingRight: "2rem" }}>
+          <section id="contact" style={{ minHeight: "80vh", paddingTop: "8rem", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", paddingLeft: "2rem", paddingRight: "2rem" }}>
             <span className="reveal" style={{ display: "block", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.2em", color: "var(--accent-magenta)", marginBottom: "1.5rem", fontWeight: "600" }}>
               get in touch
             </span>
@@ -654,9 +656,8 @@ export default function Home() {
                   zIndex: 9998,
                   touchAction: "none",
                   overscrollBehavior: "none",
-                  // Removed the darkening rgba background so page isn't darkened
                 }}
-                onClick={() => setShowPS5Modal(false)} // Click outside to close
+                onClick={() => setShowPS5Modal(false)}
               >
                 <div
                   className="ps3-xmb-backdrop-small"
@@ -680,14 +681,12 @@ export default function Home() {
                     fontFamily: "'Istok Web', sans-serif",
                     overflow: "hidden"
                   }}
-                  onClick={(e) => e.stopPropagation()} // Prevent clicks inside from closing
-                  onWheel={(e) => e.stopPropagation()} // Specifically block wheel events from propagating
-                  onTouchMove={(e) => e.stopPropagation()} // Block touch scrolling from propagating
+                  onClick={(e) => e.stopPropagation()}
+                  onWheel={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
                 >
                   {/* Authentic Flowing Blue XMB Ribbon Background */}
                   <div style={{ position: "absolute", top: "0", left: "0", width: "100%", height: "100%", zIndex: 0, opacity: 0.9, pointerEvents: "none", overflow: "hidden", borderRadius: "12px" }}>
-
-                    {/* SVG Flowing Ribbons matching the requested image */}
                     <svg viewBox="0 0 1000 500" preserveAspectRatio="none" style={{ position: "absolute", width: "300%", height: "100%", top: "0", left: "-100%", animation: "xmbFlowRibbon 20s infinite linear alternate" }}>
                       <defs>
                         <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -697,7 +696,6 @@ export default function Home() {
                           <stop offset="100%" stopColor="transparent" />
                         </linearGradient>
                       </defs>
-                      {/* Deep sweeping blue waves */}
                       <path d="M0,250 C200,100 300,400 500,250 C700,100 800,400 1000,250 L1000,500 L0,500 Z" fill="none" stroke="url(#grad1)" strokeWidth="15" style={{ animation: "xmbWarp 15s infinite ease-in-out alternate", filter: "blur(2px)" }} />
                       <path d="M0,250 C250,50 400,350 500,250 C650,150 750,450 1000,250 L1000,500 L0,500 Z" fill="none" stroke="rgba(100, 150, 255, 0.2)" strokeWidth="8" style={{ animation: "xmbWarp 10s infinite ease-in-out alternate-reverse" }} />
                       <path d="M0,250 C150,350 350,150 500,250 C650,350 850,150 1000,250 L1000,500 L0,500 Z" fill="none" stroke="rgba(50, 100, 220, 0.3)" strokeWidth="25" style={{ animation: "xmbWarp 18s infinite ease-in-out alternate", filter: "blur(4px)" }} />
@@ -721,8 +719,8 @@ export default function Home() {
                     textShadow: "0 2px 4px rgba(0,0,0,0.8)"
                   }}>
                     <h2 style={{
-                      fontFamily: "'Istok Web', sans-serif", // Directly target the font family name
-                      fontSize: "1.4rem", // Specifically shrunk based on feedback
+                      fontFamily: "'Istok Web', sans-serif",
+                      fontSize: "1.4rem",
                       fontWeight: "400",
                       letterSpacing: "1px",
                       color: "#fff",
@@ -733,7 +731,6 @@ export default function Home() {
                       Surprise, you found an easter egg!
                     </h2>
 
-                    {/* Brief non-direct subtext below header */}
                     <p style={{
                       fontFamily: "'Istok Web', sans-serif",
                       fontSize: "0.95rem",
@@ -745,12 +742,8 @@ export default function Home() {
                       Gaming archives unlocked.
                     </p>
 
-                    {/* PS3 XMB Horizontal List Menu Style - Flat Silhouette Icons */}
+                    {/* PS3 XMB Horizontal List Menu Style */}
                     <div style={{ display: "flex", justifyContent: "center", gap: "40px", marginTop: "1rem" }}>
-
-
-
-                      {/* Instagram */}
                       <a href="https://www.instagram.com/batuinngg" target="_blank" rel="noopener noreferrer" style={{
                         display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
                         textDecoration: "none", color: "#fff", transition: "transform 0.2s, filter 0.2s, text-shadow 0.2s",
@@ -767,12 +760,10 @@ export default function Home() {
                           e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
                           e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
                         }}>
-                        {/* Authentic Instagram SVG code requested by User */}
                         <InstagramIcon />
                         <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Instagram</div>
                       </a>
 
-                      {/* Threads Logo Exact Implementation */}
                       <a href="https://threads.com/batuinngg" target="_blank" rel="noopener noreferrer" style={{
                         display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
                         textDecoration: "none", color: "#fff", transition: "transform 0.2s, filter 0.2s, text-shadow 0.2s",
@@ -789,14 +780,13 @@ export default function Home() {
                           e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
                           e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
                         }}>
-                        {/* Authentic Threads SVG as flat silhouette */}
                         <ThreadsIcon />
                         <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Threads</div>
                       </a>
                     </div>
                   </div>
 
-                  {/* Context-aware PS3 Back Prompt - bottom-left aligned */}
+                  {/* PS3 Back Prompt */}
                   <div style={{
                     position: "absolute",
                     bottom: "20px",
@@ -814,7 +804,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* HTML Styles strictly for this component */}
+                  {/* Scoped keyframes */}
                   <style dangerouslySetInnerHTML={{
                     __html: `
                     @keyframes xmbFlowRibbon {

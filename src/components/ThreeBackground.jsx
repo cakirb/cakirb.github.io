@@ -34,8 +34,8 @@ const ParticleMaterial = {
     void main() {
       vColor = color;
       
-      // Calculate age for fade in
-      float age = clamp(uTime * 0.5 - aDelay, 0.0, 1.0);
+      // Calculate age for fade in — multiplier raised so dots materialize much faster
+      float age = clamp(uTime * 1.2 - aDelay, 0.0, 1.0);
       vOpacity = age;
 
       vec3 pos = position;
@@ -72,8 +72,8 @@ const ParticleMaterial = {
       
       vec3 finalColor = vColor * uModeContrast;
       
-      // Soften master opacity significantly to allow text to punch through
-      gl_FragColor = vec4(finalColor, vOpacity * 0.45);
+      // Make particles noticeably more transparent to reduce overpowering bloom
+      gl_FragColor = vec4(finalColor, vOpacity * 0.25);
     }
   `,
   transparent: true,
@@ -168,7 +168,7 @@ const UmapParticles = ({ isDark }) => {
       col[i * 3 + 1] = c.g;
       col[i * 3 + 2] = c.b;
 
-      del[i] = Math.random() * 2.0; // Startup delay
+      del[i] = Math.random() * 0.8; // Tighter startup delay spread for faster collective appearance
     }
 
     return [pos, col, del];
@@ -224,99 +224,213 @@ const UmapParticles = ({ isDark }) => {
   );
 };
 
-const PipelineSubComponent = ({ comp, timeRef }) => {
-  const textRef = useRef();
-  
+const pipelineColors = ["#0FC09D", "#67A671", "#57D4BA"];
+
+const CyberNode = ({ pos, delay, timeRef, role, glowColor }) => {
+  const meshRef = useRef();
+
   useFrame(() => {
-    if (!textRef.current || timeRef.current === undefined) return;
-    
+    if (!meshRef.current || timeRef.current === undefined) return;
     const localTime = timeRef.current;
-    const startSec = comp.delayMin * 0.016;
+    
+    // Nodes appear fully in 0.2s after delay
+    const startSec = delay * 0.016;
+    const progress = Math.min(Math.max((localTime - startSec) / 0.2, 0), 1);
+    
+    // Scale jumps to 1 with an elastic pop
+    const easeOutBack = (x) => {
+      const c1 = 1.70158;
+      const c3 = c1 + 1;
+      return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+    };
 
-    let visibleText = "";
-    if (localTime > startSec) {
-      const charsToShow = Math.floor((localTime - startSec) * 31);
-      visibleText = comp.text.substring(0, charsToShow);
-    }
-
-    // Only trigger Troika geometry worker if the string actually physically changed!
-    // This absolutely saves WebGL from crashing by preventing 60FPS spam.
-    if (textRef.current.text !== visibleText) {
-      textRef.current.text = visibleText;
-      textRef.current.sync(); // Force Troika geometry update to WebGL immediately
-    }
+    const scale = progress > 0 ? easeOutBack(progress) : 0;
+    meshRef.current.scale.setScalar(scale);
+    meshRef.current.visible = progress > 0;
   });
 
-  // Convert pixel offsets (x, y) to a relative 3D scale. Screen 1400px mapped to viewport ~12 units.
-  // Using divisor 65 mathematically maps the old pixel coordinates precisely to the physical
-  // width of the 3D text font geometry elements so they connect without gaps or overlaps.
   return (
-    <Text
-      ref={textRef}
-      position={[comp.x / 65, -comp.y / 65, 0]}
-      color="#0fc09d"
-      fontSize={0.2}
-      anchorX="left"
-      anchorY="middle"
-      fillOpacity={0.9} // Slight opacity for bloom interaction
-    />
+    <mesh ref={meshRef} position={pos} visible={false}>
+      {/* Functional Shapes instantly categorize this as a system architectural diagram */}
+      {role === "start" && (
+        <>
+          <boxGeometry args={[0.3, 0.3, 0.3]} />
+          <meshBasicMaterial color={glowColor} wireframe={true} toneMapped={false} />
+        </>
+      )}
+      {role === "process" && (
+        <>
+          <boxGeometry args={[0.4, 0.15, 0.05]} />
+          <meshBasicMaterial color={glowColor} toneMapped={false} opacity={0.65} transparent={true} />
+        </>
+      )}
+      {role === "output" && (
+        <>
+          {/* A smooth upright cylinder natively represents a Database Storage element */}
+          <cylinderGeometry args={[0.15, 0.15, 0.3, 16]} />
+          <meshBasicMaterial color={glowColor} toneMapped={false} />
+        </>
+      )}
+    </mesh>
   );
 };
 
-// --- Floating Pipeline Component ---
-const AsciiPipeline = ({ startPos, direction, pipelineType }) => {
+const CyberEdge = ({ startPos, endPos, delay, timeRef, glowColor }) => {
   const groupRef = useRef();
+  const lineRef = useRef();
+  const packetRef = useRef(); // The glowing data packet that pulses down the line
   
-  // Create exact replica arrays from the 2D canvas pipeline version
-  const [componentsArray] = useState(() => {
-    const splitY = 30; // Original spacing
+  const dx = endPos[0] - startPos[0];
+  const dy = endPos[1] - startPos[1];
+  const dz = endPos[2] - startPos[2];
+  const length = Math.sqrt(dx*dx + dy*dy + dz*dz) || 0.01;
+  const angle = Math.atan2(dy, dx); 
+
+  useFrame(() => {
+    if (!groupRef.current || timeRef.current === undefined) return;
+    const localTime = timeRef.current;
+    
+    const startSec = delay * 0.016;
+    const progress = Math.min(Math.max((localTime - startSec) / 0.3, 0), 1); // 0.3s shoot duration
+    
+    groupRef.current.visible = progress > 0;
+    
+    if (progress > 0) {
+      const activeLength = length * progress;
+      
+      lineRef.current.scale.x = Math.max(activeLength, 0.0001);
+      lineRef.current.position.x = activeLength / 2;
+
+      // Pulse a repetitively bright data packet down the active length of the pipe
+      if (packetRef.current) {
+        // Reduced frequency by 50% to visually travel 2x slower and elegantly slide through the architecture
+        const pulseCycle = (localTime * 1.25) % 1; 
+        packetRef.current.position.x = activeLength * pulseCycle;
+        packetRef.current.visible = progress >= 0.5;
+      }
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={startPos} rotation={[0, 0, angle]} visible={false}>
+      <mesh ref={lineRef}>
+        <boxGeometry args={[1, 0.01, 0.01]} />
+        <meshBasicMaterial color={glowColor} toneMapped={false} opacity={0.3} transparent />
+      </mesh>
+      
+      {/* The glowing data packet */}
+      <mesh ref={packetRef} visible={false}>
+        <sphereGeometry args={[0.04, 8, 8]} />
+        <meshBasicMaterial color={glowColor.clone().multiplyScalar(1.5)} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+};
+
+// --- Floating 3D Cyber Pipeline Component ---
+const CyberPipeline = ({ startPos, direction, pipelineType, color }) => {
+  const groupRef = useRef();
+  const timeRef = useRef(0);
+  
+  // Statically assigned unique color passed to all nodes
+  const glowColor = useMemo(() => new THREE.Color(color).multiplyScalar(1.5), [color]);
+  
+  const [graph] = useState(() => {
+    // Physical geometric graph representation
     if (pipelineType === "branching") {
-      return [
-        { type: 'box', text: "[   ]", x: 0, y: 0, delayMin: 0 },
-        { type: 'arrow', text: "====>", x: 40, y: 0, delayMin: 20 },
-        { type: 'arrow', text: " /===>", x: 80, y: -splitY / 2, delayMin: 60 },
-        { type: 'box', text: "[   ]", x: 130, y: -splitY, delayMin: 90 },
-        { type: 'arrow', text: " \\===>", x: 80, y: splitY / 2, delayMin: 60 },
-        { type: 'box', text: "[   ]", x: 130, y: splitY, delayMin: 90 },
-        { type: 'arrow', text: " \\===>", x: 170, y: -splitY / 2, delayMin: 120 },
-        { type: 'arrow', text: " /===>", x: 170, y: splitY / 2, delayMin: 120 },
-        { type: 'box', text: "[   ]", x: 220, y: 0, delayMin: 150 },
-      ];
+      return {
+        nodes: [
+          { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
+          { id: 1, p: [1.2, 0, 0], delay: 15, role: "process" },
+          { id: 2, p: [2.4, -0.6, 0], delay: 35, role: "process" },
+          { id: 3, p: [2.4, 0.6, 0], delay: 35, role: "process" },
+          { id: 4, p: [3.6, -0.6, 0], delay: 55, role: "process" },
+          { id: 5, p: [3.6, 0.6, 0], delay: 55, role: "process" },
+          { id: 6, p: [4.8, 0, 0], delay: 85, role: "output" },
+        ],
+        edges: [
+          { source: 0, target: 1, delay: 5 },
+          { source: 1, target: 2, delay: 20 },
+          { source: 1, target: 3, delay: 20 },
+          { source: 2, target: 4, delay: 40 },
+          { source: 3, target: 5, delay: 40 },
+          { source: 4, target: 6, delay: 65 },
+          { source: 5, target: 6, delay: 65 },
+        ]
+      };
+    } else if (pipelineType === "hexagon") {
+      return {
+        nodes: [
+          { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
+          { id: 1, p: [1.2, 0.8, 0], delay: 20, role: "process" },
+          { id: 2, p: [1.2, -0.8, 0], delay: 20, role: "process" },
+          { id: 3, p: [2.6, 0.8, 0], delay: 40, role: "process" },
+          { id: 4, p: [2.6, -0.8, 0], delay: 40, role: "process" },
+          { id: 5, p: [3.8, 0, 0], delay: 60, role: "output" },
+        ],
+        edges: [
+          { source: 0, target: 1, delay: 5 },
+          { source: 0, target: 2, delay: 5 },
+          { source: 1, target: 3, delay: 25 },
+          { source: 2, target: 4, delay: 25 },
+          { source: 3, target: 5, delay: 45 },
+          { source: 4, target: 5, delay: 45 },
+        ]
+      };
     } else {
-      return [
-        { type: 'box', text: "[   ]", x: 0, y: 0, delayMin: 0 },
-        { type: 'arrow', text: "=====>", x: 40, y: 0, delayMin: 20 },
-        { type: 'box', text: "[   ]", x: 90, y: 0, delayMin: 60 },
-        { type: 'arrow', text: "=====>", x: 130, y: 0, delayMin: 90 },
-        { type: 'box', text: "[   ]", x: 180, y: 0, delayMin: 120 },
-      ];
+      return {
+        nodes: [
+          { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
+          { id: 1, p: [1.5, 0, 0], delay: 20, role: "process" },
+          { id: 2, p: [3.0, 0, 0], delay: 40, role: "process" },
+          { id: 3, p: [4.5, 0, 0], delay: 60, role: "output" },
+        ],
+        edges: [
+          { source: 0, target: 1, delay: 5 },
+          { source: 1, target: 2, delay: 25 },
+          { source: 2, target: 3, delay: 45 },
+        ]
+      };
     }
   });
 
   const startTime = useRef(0);
-  const timeRef = useRef(0);
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
     if (startTime.current === 0) startTime.current = state.clock.getElapsedTime();
     
-    // Store in mutable ref to passively provide it to children without triggering React render storms
     timeRef.current = state.clock.getElapsedTime() - startTime.current;
     
     // Smooth 3D Translation
-    groupRef.current.position.x += direction * delta * 0.15;
-    // Natural floating Bob
+    groupRef.current.position.x += direction * delta * 0.25;
     groupRef.current.position.y += Math.sin(state.clock.elapsedTime) * delta * 0.1;
 
-    // Slight dynamic rotation for 3D presence
-    groupRef.current.rotation.x = Math.sin(timeRef.current * 0.5) * 0.05;
-    groupRef.current.rotation.y = Math.cos(timeRef.current * 0.5) * 0.05;
+    // Noticeable dynamic rotation for 3D presence but strictly restrained so it floats like a 
+    // rigid 2D flowchart GUI layer, preventing it from tumbling spherically like a chemistry molecule.
+    groupRef.current.rotation.x = Math.sin(timeRef.current * 0.2) * 0.05;
+    groupRef.current.rotation.y = Math.sin(timeRef.current * 0.3) * 0.05;
+
+    // Trigger Dissolve Fade: between 11s and 14s of local time, mathematically shrink the structure into the void
+    if (timeRef.current > 11.0) {
+      const dissolveProgress = Math.min((timeRef.current - 11.0) / 3.0, 1.0); // 0.0 -> 1.0
+      // Sine wave ease-in-out feeling for scale collapse
+      const scaleMult = Math.cos(dissolveProgress * Math.PI / 2); // 1.0 -> 0.0
+      groupRef.current.scale.setScalar(scaleMult);
+      // Sink slightly backward into Z-space
+      groupRef.current.position.z = startPos[2] - (dissolveProgress * 4.0);
+    }
   });
 
   return (
     <group ref={groupRef} position={startPos}>
-       {componentsArray.map((comp, idx) => (
-         <PipelineSubComponent key={idx} comp={comp} timeRef={timeRef} />
+       {graph.edges.map((edge, idx) => {
+         const from = graph.nodes.find(n => n.id === edge.source);
+         const to = graph.nodes.find(n => n.id === edge.target);
+         return <CyberEdge key={`e-${idx}`} startPos={from.p} endPos={to.p} delay={edge.delay} timeRef={timeRef} glowColor={glowColor} />
+       })}
+       {graph.nodes.map((node, idx) => (
+         <CyberNode key={`n-${idx}`} pos={node.p} delay={node.delay} timeRef={timeRef} role={node.role} glowColor={glowColor} />
        ))}
     </group>
   );
@@ -326,33 +440,66 @@ const PipelineManager = () => {
     const { viewport } = useThree();
     const [pipelines, setPipelines] = useState([]);
 
-    // Spawn new pipelines periodically
+    // Spawn new pipelines periodically and safely garbage collect old ones based on exact system clock rather than array slicing
     useEffect(() => {
-        const interval = setInterval(() => {
-            setPipelines((curr) => {
-                const active = curr.slice(-3); // Keep only max 4 to prevent memory leaks over time
+        const spawnOne = (curr) => {
+            const now = Date.now();
+            const active = curr.filter(p => now - p.spawnTime < 15000);
+            
+            // Span pipelines uniformly across the whole screen while verifying 
+            // they do not spawn close enough to visually collide with existing active paths.
+            let vpX = 0, vpY = 0;
+            let isValid = false;
+            let attempts = 0;
+            
+            while (!isValid && attempts < 20) {
+                vpX = (Math.random() - 0.5) * viewport.width;
+                vpY = (Math.random() - 0.5) * viewport.height * 0.8;
                 
-                // Since the left is now dark for reading text, span pipelines uniformly across the whole screen.
-                const vpX = (Math.random() - 0.5) * viewport.width;
-                const vpY = (Math.random() - 0.5) * viewport.height * 0.8;
-                return [...active, { 
-                    id: Math.random(), 
-                    pos: [vpX, vpY, 0.5], // Render above particles slightly
-                    direction: 1.0, 
-                    type: Math.random() > 0.5 ? "branching" : "linear"
-                }];
-            });
-        }, 5000); // Try spawning every 5 sec
-        
-        return () => clearInterval(interval);
+                const collision = active.find(p => {
+                    const dx = p.pos[0] - vpX;
+                    const dy = p.pos[1] - vpY;
+                    return Math.sqrt(dx*dx + dy*dy) < 6.5; // Requires 6.5 WebGL units of safe radius distance
+                });
+                
+                if (!collision) isValid = true;
+                attempts++;
+            }
+            
+            const typeRoll = Math.random();
+            const type = typeRoll > 0.66 ? "branching" : typeRoll > 0.33 ? "hexagon" : "linear";
+            const color = pipelineColors[Math.floor(Math.random() * pipelineColors.length)];
+
+            return [...active, { 
+                id: Math.random(), 
+                spawnTime: now,
+                pos: [vpX, vpY, 0.5], 
+                direction: 1.0, 
+                type: type,
+                color: color
+            }];
+        };
+
+        // Wait 4.6 seconds so it spawns ~1.5s after the hero text cascade completes at ~3.1s
+        const initialTimer = setTimeout(() => {
+            setPipelines(curr => spawnOne(spawnOne([])));
+        }, 4600);
+
+        const interval = setInterval(() => {
+            setPipelines(spawnOne);
+        }, 5000); 
+
+        return () => {
+            clearTimeout(initialTimer);
+            clearInterval(interval);
+        };
     }, [viewport.width, viewport.height]);
 
-    // Cleanup old ones might require robust life-cycle but for effect they eventually float outside view
     return (
         <group>
             {pipelines.map(p => (
                 <Suspense fallback={null} key={p.id}>
-                  <AsciiPipeline startPos={p.pos} direction={p.direction} pipelineType={p.type} />
+                    <CyberPipeline startPos={p.pos} direction={p.direction} pipelineType={p.type} color={p.color} />
                 </Suspense>
             ))}
         </group>
@@ -393,7 +540,7 @@ export default function ThreeBackground() {
             <Bloom 
               luminanceThreshold={0.2} 
               mipmapBlur 
-              intensity={isDark ? 0.7 : 0.25} // Subdued slightly to aid readability further
+              intensity={isDark ? 0.4 : 0.15} // Reduced heavily so pipelines cleanly out-glow the background
             />
         </EffectComposer>
       </Canvas>
