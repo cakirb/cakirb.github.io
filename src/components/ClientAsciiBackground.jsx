@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const AsciiBackground = dynamic(() => import("@/components/AsciiBackground"), {
+const ThreeBackground = dynamic(() => import("@/components/ThreeBackground"), {
     ssr: false,
 });
 
 export default function ClientAsciiBackground() {
-    return <AsciiBackground />;
+    return <ThreeBackground />;
 }
