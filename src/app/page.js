@@ -1,12 +1,10 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
-import { Canvas } from "@react-three/fiber";
 import {
   GithubIcon, LinkedInIcon, OrcidIcon, ScholarIcon, XIcon, EmailIcon,
   BriefcaseIcon, GraduationIcon, InstagramIcon, ThreadsIcon
 } from "../components/Icons";
-import { HologramFace } from "../components/HologramFace";
 
 // Bluesky Icon Component
 const BlueskyIcon = ({ style, ...props }) => (
@@ -199,11 +197,11 @@ export default function Home() {
             </h2>
 
             {/* TIMELINE CONTAINER */}
-            <div className="reveal" style={{
+            <div className="reveal timeline-container" style={{
               position: "relative",
               maxWidth: "800px",
               margin: "0 auto",
-              paddingLeft: "4rem" /* Space for the dual tracks */
+              paddingLeft: "var(--timeline-padding, 4rem)" /* Space for the dual tracks */
             }}>
               {/* Track 1: Career (Cyan) */}
               <div
@@ -258,7 +256,7 @@ export default function Home() {
               {/* ENTRY 1: 2024 - Present (Career) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-cyan)", boxShadow: "0 0 10px rgba(18, 69, 89, 0.4)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-cyan)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -298,7 +296,7 @@ export default function Home() {
               {/* ENTRY 2: 2021 - 2024 (Career) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-cyan)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -338,7 +336,7 @@ export default function Home() {
               {/* ENTRY 3: 2021 - Present (Education) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-magenta)", boxShadow: "0 0 10px rgba(89, 131, 146, 0.4)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-magenta)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -392,7 +390,7 @@ export default function Home() {
               {/* ENTRY 4: 2019 - 2021 (Career) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-cyan)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -418,7 +416,7 @@ export default function Home() {
               {/* ENTRY 4.5: 2019 (Career) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-cyan)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -457,7 +455,7 @@ export default function Home() {
               {/* ENTRY 5: 2017 - 2021 (Education) */}
               <div style={{ position: "relative", paddingBottom: "3rem", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-magenta)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-magenta)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>
@@ -487,7 +485,7 @@ export default function Home() {
               {/* ENTRY 6: 2012 - 2016 (Education) */}
               <div style={{ position: "relative", paddingBottom: "1rem", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
                 <div style={{
-                  position: "absolute", left: "calc(-4rem + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
+                  position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
                   background: "var(--background)", border: "3px solid var(--accent-magenta)", zIndex: 1
                 }} />
                 <span style={{ display: "block", fontFamily: "var(--font-jetbrains-mono)", fontSize: "0.9rem", color: "var(--accent-magenta)", fontWeight: "600", opacity: 0.8, marginBottom: "0.5rem" }}>

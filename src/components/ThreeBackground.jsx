@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import { useRef, useMemo, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Text } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 
@@ -515,7 +514,10 @@ export default function ThreeBackground() {
 
   // Detect mobile on mount
   useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
+    const timer = setTimeout(() => {
+      setIsMobile(window.innerWidth <= 768);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Read theme on mount and observe changes

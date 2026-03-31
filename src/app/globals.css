@@ -20,6 +20,8 @@
   /* ASCII Animation Colors */
   --ascii-color: rgba(89, 131, 146, 0.15);
   --ascii-highlight: #598392;
+  
+  --timeline-padding: 4rem;
 }
 
 /* Absolute Scroll Lock Class for Modals */
@@ -488,8 +490,15 @@ a:hover {
   }
 }
 
+.mobile-only-link {
+  display: none !important;
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+  .mobile-only-link {
+    display: block !important;
+  }
   html {
     font-size: 100%;
   }
@@ -583,14 +592,13 @@ a:hover {
 
   nav {
     border-radius: 40px !important;
-    padding: 1rem 1.5rem !important;
+    padding: 0.8rem 1rem !important;
     top: 1rem !important;
     width: calc(100% - 1.5rem) !important;
   }
 
   .nav-container {
-    flex-wrap: wrap;
-    gap: 0.8rem !important;
+    flex-wrap: nowrap;
     justify-content: center !important;
   }
 
@@ -598,17 +606,21 @@ a:hover {
     flex-wrap: nowrap !important;
     overflow-x: auto;
     overflow-y: hidden;
-    justify-content: center !important;
-    gap: 1.5rem !important;
-    padding-bottom: 0.2rem; /* Buffer for touch */
+    justify-content: flex-start !important;
+    gap: 1.2rem !important;
+    padding-bottom: 0;
     width: 100%;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-
-  /* Prevent texts like About Me from splitting onto two lines inside the scroll row */
+  
   .nav-links a {
+    font-size: 0.85rem !important;
     white-space: nowrap !important;
+  }
+  
+  .nav-brand {
+    display: none !important;
   }
 
   /* Disable vertical movement on nav items on mobile */
@@ -618,6 +630,10 @@ a:hover {
 
   .nav-links::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
+  }
+
+  :root {
+    --timeline-padding: 3.5rem;
   }
 }
 

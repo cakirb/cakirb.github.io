@@ -6,6 +6,6 @@ const ThreeBackground = dynamic(() => import("@/components/ThreeBackground"), {
     ssr: false,
 });
 
-export default function ClientAsciiBackground() {
+export default function ClientThreeBackground() {
     return <ThreeBackground />;
 }

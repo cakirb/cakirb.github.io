@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState("");
@@ -72,6 +72,7 @@ export default function Navbar() {
     }, [activeSection]);
 
     const navLinks = [
+        { name: "Top", href: "#home", mobileOnly: true },
         { name: "About Me", href: "#about" },
         { name: "Experience", href: "#experience" },
         { name: "Selected Work", href: "#projects" },
@@ -114,7 +115,7 @@ export default function Navbar() {
                                 key={item.name}
                                 href={item.href}
                                 data-section={item.href.substring(1)}
-                                className="nav-link-item"
+                                className={`nav-link-item ${item.mobileOnly ? 'mobile-only-link' : ''}`}
                                 style={{
                                     position: "relative",
                                     color: isActive ? "var(--accent-cyan)" : "inherit",

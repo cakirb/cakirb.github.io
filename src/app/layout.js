@@ -1,6 +1,6 @@
 import { Space_Grotesk, DM_Sans, JetBrains_Mono, Istok_Web } from "next/font/google";
 import Navbar from "@/components/Navbar";
-import ClientAsciiBackground from "@/components/ClientAsciiBackground";
+import ClientThreeBackground from "@/components/ClientThreeBackground";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" style={{ overflowX: 'hidden' }}>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${istokWeb.variable}`} style={{ overflowX: 'hidden', margin: 0, padding: 0 }}>
-        <ClientAsciiBackground />
+        <ClientThreeBackground />
         <Navbar />
         {children}
       </body>
