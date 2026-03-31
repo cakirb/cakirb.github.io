@@ -1,8 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState("");
+    const [mobileVisible, setMobileVisible] = useState(false);
+    const navLinksRef = useRef(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -21,6 +23,54 @@ export default function Navbar() {
         };
     }, []);
 
+    // Mobile-only: hide navbar when hero is visible, show when scrolled past
+    useEffect(() => {
+        const isMobile = () => window.innerWidth <= 768;
+        
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!isMobile()) {
+                    setMobileVisible(true);
+                    return;
+                }
+                // When hero is NOT intersecting (scrolled past), show navbar
+                setMobileVisible(!entry.isIntersecting);
+            });
+        }, { threshold: 0.05 });
+
+        const heroSection = document.getElementById("home");
+        if (heroSection) heroObserver.observe(heroSection);
+
+        // Also handle resize — if user resizes to desktop, always show
+        const handleResize = () => {
+            if (!isMobile()) setMobileVisible(true);
+        };
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            if (heroSection) heroObserver.unobserve(heroSection);
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    // Auto-scroll the nav-links container to show the active link fully
+    useEffect(() => {
+        if (!navLinksRef.current || !activeSection) return;
+        const container = navLinksRef.current;
+        const activeLink = container.querySelector(`[data-section="${activeSection}"]`);
+        if (!activeLink) return;
+
+        // Scroll the active link into view within the horizontal scroll container
+        const linkLeft = activeLink.offsetLeft;
+        const linkWidth = activeLink.offsetWidth;
+        const containerWidth = container.offsetWidth;
+        const scrollLeft = container.scrollLeft;
+
+        // Center the active link in the container if possible
+        const targetScroll = linkLeft - (containerWidth / 2) + (linkWidth / 2);
+        container.scrollTo({ left: Math.max(0, targetScroll), behavior: "smooth" });
+    }, [activeSection]);
+
     const navLinks = [
         { name: "About Me", href: "#about" },
         { name: "Experience", href: "#experience" },
@@ -30,21 +80,23 @@ export default function Navbar() {
 
     return (
         <nav
+            className="site-nav"
             style={{
                 position: "fixed",
                 top: "1.5rem",
                 left: "50%",
-                transform: "translateX(-50%)",
+                transform: mobileVisible ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(-120%)",
                 width: "calc(100% - 2rem)",
                 maxWidth: "850px",
                 zIndex: 50,
                 padding: "0.8rem 2rem",
-                transition: "all 0.3s ease",
+                transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
                 background: "var(--glass-bg)",
                 backdropFilter: "blur(16px)",
                 border: "1px solid rgba(255, 255, 255, 0.08)",
                 borderRadius: "99px",
-                boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)"
+                boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)",
+                opacity: mobileVisible ? 1 : 0,
             }}
         >
             <div className="nav-container" style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -54,14 +106,15 @@ export default function Navbar() {
                     </span>
                 </a>
 
-                <div className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center", fontSize: "0.9rem", fontWeight: "500" }}>
+                <div ref={navLinksRef} className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center", fontSize: "0.9rem", fontWeight: "500" }}>
                     {navLinks.map((item) => {
                         const isActive = activeSection === item.href.substring(1);
                         return (
                             <a
                                 key={item.name}
                                 href={item.href}
-                                className="social-icon-hover"
+                                data-section={item.href.substring(1)}
+                                className="nav-link-item"
                                 style={{
                                     position: "relative",
                                     color: isActive ? "var(--accent-cyan)" : "inherit",

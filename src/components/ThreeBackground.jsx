@@ -177,8 +177,11 @@ const UmapParticles = ({ isDark }) => {
   const statePointer = useRef(new THREE.Vector2(-10, -10));
 
   useEffect(() => {
+    // Only enable mouse repulsion on pointer devices, not mobile touch
+    const hasPointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!hasPointer) return;
+
     const handleMouseMove = (e) => {
-      // Normalize mouse to [-1, 1] range
       statePointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       statePointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
@@ -508,6 +511,12 @@ const PipelineManager = () => {
 
 export default function ThreeBackground() {
   const [isDark, setIsDark] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+  }, []);
 
   // Read theme on mount and observe changes
   useEffect(() => {
@@ -520,30 +529,32 @@ export default function ThreeBackground() {
       }
     };
     checkTheme();
-    // Minimal polling or rely on the user to reload since this relies on standard CSS attributes mostly.
     const observer = new MutationObserver(checkTheme);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -2, pointerEvents: "none" }}>
+    <div className="three-bg-container" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -2, pointerEvents: "none" }}>
       <Canvas 
         camera={{ position: [0, 0, 10], fov: 75 }}
-        dpr={[1, 2]} // Support high-res displays beautifully
+        dpr={[1, 2]}
       >
         <PipelineManager />
         <UmapParticles isDark={isDark} />
         
-        {/* Post Processing Glow & Optical Blur */}
-        <EffectComposer disableNormalPass>
-            <Bloom 
-              luminanceThreshold={0.2} 
-              mipmapBlur 
-              intensity={isDark ? 0.4 : 0.15} // Reduced heavily so pipelines cleanly out-glow the background
-            />
-        </EffectComposer>
+        {/* Post Processing Glow — disabled on mobile where it creates blurry blobs */}
+        {!isMobile && (
+          <EffectComposer disableNormalPass>
+              <Bloom 
+                luminanceThreshold={0.2} 
+                mipmapBlur 
+                intensity={isDark ? 0.4 : 0.15}
+              />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );
 }
+

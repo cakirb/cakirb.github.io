@@ -140,11 +140,8 @@ export default function Home() {
 
               {/* Subdued, highly designed subheaders */}
               <div className="hero-stagger-2">
-                <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "0.2rem", letterSpacing: "-0.02em" }}>
-                  Senior Bioinformatician &mdash; <span style={{ color: "var(--accent-magenta)" }}>Wellcome Sanger Institute</span>
-                </h2>
                 <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "4rem", letterSpacing: "-0.02em" }}>
-                  PhD Candidate &mdash; <span style={{ color: "var(--accent-magenta)" }}>Gebze Technical University</span>
+                  Senior Bioinformatician and PhD Candidate
                 </h2>
               </div>
 
@@ -183,7 +180,7 @@ export default function Home() {
             <h2 className="reveal" style={{ fontFamily: "var(--font-space-grotesk)", fontSize: "2.5rem", color: "var(--foreground)", marginBottom: "3rem", fontWeight: "700", letterSpacing: "-0.02em" }}>
               About Me
             </h2>
-            
+
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", paddingBottom: "4rem" }}>
               <div className="glass-panel reveal" style={{ maxWidth: "800px", width: "100%", backgroundColor: "rgba(10, 15, 20, 0.75)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255, 255, 255, 0.03)", padding: "3rem", borderRadius: "16px", boxShadow: "0 10px 40px -10px rgba(0,0,0,0.5)" }}>
                 <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "2.5rem", lineHeight: "1.9", fontWeight: "400" }}>
@@ -842,7 +839,7 @@ export default function Home() {
           </footer>
 
           {/* FLOATING RETURN BUTTON */}
-          <div 
+          <div
             style={{
               position: "fixed",
               bottom: returnScrollPos !== null ? "40px" : "-100px",
@@ -872,14 +869,14 @@ export default function Home() {
                 setReturnScrollPos(null);
               }
             }}
-            onMouseOver={(e) => { 
-              e.currentTarget.style.transform = "translateX(-50%) scale(1.1) rotate(-10deg)"; 
-              e.currentTarget.style.boxShadow = "0 6px 25px rgba(89, 131, 146, 0.4)"; 
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = "translateX(-50%) scale(1.1) rotate(-10deg)";
+              e.currentTarget.style.boxShadow = "0 6px 25px rgba(89, 131, 146, 0.4)";
               e.currentTarget.style.background = "rgba(17, 21, 24, 1)";
             }}
-            onMouseOut={(e) => { 
-              e.currentTarget.style.transform = "translateX(-50%) scale(1) rotate(0deg)"; 
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.5)"; 
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = "translateX(-50%) scale(1) rotate(0deg)";
+              e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.5)";
               e.currentTarget.style.background = "rgba(17, 21, 24, 0.85)";
             }}
             title="Return to Experience"

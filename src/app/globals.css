@@ -38,6 +38,20 @@
   transition: background-color 0.4s ease;
 }
 
+/* Mobile: remove section overlay so Three.js background shows through */
+@media (max-width: 768px) {
+  .section-solid-bg {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Dim the particle canvas on mobile — compensates for removed section overlay */
+  .three-bg-container {
+    opacity: 0.6;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 115%;
@@ -119,9 +133,10 @@ a:hover {
   animation: lineGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.0s both;
 }
 
-/* 3D hover effect disabled for pure editorial look */
-.glass-panel:hover {
-  border-left-color: var(--accent-cyan);
+@media (hover: hover) and (pointer: fine) {
+  .glass-panel:hover {
+    border-left-color: var(--accent-cyan);
+  }
 }
 
 /* Project cards: dark semi-transparent background, no left accent line */
@@ -283,11 +298,15 @@ a:hover {
   opacity: 0.7;
 }
 
-.social-icon-hover:hover {
-  transform: translateY(-4px);
-  color: var(--accent-cyan);
-  opacity: 1;
-  filter: drop-shadow(0 4px 12px rgba(18, 69, 89, 0.4));
+/* Only apply hover effects on devices with a pointer (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .social-icon-hover:hover,
+  .nav-link-item:hover {
+    transform: translateY(-4px);
+    color: var(--accent-cyan);
+    opacity: 1;
+    filter: drop-shadow(0 4px 12px rgba(18, 69, 89, 0.4));
+  }
 }
 
 /* 
@@ -461,6 +480,14 @@ a:hover {
   display: block;
 }
 
+/* Desktop: navbar always visible regardless of JS state */
+@media (min-width: 769px) {
+  .site-nav {
+    transform: translateX(-50%) translateY(0) !important;
+    opacity: 1 !important;
+  }
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
   html {
@@ -472,15 +499,86 @@ a:hover {
     padding-right: 1rem !important;
   }
 
-  /* Prevent tight viewports from pushing centered Hero text under the nav */
+  /* Hero: full viewport minimum, no header, vertically centered */
   #home {
-    justify-content: flex-start !important;
-    padding-top: 11rem !important;
+    min-height: 100dvh !important;
+    justify-content: center !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Make hero name larger on mobile */
+  #home h1 {
+    font-size: max(3.5rem, 12vw) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #home h2 {
+    font-size: max(1.8vw, 1rem) !important;
+  }
+
+  /* Reduce the inline 4rem gap between position titles and gradient description */
+  #home .hero-stagger-2 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  #home .hero-stagger-2 h2 {
+    margin-bottom: 0 !important;
+  }
+
+  /* Reduce the gradient paragraph on mobile */
+  #home p {
+    font-size: 1.05rem !important;
+    margin-bottom: 2rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Remove left padding/border from glass-panel in hero on mobile */
+  #home .glass-panel {
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+
+  #home .glass-panel::before {
+    display: none !important;
   }
 
   .glass-panel {
     padding-left: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* About Me card: tighter padding and smaller text for readability on mobile */
+  #about .glass-panel {
+    padding: 1.5rem !important;
+    border-left: none !important;
+  }
+
+  #about .glass-panel p {
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #about h2 {
+    font-size: 2rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Reduce excessive top padding between sections on mobile */
+  #about, #experience, #projects, #contact {
+    padding-top: 4rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Center the PS3 easter egg modal on mobile */
+  .ps3-xmb-backdrop-small {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
   }
 
   nav {
@@ -499,7 +597,8 @@ a:hover {
   .nav-links {
     flex-wrap: nowrap !important;
     overflow-x: auto;
-    justify-content: flex-start !important;
+    overflow-y: hidden;
+    justify-content: center !important;
     gap: 1.5rem !important;
     padding-bottom: 0.2rem; /* Buffer for touch */
     width: 100%;
@@ -510,6 +609,11 @@ a:hover {
   /* Prevent texts like About Me from splitting onto two lines inside the scroll row */
   .nav-links a {
     white-space: nowrap !important;
+  }
+
+  /* Disable vertical movement on nav items on mobile */
+  .nav-link-item {
+    transform: none !important;
   }
 
   .nav-links::-webkit-scrollbar {
