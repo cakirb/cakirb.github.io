@@ -831,7 +831,10 @@ export default function Home() {
               <span className="footer-author">Designed & Built by Batuhan Cakir</span>
               <span className="footer-separator"> &mdash; </span>
               <span className="footer-vibe" style={{ color: "var(--accent-cyan)", opacity: 0.8 }}>
-                <span style={{ fontSize: "1.1rem", verticalAlign: "-1px", marginRight: "4px" }}>✦</span> Vibe-coded in Antigravity with Gemini 3.1 Pro
+                <a href="/llms.txt" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} title="llms.txt">
+                  <span style={{ fontSize: "1.1rem", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
+                </a>
+                Vibe-coded with Gemini 3.1 Pro
               </span>
             </p>
           </footer>

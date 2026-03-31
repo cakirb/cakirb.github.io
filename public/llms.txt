@@ -1,0 +1,66 @@
+# Batuhan Çakır
+
+**Senior Bioinformatician and PhD Candidate**
+
+Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline development. Interested in trajectories, cell-fate transitions, and reproducible workflows.
+
+## Contact & Links
+- **Email:** bc8@sanger.ac.uk
+- **X (Twitter):** [https://x.com/cakirb_](https://x.com/cakirb_)
+- **LinkedIn:** [https://linkedin.com/in/batuhancakir](https://linkedin.com/in/batuhancakir)
+- **Bluesky:** [https://bsky.app/profile/cakirb.bsky.social](https://bsky.app/profile/cakirb.bsky.social)
+- **GitHub:** [https://github.com/cakirb](https://github.com/cakirb)
+- **Google Scholar:** [https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en](https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en)
+- **ORCID:** [https://orcid.org/0000-0003-4513-606X](https://orcid.org/0000-0003-4513-606X)
+
+## About Me
+I am a bioinformatician working in single-cell genomics, with a particular interest in lineage tracing, trajectories, and cell-fate transitions. My work combines scRNA-seq analysis with pipeline development, and I enjoy building reproducible workflows for processing large-scale datasets.
+
+I am currently a Senior Bioinformatician in the Cellular Genomics Informatics (CellGenIT) team at the Wellcome Sanger Institute and a PhD candidate at Gebze Technical University. My background includes a BSc in Bioengineering and an MSc in Bioinformatics and Systems Biology. Over the years, I have contributed to collaborative single-cell projects through data analysis, workflow development, benchmarking, and publication-supporting resources.
+
+## Experience
+
+### Career
+- **Senior Bioinformatician** @ Wellcome Sanger Institute (2024 — Present)
+  - Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.
+  - Contributing to scalable pipelines including nf-scautoqc, with a focus on reproducible analysis and large-scale dataset processing.
+- **Bioinformatician** @ Wellcome Sanger Institute (2021 — 2024)
+  - Supported the curation of datasets for the CZ CELLxGENE Discover portal and contributed to project-specific resources for data access and visualisation.
+  - Contributed to collaborative single-cell projects across data analysis, curation, and workflow support.
+- **Research Assistant** @ Gebze Technical University (2019 — 2021)
+  - Contributed to research projects in bioinformatics and structural biology.
+  - Supported teaching in courses including Biostatistics and Heat and Mass Transfer.
+- **Visiting Scientist** @ Wellcome Sanger Institute (2019)
+  - Benchmarked single-cell RNA-seq visualisation tools during an internship with the Cellular Genetics Informatics team.
+
+### Education
+- **PhD at Bioinformatics & Systems Biology** @ Gebze Technical University (2021 — Present)
+  - Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.
+  - Developing workflows including nf-larry and nf-cellsnplite as part of ongoing thesis work.
+- **MSc at Bioinformatics & Systems Biology** @ Gebze Technical University (2017 — 2021)
+  - Worked on single-cell RNA-seq analysis in stem cell differentiation.
+  - Thesis: Mathematical Modelling of Molecular Trajectories in Stem Cell Transformation Processes via Bioinformatic Analysis of Single Cell Omics Data.
+- **BSc at Bioengineering** @ Yildiz Technical University (2012 — 2016)
+
+## Selected Work
+
+### nf-scautoqc (Pipeline / Nextflow)
+Automated quality control, doublet detection, and optional integration for single-cell RNA-seq data on HPC environments.
+- Repository: [https://github.com/cellgeni/nf-scautoqc](https://github.com/cellgeni/nf-scautoqc)
+
+### nf-larry (Pipeline / Nextflow)
+Extracts and tracks clonal LARRY barcodes from raw reads, integrating clone lineages directly into gene expression matrices.
+- Repository: [https://github.com/cellgeni/nf-larry](https://github.com/cellgeni/nf-larry)
+
+### nf-cellsnplite (Pipeline / Nextflow)
+A scalable Nextflow pipeline implementing cellsnp-lite for genotyping single cells from aligned sequencing reads.
+- Repository: [https://github.com/cellgeni/nf-cellsnplite/](https://github.com/cellgeni/nf-cellsnplite/)
+
+### CELLxGENE Discover Curation (Resource)
+Contributed to the curation of the COVID-19 Cell Atlas for the CELLxGENE Discover portal, enabling broad access to vital single-cell datasets.
+- Portal: [https://cellxgene.cziscience.com/](https://cellxgene.cziscience.com/)
+- Paper: [https://doi.org/10.1093/nar/gkae1142](https://doi.org/10.1093/nar/gkae1142)
+
+### Benchmarking scRNA-seq Visualisation Tools (Benchmarking)
+Extensive evaluation and benchmarking of single-cell RNA-seq data visualisation tools. Published in NARGAB.
+- Paper: [https://academic.oup.com/nargab/article/2/3/lqaa052/5877814](https://academic.oup.com/nargab/article/2/3/lqaa052/5877814)

@@ -221,10 +221,10 @@ a:hover {
   transform: rotate(-1.5deg);
   border-radius: 3px 8px 4px 6px;
   box-shadow: 0 0 6px rgba(89, 131, 146, 0.3);
-  /* Smooth human-like stroke easing, stays for 1.5s, then fades out softly */
+  /* Smooth human-like stroke easing, stays for 1.0s, then fades out softly */
   animation: 
-    markerSwipe 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.8s,
-    markerFadeOut 0.5s ease-out forwards 2.5s;
+    markerSwipe 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards 4.1s,
+    markerFadeOut 0.5s ease-out forwards 5.8s;
 }
 
 /* 

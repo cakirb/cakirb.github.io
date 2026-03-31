@@ -30,6 +30,11 @@ export const metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  alternates: {
+    types: {
+      'text/markdown': '/llms.txt',
+    },
+  },
 };
 
 export const viewport = {
