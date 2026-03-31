@@ -14,9 +14,11 @@ Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline deve
 - **ORCID:** [https://orcid.org/0000-0003-4513-606X](https://orcid.org/0000-0003-4513-606X)
 
 ## About Me
-I am a bioinformatician working in single-cell genomics, with a particular interest in lineage tracing, trajectories, and cell-fate transitions. My work combines scRNA-seq analysis with pipeline development, and I enjoy building reproducible workflows for processing large-scale datasets.
+I’ve been interested in computers from an early age, and I always knew they would shape my future. My interest in coding began during my undergraduate studies, when a MATLAB course made me realise how much I enjoyed solving problems through programming.
 
-I am currently a Senior Bioinformatician in the Cellular Genomics Informatics (CellGenIT) team at the Wellcome Sanger Institute and a PhD candidate at Gebze Technical University. My background includes a BSc in Bioengineering and an MSc in Bioinformatics and Systems Biology. Over the years, I have contributed to collaborative single-cell projects through data analysis, workflow development, benchmarking, and publication-supporting resources.
+That interest became a clear path when I started my MSc in Bioinformatics and Systems Biology in 2017. During that time, I built my foundations in Python and R and was introduced to bioinformatics in a way that immediately clicked with me. Working on single-cell RNA-seq and trajectory-focused projects showed me that I had found the field I wanted to grow in.
+
+Since then, my work has focused on the space between coding and biology, with particular interests in single-cell genomics, lineage tracing, and reproducible analysis workflows. My path has taken me from academic research in Turkey to the Wellcome Sanger Institute, where I now work as a Senior Bioinformatician while continuing my PhD. Across these roles, what has stayed constant is my enjoyment of building useful computational tools and continuing to grow through the work I do.
 
 ## Experience
 
