@@ -127,10 +127,10 @@ const randomGaussian = (mean = 0, stdev = 1) => {
 };
 
 // --- Particles Component ---
-const UmapParticles = ({ isDark }) => {
+const UmapParticles = ({ isDark, isMobile }) => {
   const shaderRef = useRef();
   const { viewport, size } = useThree();
-  const particleCount = 40000; // Drastically increased due to WebGL
+  const particleCount = isMobile ? 3000 : 40000; // Drastically decreased on mobile
 
   const [positions, colors, delays] = useMemo(() => {
     const pos = new Float32Array(particleCount * 3);
@@ -171,7 +171,7 @@ const UmapParticles = ({ isDark }) => {
     }
 
     return [pos, col, del];
-  }, [viewport.width, viewport.height]);
+  }, [viewport.width, viewport.height, particleCount]);
 
   const statePointer = useRef(new THREE.Vector2(-10, -10));
 
@@ -438,12 +438,15 @@ const CyberPipeline = ({ startPos, direction, pipelineType, color }) => {
   );
 };
 
-const PipelineManager = () => {
+const PipelineManager = ({ isMobile }) => {
     const { viewport } = useThree();
     const [pipelines, setPipelines] = useState([]);
 
     // Spawn new pipelines periodically and safely garbage collect old ones based on exact system clock rather than array slicing
     useEffect(() => {
+        // Disable pipelines on mobile to save battery and reduce visual clutter
+        if (isMobile) return;
+
         const spawnOne = (curr) => {
             const now = Date.now();
             const active = curr.filter(p => now - p.spawnTime < 15000);
@@ -495,7 +498,7 @@ const PipelineManager = () => {
             clearTimeout(initialTimer);
             clearInterval(interval);
         };
-    }, [viewport.width, viewport.height]);
+    }, [viewport.width, viewport.height, isMobile]);
 
     return (
         <group>
@@ -510,14 +513,13 @@ const PipelineManager = () => {
 
 export default function ThreeBackground() {
   const [isDark, setIsDark] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  // Detect mobile on mount
+  // Detect mobile on resize
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMobile(window.innerWidth <= 768);
-    }, 0);
-    return () => clearTimeout(timer);
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Read theme on mount and observe changes
@@ -540,10 +542,10 @@ export default function ThreeBackground() {
     <div className="three-bg-container" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -2, pointerEvents: "none" }}>
       <Canvas 
         camera={{ position: [0, 0, 10], fov: 75 }}
-        dpr={[1, 2]}
+        dpr={isMobile ? 1 : [1, 2]}
       >
-        <PipelineManager />
-        <UmapParticles isDark={isDark} />
+      <PipelineManager isMobile={isMobile} />
+      <UmapParticles isDark={isDark} isMobile={isMobile} />
         
         {/* Post Processing Glow — disabled on mobile where it creates blurry blobs */}
         {!isMobile && (

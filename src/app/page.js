@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import confetti from "canvas-confetti";
 import {
   GithubIcon, LinkedInIcon, OrcidIcon, ScholarIcon, XIcon, EmailIcon,
   BriefcaseIcon, GraduationIcon, InstagramIcon, ThreadsIcon
@@ -22,7 +21,10 @@ export default function Home() {
   const [ps3Time, setPs3Time] = useState("");
   const [returnScrollPos, setReturnScrollPos] = useState(null);
 
-  const firePSConfetti = (rect, particleMultiplier = 1) => {
+  const firePSConfetti = async (rect, particleMultiplier = 1) => {
+    const confettiModule = await import("canvas-confetti");
+    const confetti = confettiModule.default;
+
     const origin = {
       x: (rect.left + rect.width / 2) / window.innerWidth,
       y: (rect.top + rect.height / 2) / window.innerHeight
@@ -602,22 +604,7 @@ export default function Home() {
               get in touch
             </span>
             <h2 className="reveal" style={{ fontSize: "3.5rem", color: "var(--accent-cyan)", letterSpacing: "-0.04em", lineHeight: "1.1", marginBottom: "1.5rem", transitionDelay: "0.1s" }}>
-              Say <span
-                className="glitch-text"
-                style={{ cursor: "pointer" }}
-                onClick={(e) => {
-                  const rect = e.target.getBoundingClientRect();
-                  firePSConfetti(rect);
-
-                  // Keep modal in bounds
-                  let spawnX = e.clientX + 40;
-                  let spawnY = e.clientY;
-                  if (spawnX > window.innerWidth - 450) spawnX = window.innerWidth - 450;
-
-                  setPs3ModalPos({ x: spawnX, y: spawnY });
-                  setShowPS5Modal(true);
-                }}
-              >Hello</span>
+              Say Hello
             </h2>
             <p className="reveal" style={{ maxWidth: "600px", marginBottom: "2rem", opacity: 0.9, transitionDelay: "0.2s" }}>
               Whether you have a question about computational biology, single-cell analysis, or just want to say hi, my inbox is always open.
@@ -837,7 +824,24 @@ export default function Home() {
                 <a href="/llms.txt" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} title="llms.txt">
                   <span style={{ fontSize: "1.1rem", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
                 </a>
-                Vibe-coded with Gemini 3.1 Pro
+                <span
+                  className="glitch-text"
+                  style={{ cursor: "pointer" }}
+                  onClick={(e) => {
+                    const rect = e.target.getBoundingClientRect();
+                    firePSConfetti(rect);
+
+                    // Keep modal in bounds
+                    let spawnX = e.clientX + 40;
+                    let spawnY = e.clientY;
+                    if (spawnX > window.innerWidth - 450) spawnX = window.innerWidth - 450;
+                    // Adjust for footer being at the bottom so modal doesn't clip off-screen
+                    if (spawnY > window.innerHeight - 300) spawnY = window.innerHeight - 300;
+
+                    setPs3ModalPos({ x: spawnX, y: spawnY });
+                    setShowPS5Modal(true);
+                  }}
+                >Vibe-coded</span> with Gemini 3.1 Pro
               </span>
             </p>
           </footer>
