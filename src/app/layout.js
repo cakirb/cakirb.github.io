@@ -1,4 +1,4 @@
-import { Space_Grotesk, DM_Sans, JetBrains_Mono, Istok_Web } from "next/font/google";
+import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ClientThreeBackground from "@/components/ClientThreeBackground";
 import "./globals.css";
@@ -15,12 +15,6 @@ const dmSans = DM_Sans({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-});
-
-const istokWeb = Istok_Web({
-  weight: ['400', '700'],
-  variable: "--font-istok-web",
   subsets: ["latin"],
 });
 
@@ -47,7 +41,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" style={{ overflowX: 'hidden' }}>
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${istokWeb.variable}`} style={{ overflowX: 'hidden', margin: 0, padding: 0 }}>
+      <body className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`} style={{ overflowX: 'hidden', margin: 0, padding: 0 }}>
         <ClientThreeBackground />
         <Navbar />
         {children}

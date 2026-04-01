@@ -1,9 +1,22 @@
 "use client";
 
-import { useRef, useMemo, useState, useEffect, Suspense } from "react";
+import { useRef, useMemo, useState, useEffect, Suspense, lazy } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
+
+const PostEffects = lazy(() =>
+  import("@react-three/postprocessing").then((mod) => ({
+    default: ({ isDark }) => (
+      <mod.EffectComposer disableNormalPass>
+        <mod.Bloom
+          luminanceThreshold={0.2}
+          mipmapBlur
+          intensity={isDark ? 0.4 : 0.15}
+        />
+      </mod.EffectComposer>
+    ),
+  }))
+);
 
 /* eslint-disable react-hooks/purity */
 
@@ -547,15 +560,10 @@ export default function ThreeBackground() {
       <PipelineManager isMobile={isMobile} />
       <UmapParticles isDark={isDark} isMobile={isMobile} />
         
-        {/* Post Processing Glow — disabled on mobile where it creates blurry blobs */}
         {!isMobile && (
-          <EffectComposer disableNormalPass>
-              <Bloom 
-                luminanceThreshold={0.2} 
-                mipmapBlur 
-                intensity={isDark ? 0.4 : 0.15}
-              />
-          </EffectComposer>
+          <Suspense fallback={null}>
+            <PostEffects isDark={isDark} />
+          </Suspense>
         )}
       </Canvas>
     </div>

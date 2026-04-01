@@ -153,7 +153,12 @@ a:hover {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 1.0s cubic-bezier(0.19, 1, 0.22, 1), transform 1.0s cubic-bezier(0.19, 1, 0.22, 1);
-  will-change: opacity, transform;
+}
+
+@media (min-width: 769px) {
+  .reveal {
+    will-change: opacity, transform;
+  }
 }
 
 .reveal.active {
@@ -237,7 +242,6 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Very dark translucent base tinted with primary #124559 hue */
   background-color: rgba(9, 36, 46, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -247,47 +251,11 @@ a:hover {
   pointer-events: none;
 }
 
-/* 
-  Pill Badges (BSc, MSc, PhD) 
-  Sleek floating tags to highlight degree types.
-*/
-.pill-badge {
-  display: inline-block;
-  margin-left: 0.75rem;
-  padding: 0.2rem 0.6rem;
-  font-family: var(--font-jetbrains-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  background-color: var(--accent-cyan);
-  color: var(--background);
-  /* Inverted for high contrast */
-  border-radius: 9999px;
-  /* Pill shape */
-  vertical-align: middle;
-  transform: translateY(-2px);
-}
-
-/* 
-  Subtle Highlights
-  A middle ground between plain text and heavy pills
-*/
-.subtle-highlight {
-  font-weight: 600;
-  padding: 0.15em 0.35em;
-  border-radius: 4px;
-  font-size: 0.95em;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.subtle-highlight.cyan {
-  color: var(--accent-cyan);
-  background-color: rgba(89, 131, 146, 0.15);
-}
-
-.subtle-highlight.magenta {
-  color: var(--accent-magenta);
-  background-color: rgba(196, 135, 157, 0.15);
+@media (max-width: 768px) {
+  .frosted-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 /* 
@@ -368,112 +336,6 @@ a:hover {
     text-shadow: -1px 0 #f472b6, 1px 0 #3b82f6;
     color: #ef4444;
   }
-}
-
-@keyframes cyberpunkSlideIn {
-  0% {
-    transform: translateY(20px) scale(0.95);
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  50% {
-    filter: blur(0px);
-    opacity: 1;
-    transform: translateY(-5px) scale(1.02);
-  }
-
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes destinyMaterialize {
-  0% {
-    opacity: 0;
-    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    transform: translateY(-10px);
-  }
-
-  50% {
-    opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-  }
-
-  100% {
-    opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    transform: translateY(0);
-  }
-}
-
-@keyframes ps2Materialize {
-  0% {
-    opacity: 0;
-    transform: scale(1.1) perspective(1000px) rotateX(10deg);
-    filter: blur(20px) contrast(150%);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(0.98) perspective(1000px) rotateX(-2deg);
-    filter: blur(5px) contrast(120%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) perspective(1000px) rotateX(0deg);
-    filter: blur(0px) contrast(100%);
-  }
-}
-
-@keyframes ps2BlockFloat {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-    opacity: 0.3;
-  }
-
-  100% {
-    transform: translateY(0) rotate(360deg);
-    opacity: 0.1;
-  }
-}
-
-@keyframes ps2GlowPulse {
-  0% {
-    box-shadow: 0 0 10px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.1);
-  }
-
-  50% {
-    box-shadow: 0 0 30px rgba(0, 150, 255, 0.4), inset 0 0 40px rgba(0, 150, 255, 0.2);
-  }
-
-  100% {
-    box-shadow: 0 0 10px rgba(0, 150, 255, 0.2), inset 0 0 20px rgba(0, 150, 255, 0.1);
-  }
-}
-
-.cyber-text-container {
-  display: inline-grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-}
-
-.cyber-text-base {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.cyber-text-scan {
-  grid-column: 1;
-  grid-row: 1;
-  /* keep rest the same */
 }
 
 .badge-icon-container svg {
@@ -660,3 +522,26 @@ a:hover {
 .hero-stagger-2 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
 .hero-stagger-3 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.6s both; }
 .hero-stagger-4 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.9s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .hero-stagger-1,
+  .hero-stagger-2,
+  .hero-stagger-3,
+  .hero-stagger-4 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .marker-highlight::after {
+    animation: none !important;
+    width: 105%;
+    opacity: 0;
+  }
+
+  .three-bg-container {
+    display: none !important;
+  }
+}
