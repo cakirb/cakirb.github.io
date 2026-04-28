@@ -167,6 +167,12 @@ const UmapParticles = ({ isDark, isMobile }) => {
       }
 
       // Convert from [0, 1] normalized bounds to viewport space
+      // If mobile, map x to [0.5, 1.0] and y to [0.5, 1.0] before converting
+      if (isMobile) {
+         x = 0.4 + (x * 0.6); // Push to right
+         y = 0.4 + (y * 0.6); // Push to top
+      }
+
       const vpX = (x - 0.5) * viewport.width;
       const vpY = -(y - 0.5) * viewport.height;
       const vpZ = (Math.random() - 0.5) * 1.5; // Z depth for parallax
@@ -242,10 +248,10 @@ const UmapParticles = ({ isDark, isMobile }) => {
 const pipelineColors = ["#0FC09D", "#67A671", "#57D4BA"];
 
 const CyberNode = ({ pos, delay, timeRef, role, glowColor }) => {
-  const meshRef = useRef();
+  const groupRef = useRef();
 
   useFrame(() => {
-    if (!meshRef.current || timeRef.current === undefined) return;
+    if (!groupRef.current || timeRef.current === undefined) return;
     const localTime = timeRef.current;
     
     // Nodes appear fully in 0.2s after delay
@@ -260,33 +266,34 @@ const CyberNode = ({ pos, delay, timeRef, role, glowColor }) => {
     };
 
     const scale = progress > 0 ? easeOutBack(progress) : 0;
-    meshRef.current.scale.setScalar(scale);
-    meshRef.current.visible = progress > 0;
+    groupRef.current.scale.setScalar(scale);
+    groupRef.current.visible = progress > 0;
   });
 
   return (
-    <mesh ref={meshRef} position={pos} visible={false}>
-      {/* Functional Shapes instantly categorize this as a system architectural diagram */}
+    <group ref={groupRef} position={pos} visible={false}>
+      {/* Input nodes as circles (3D flat cylinders) */}
       {role === "start" && (
-        <>
-          <boxGeometry args={[0.3, 0.3, 0.3]} />
-          <meshBasicMaterial color={glowColor} wireframe={true} toneMapped={false} />
-        </>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.2, 0.2, 0.08, 32]} />
+          <meshBasicMaterial color={glowColor} wireframe={true} toneMapped={false} transparent={true} />
+        </mesh>
       )}
+      {/* Processing steps as rounded rectangles (capsules) */}
       {role === "process" && (
-        <>
-          <boxGeometry args={[0.4, 0.15, 0.05]} />
+        <mesh rotation={[0, 0, Math.PI / 2]}>
+          <capsuleGeometry args={[0.15, 0.3, 4, 16]} />
           <meshBasicMaterial color={glowColor} toneMapped={false} opacity={0.65} transparent={true} />
-        </>
+        </mesh>
       )}
+      {/* Output nodes as hexagons (6-sided cylinders) */}
       {role === "output" && (
-        <>
-          {/* A smooth upright cylinder natively represents a Database Storage element */}
-          <cylinderGeometry args={[0.15, 0.15, 0.3, 16]} />
-          <meshBasicMaterial color={glowColor} toneMapped={false} />
-        </>
+        <mesh rotation={[Math.PI / 2, 0, Math.PI / 6]}>
+          <cylinderGeometry args={[0.25, 0.25, 0.08, 6]} />
+          <meshBasicMaterial color={glowColor} toneMapped={false} transparent={true} />
+        </mesh>
       )}
-    </mesh>
+    </group>
   );
 };
 
@@ -306,7 +313,8 @@ const CyberEdge = ({ startPos, endPos, delay, timeRef, glowColor }) => {
     const localTime = timeRef.current;
     
     const startSec = delay * 0.016;
-    const progress = Math.min(Math.max((localTime - startSec) / 0.3, 0), 1); // 0.3s shoot duration
+    const buildDuration = 0.3;
+    const progress = Math.min(Math.max((localTime - startSec) / buildDuration, 0), 1); 
     
     groupRef.current.visible = progress > 0;
     
@@ -316,12 +324,14 @@ const CyberEdge = ({ startPos, endPos, delay, timeRef, glowColor }) => {
       lineRef.current.scale.x = Math.max(activeLength, 0.0001);
       lineRef.current.position.x = activeLength / 2;
 
-      // Pulse a repetitively bright data packet down the active length of the pipe
+      // Pulse a glowing data packet along the edge continuously
       if (packetRef.current) {
-        // Reduced frequency by 50% to visually travel 2x slower and elegantly slide through the architecture
-        const pulseCycle = (localTime * 1.25) % 1; 
-        packetRef.current.position.x = activeLength * pulseCycle;
-        packetRef.current.visible = progress >= 0.5;
+        const flowTime = Math.max(0, localTime - startSec - buildDuration);
+        const speed = 0.8; // Control speed of data flow
+        const pulseCycle = (flowTime * speed) % 1; 
+        
+        packetRef.current.position.x = length * pulseCycle;
+        packetRef.current.visible = flowTime > 0;
       }
     }
   });
@@ -329,14 +339,14 @@ const CyberEdge = ({ startPos, endPos, delay, timeRef, glowColor }) => {
   return (
     <group ref={groupRef} position={startPos} rotation={[0, 0, angle]} visible={false}>
       <mesh ref={lineRef}>
-        <boxGeometry args={[1, 0.01, 0.01]} />
-        <meshBasicMaterial color={glowColor} toneMapped={false} opacity={0.3} transparent />
+        <boxGeometry args={[1, 0.02, 0.02]} />
+        <meshBasicMaterial color={glowColor} toneMapped={false} opacity={0.15} transparent={true} />
       </mesh>
       
-      {/* The glowing data packet */}
+      {/* The glowing data packet (dash shaped) */}
       <mesh ref={packetRef} visible={false}>
-        <sphereGeometry args={[0.04, 8, 8]} />
-        <meshBasicMaterial color={glowColor.clone().multiplyScalar(1.5)} toneMapped={false} />
+        <boxGeometry args={[0.2, 0.05, 0.05]} />
+        <meshBasicMaterial color={glowColor.clone().multiplyScalar(2.0)} toneMapped={false} transparent={true} />
       </mesh>
     </group>
   );
@@ -351,48 +361,66 @@ const CyberPipeline = ({ startPos, direction, pipelineType, color }) => {
   const glowColor = useMemo(() => new THREE.Color(color).multiplyScalar(1.5), [color]);
   
   const [graph] = useState(() => {
-    // Physical geometric graph representation
-    if (pipelineType === "branching") {
+    // Physical geometric graph representation (Classic DAGs)
+    if (pipelineType === "branching") { // Fork-Join / Diamond
       return {
         nodes: [
           { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
           { id: 1, p: [1.2, 0, 0], delay: 15, role: "process" },
-          { id: 2, p: [2.4, -0.6, 0], delay: 35, role: "process" },
-          { id: 3, p: [2.4, 0.6, 0], delay: 35, role: "process" },
-          { id: 4, p: [3.6, -0.6, 0], delay: 55, role: "process" },
-          { id: 5, p: [3.6, 0.6, 0], delay: 55, role: "process" },
-          { id: 6, p: [4.8, 0, 0], delay: 85, role: "output" },
+          { id: 2, p: [2.6, 0.8, 0], delay: 35, role: "process" },
+          { id: 3, p: [2.6, -0.8, 0], delay: 35, role: "process" },
+          { id: 4, p: [4.0, 0, 0], delay: 55, role: "process" },
+          { id: 5, p: [5.2, 0, 0], delay: 80, role: "output" },
         ],
         edges: [
           { source: 0, target: 1, delay: 5 },
           { source: 1, target: 2, delay: 20 },
           { source: 1, target: 3, delay: 20 },
           { source: 2, target: 4, delay: 40 },
-          { source: 3, target: 5, delay: 40 },
-          { source: 4, target: 6, delay: 65 },
-          { source: 5, target: 6, delay: 65 },
+          { source: 3, target: 4, delay: 40 },
+          { source: 4, target: 5, delay: 60 },
         ]
       };
-    } else if (pipelineType === "hexagon") {
+    } else if (pipelineType === "hexagon") { // Scatter-Gather
       return {
         nodes: [
           { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
-          { id: 1, p: [1.2, 0.8, 0], delay: 20, role: "process" },
-          { id: 2, p: [1.2, -0.8, 0], delay: 20, role: "process" },
-          { id: 3, p: [2.6, 0.8, 0], delay: 40, role: "process" },
-          { id: 4, p: [2.6, -0.8, 0], delay: 40, role: "process" },
-          { id: 5, p: [3.8, 0, 0], delay: 60, role: "output" },
+          { id: 1, p: [1.6, 1.0, 0], delay: 20, role: "process" },
+          { id: 2, p: [1.6, 0, 0], delay: 20, role: "process" },
+          { id: 3, p: [1.6, -1.0, 0], delay: 20, role: "process" },
+          { id: 4, p: [3.2, 0, 0], delay: 45, role: "process" },
+          { id: 5, p: [4.4, 0, 0], delay: 70, role: "output" },
         ],
         edges: [
           { source: 0, target: 1, delay: 5 },
           { source: 0, target: 2, delay: 5 },
-          { source: 1, target: 3, delay: 25 },
+          { source: 0, target: 3, delay: 5 },
+          { source: 1, target: 4, delay: 25 },
           { source: 2, target: 4, delay: 25 },
-          { source: 3, target: 5, delay: 45 },
-          { source: 4, target: 5, delay: 45 },
+          { source: 3, target: 4, delay: 25 },
+          { source: 4, target: 5, delay: 50 },
         ]
       };
-    } else {
+    } else if (pipelineType === "mobile-branching") { // Branching for mobile
+      return {
+        nodes: [
+          { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
+          { id: 1, p: [1.2, 0, 0], delay: 15, role: "process" },
+          { id: 2, p: [2.6, 0.8, 0], delay: 35, role: "process" },
+          { id: 3, p: [2.6, -0.8, 0], delay: 35, role: "process" },
+          { id: 4, p: [4.0, 0, 0], delay: 55, role: "process" },
+          { id: 5, p: [5.2, 0, 0], delay: 80, role: "output" },
+        ],
+        edges: [
+          { source: 0, target: 1, delay: 5 },
+          { source: 1, target: 2, delay: 20 },
+          { source: 1, target: 3, delay: 20 },
+          { source: 2, target: 4, delay: 40 },
+          { source: 3, target: 4, delay: 40 },
+          { source: 4, target: 5, delay: 60 },
+        ]
+      };
+    } else { // Linear Chain
       return {
         nodes: [
           { id: 0, p: [0, 0, 0], delay: 0, role: "start" },
@@ -417,23 +445,35 @@ const CyberPipeline = ({ startPos, direction, pipelineType, color }) => {
     
     timeRef.current = state.clock.getElapsedTime() - startTime.current;
     
-    // Smooth 3D Translation
-    groupRef.current.position.x += direction * delta * 0.25;
-    groupRef.current.position.y += Math.sin(state.clock.elapsedTime) * delta * 0.1;
+    // Instead of drifting across the screen, it stays mostly static to let the data pulses flow
+    // Just a very subtle floating bobbing for "breath"
+    groupRef.current.position.y += Math.sin(state.clock.elapsedTime * 2) * delta * 0.05;
 
-    // Noticeable dynamic rotation for 3D presence but strictly restrained so it floats like a 
-    // rigid 2D flowchart GUI layer, preventing it from tumbling spherically like a chemistry molecule.
+    // Subtly rotate for 3D presence without tumbling
     groupRef.current.rotation.x = Math.sin(timeRef.current * 0.2) * 0.05;
     groupRef.current.rotation.y = Math.sin(timeRef.current * 0.3) * 0.05;
+    
+    // For the mobile static pipeline, orient it vertically flowing downwards
+    if (pipelineType === "mobile-branching") {
+      groupRef.current.rotation.z = -Math.PI / 2.1; // Slight angle for dynamism
+      groupRef.current.scale.setScalar(0.75); // Shrink slightly so it fits neatly
+    }
 
-    // Trigger Dissolve Fade: between 11s and 14s of local time, mathematically shrink the structure into the void
-    if (timeRef.current > 11.0) {
-      const dissolveProgress = Math.min((timeRef.current - 11.0) / 3.0, 1.0); // 0.0 -> 1.0
-      // Sine wave ease-in-out feeling for scale collapse
-      const scaleMult = Math.cos(dissolveProgress * Math.PI / 2); // 1.0 -> 0.0
-      groupRef.current.scale.setScalar(scaleMult);
-      // Sink slightly backward into Z-space
-      groupRef.current.position.z = startPos[2] - (dissolveProgress * 4.0);
+    // Exit: graceful fade out (unless it's the persistent mobile pipeline)
+    const t = timeRef.current;
+    if (t > 11.0 && pipelineType !== "mobile-branching") {
+      const fadeEnd = 14.5; // Smooth fade until right before GC at 15s
+      const progress = Math.max(0, 1.0 - (t - 11.0) / (fadeEnd - 11.0));
+      
+      groupRef.current.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.transparent = true;
+          if (child.userData.origOpacity === undefined) {
+             child.userData.origOpacity = child.material.opacity !== undefined ? child.material.opacity : 1.0;
+          }
+          child.material.opacity = child.userData.origOpacity * progress;
+        }
+      });
     }
   });
 
@@ -457,12 +497,25 @@ const PipelineManager = ({ isMobile }) => {
 
     // Spawn new pipelines periodically and safely garbage collect old ones based on exact system clock rather than array slicing
     useEffect(() => {
-        // Disable pipelines on mobile to save battery and reduce visual clutter
-        if (isMobile) return;
+        if (isMobile) {
+            // Spawn just one persistent vertical pipeline in the hero background
+            const spawnMobile = () => {
+                setPipelines([{ 
+                    id: 'mobile-pipeline', 
+                    spawnTime: Date.now(),
+                    pos: [2.0, 3.8, 0], // Positioned safely at the top right, behind less text
+                    direction: 1.0, 
+                    type: "mobile-branching", // Special type that won't fade out and will be vertical
+                    color: pipelineColors[1] // Green fits well
+                }]);
+            };
+            const initialTimer = setTimeout(spawnMobile, 1500); // Quick fade in
+            return () => clearTimeout(initialTimer);
+        }
 
         const spawnOne = (curr) => {
             const now = Date.now();
-            const active = curr.filter(p => now - p.spawnTime < 15000);
+            const active = curr.filter(p => now - p.spawnTime < 15000 && p.type !== "mobile-branching");
             
             // Span pipelines uniformly across the whole screen while verifying 
             // they do not spawn close enough to visually collide with existing active paths.
@@ -471,7 +524,8 @@ const PipelineManager = ({ isMobile }) => {
             let attempts = 0;
             
             while (!isValid && attempts < 20) {
-                vpX = (Math.random() - 0.5) * viewport.width;
+                // Spawn slightly more centered to account for static width of DAGs
+                vpX = (Math.random() - 0.5) * (viewport.width - 6);
                 vpY = (Math.random() - 0.5) * viewport.height * 0.8;
                 
                 const collision = active.find(p => {

@@ -18,7 +18,6 @@ export default function Home() {
   // Easter Egg States
   const [showPS5Modal, setShowPS5Modal] = useState(false);
   const [ps3ModalPos, setPs3ModalPos] = useState({ x: 0, y: 0 });
-  const [ps3Time, setPs3Time] = useState("");
   const [returnScrollPos, setReturnScrollPos] = useState(null);
 
   const firePSConfetti = async (rect, particleMultiplier = 1) => {
@@ -75,7 +74,6 @@ export default function Home() {
 
   // Global Scroll Lock and ESC listener when Modal is Active
   useEffect(() => {
-    let interval;
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         setShowPS5Modal(false);
@@ -85,15 +83,6 @@ export default function Home() {
     if (showPS5Modal) {
       document.documentElement.classList.add("no-scroll");
       window.addEventListener("keydown", handleKeyDown);
-
-      const updateTime = () => {
-        const now = new Date();
-        const dateStr = `${now.getDate()}/${now.getMonth() + 1}`;
-        const timeStr = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
-        setPs3Time(`${dateStr} ${timeStr}`);
-      };
-      updateTime();
-      interval = setInterval(updateTime, 10000);
     } else {
       document.documentElement.classList.remove("no-scroll");
       window.removeEventListener("keydown", handleKeyDown);
@@ -103,7 +92,6 @@ export default function Home() {
     return () => {
       document.documentElement.classList.remove("no-scroll");
       window.removeEventListener("keydown", handleKeyDown);
-      if (interval) clearInterval(interval);
     };
   }, [showPS5Modal]);
 
@@ -133,23 +121,23 @@ export default function Home() {
               paddingTop: "5rem"
             }}
           >
-            <div className="glass-panel" style={{ maxWidth: "1000px" }}>
-              <h1 className="hero-stagger-1" style={{ fontSize: "max(3.5rem, 8vw)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem", color: "var(--accent-cyan)" }}>
-                <span className="marker-highlight" style={{ fontFamily: "inherit" }}>Batu</span>han Çakır
+            <div style={{ maxWidth: "1000px" }}>
+              <h1 className="hero-stagger-1" style={{ fontSize: "max(3.5rem, 8vw)", fontWeight: "700", letterSpacing: "-0.02em", lineHeight: "1.1", marginBottom: "3rem" }}>
+                <span style={{ fontFamily: "inherit", background: "linear-gradient(90deg, #2dd4bf 0%, #c4b5fd 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline" }}>Batuhan Çakır</span>
               </h1>
 
               {/* Subdued, highly designed subheaders */}
               <div className="hero-stagger-2">
-                <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, marginBottom: "4rem", letterSpacing: "-0.02em" }}>
+                <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, color: "#4ade80", marginBottom: "4rem", letterSpacing: "-0.02em" }}>
                   Senior Bioinformatician and PhD Candidate
                 </h2>
               </div>
 
-              <p className="hero-stagger-3" style={{ fontSize: "1.35rem", background: "linear-gradient(90deg, var(--accent-cyan) 0%, #8282ff 50%, var(--accent-magenta) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", marginBottom: "3rem", maxWidth: "800px", lineHeight: "1.6", fontWeight: "600", letterSpacing: "-0.01em" }}>
+              <p className="hero-stagger-3" style={{ fontSize: "1.35rem", color: "var(--foreground)", marginBottom: "3rem", maxWidth: "800px", lineHeight: "1.6", fontWeight: "400", opacity: 0.9 }}>
                 Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline development. Interested in trajectories, cell-fate transitions, and reproducible workflows.
               </p>
 
-              <div className="hero-stagger-4" style={{ display: "flex", gap: "1.8rem", marginTop: "1rem", flexWrap: "wrap" }}>
+              <div className="hero-stagger-4 hero-social-icons" style={{ display: "flex", gap: "1.8rem", marginTop: "3.5rem", flexWrap: "wrap" }}>
                 <a href="https://x.com/cakirb_" target="_blank" rel="noopener noreferrer" className="social-icon-hover" title="X (Twitter)">
                   <XIcon />
                 </a>
@@ -181,18 +169,16 @@ export default function Home() {
               About Me
             </h2>
 
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", paddingBottom: "4rem" }}>
-              <div className="glass-panel reveal" style={{ maxWidth: "800px", width: "100%", backgroundColor: "rgba(10, 15, 20, 0.75)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255, 255, 255, 0.03)", padding: "3rem", borderRadius: "16px", boxShadow: "0 10px 40px -10px rgba(0,0,0,0.5)" }}>
-                <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "2.5rem", lineHeight: "1.9", fontWeight: "400" }}>
-                  I’ve been interested in computers from an early age, and I always knew they would shape my future. My interest in coding began during my undergraduate studies, when a MATLAB course made me realise how much I enjoyed solving problems through programming.
-                </p>
-                <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "2.5rem", lineHeight: "1.9", fontWeight: "400" }}>
-                  That interest became a clear path when I started my MSc in Bioinformatics and Systems Biology in 2017. During that time, I built my foundations in Python and R and was introduced to bioinformatics in a way that immediately clicked with me. Working on single-cell RNA-seq and trajectory-focused projects showed me that I had found the field I wanted to grow in.
-                </p>
-                <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "0", lineHeight: "1.9", fontWeight: "400" }}>
-                  Since then, my work has focused on the space between coding and biology, with particular interests in single-cell genomics, lineage tracing, and reproducible analysis workflows. My path has taken me from academic research in Turkey to the Wellcome Sanger Institute, where I now work as a Senior Bioinformatician while continuing my PhD. Across these roles, what has stayed constant is my enjoyment of building useful computational tools and continuing to grow through the work I do.
-                </p>
-              </div>
+            <div className="glass-panel reveal" style={{ maxWidth: "800px" }}>
+              <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "2rem", lineHeight: "1.5", fontWeight: "400" }}>
+                I’ve been interested in computers from an early age, and I always knew they would shape my future. My interest in coding began during my undergraduate studies, when a MATLAB course made me realise how much I enjoyed solving problems through programming.
+              </p>
+              <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "2rem", lineHeight: "1.5", fontWeight: "400" }}>
+                That interest became a clear path when I started my MSc in Bioinformatics and Systems Biology in 2017. During that time, I built my foundations in Python and R and was introduced to bioinformatics in a way that immediately clicked with me. Working on single-cell RNA-seq and trajectory-focused projects showed me that I had found the field I wanted to grow in.
+              </p>
+              <p style={{ fontSize: "1.1rem", color: "var(--foreground)", opacity: 0.95, marginBottom: "0", lineHeight: "1.5", fontWeight: "400" }}>
+                Since then, my work has focused on the space between coding and biology, with particular interests in single-cell genomics, lineage tracing, and reproducible analysis workflows. My path has taken me from academic research in Turkey to the Wellcome Sanger Institute, where I now work as a Senior Bioinformatician while continuing my PhD. Across these roles, what has stayed constant is my enjoyment of building useful computational tools and continuing to grow through the work I do.
+              </p>
             </div>
           </section>
           {/* --- EXPERIENCE SECTION --- */}
@@ -205,7 +191,6 @@ export default function Home() {
             <div className="reveal timeline-container" style={{
               position: "relative",
               maxWidth: "800px",
-              margin: "0 auto",
               paddingLeft: "var(--timeline-padding, 4rem)" /* Space for the dual tracks */
             }}>
               {/* Track 1: Career (Cyan) */}
@@ -276,7 +261,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Wellcome Sanger Institute
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <li>Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.</li>
                     <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => {
@@ -316,7 +301,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Wellcome Sanger Institute
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <li>Supported the curation of datasets for the <a href="#curation-card" onClick={(e) => {
                       e.preventDefault();
@@ -356,7 +341,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-magenta)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Gebze Technical University
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <li>Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.</li>
                     <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => {
@@ -410,7 +395,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Gebze Technical University
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <li>Contributed to research projects in bioinformatics and structural biology.</li>
                     <li>Supported teaching in courses including Biostatistics and Heat and Mass Transfer, helping with coursework assessment, quizzes, and student support.</li>
@@ -436,7 +421,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Wellcome Sanger Institute
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <li><a href="#benchmarking-card" onClick={(e) => {
                       e.preventDefault();
@@ -475,7 +460,7 @@ export default function Home() {
                 <p style={{ fontSize: "1rem", color: "var(--accent-magenta)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
                   Gebze Technical University
                 </p>
-                <div style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
+                <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 0.8, lineHeight: "1.8", color: "var(--foreground)" }}>
                   <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.8rem" }}>
                     <li>Worked on single-cell RNA-seq analysis in stem cell differentiation.
                       <ul style={{ listStyleType: "circle", paddingLeft: "1.2rem", margin: "0.5rem 0 0 0", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -522,12 +507,12 @@ export default function Home() {
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
                 </div>
-                <h4 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-scautoqc</h4>
+                <h3 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-scautoqc</h3>
                 <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
                   Automated quality control, doublet detection, and optional integration for single-cell RNA-seq data on HPC environments.
                 </p>
-                <a href="https://github.com/cellgeni/nf-scautoqc" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                <a href="https://github.com/cellgeni/nf-scautoqc" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#85c6b9", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
                 </a>
               </div>
 
@@ -537,12 +522,12 @@ export default function Home() {
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
                 </div>
-                <h4 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-larry</h4>
+                <h3 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-larry</h3>
                 <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
                   Extracts and tracks clonal LARRY barcodes from raw reads, integrating clone lineages directly into gene expression matrices.
                 </p>
-                <a href="https://github.com/cellgeni/nf-larry" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                <a href="https://github.com/cellgeni/nf-larry" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#85c6b9", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
                 </a>
               </div>
 
@@ -552,12 +537,12 @@ export default function Home() {
                   <svg role="img" viewBox="0 0 24 24" fill="currentColor" width="16px" height="16px" style={{ transform: "translateY(-1px)" }} xmlns="http://www.w3.org/2000/svg"><title>Nextflow</title><path d="M.005 4.424V0c6.228.259 11.227 5.268 11.477 11.506H7.058C6.828 7.715 3.786 4.673.005 4.424m7.082 8.089h4.424C11.251 18.741 6.242 23.741.005 23.99v-4.423c3.79-.231 6.832-3.273 7.082-7.054m9.826-1.036h-4.424C12.749 5.249 17.758.25 23.995 0v4.424c-3.79.23-6.832 3.263-7.082 7.053m7.082 8.099V24c-6.228-.259-11.227-5.268-11.477-11.506h4.424c.23 3.791 3.272 6.833 7.053 7.082" /></svg>
                   PIPELINE / NEXTFLOW
                 </div>
-                <h4 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-cellsnplite</h4>
+                <h3 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>nf-cellsnplite</h3>
                 <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
                   A scalable Nextflow pipeline implementing cellsnp-lite for genotyping single cells from aligned sequencing reads.
                 </p>
-                <a href="https://github.com/cellgeni/nf-cellsnplite/" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                <a href="https://github.com/cellgeni/nf-cellsnplite/" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#85c6b9", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                  <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
                 </a>
               </div>
 
@@ -567,16 +552,16 @@ export default function Home() {
                   <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16px" height="16px" style={{ transform: "translateY(-1px)" }}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                   RESOURCE
                 </div>
-                <h4 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>CELLxGENE Discover Curation</h4>
+                <h3 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>CELLxGENE Discover Curation</h3>
                 <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
                   Contributed to the curation of the <a href="https://www.covid19cellatlas.org/" target="_blank" rel="noopener noreferrer" className="hover-link" style={{ textDecoration: "underline", textDecorationStyle: "dotted", fontWeight: "500", color: "inherit", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "#8282ff"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>COVID-19 Cell Atlas</a> for the CELLxGENE Discover portal, enabling broad access to vital single-cell datasets.
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", flexWrap: "wrap" }}>
-                  <a href="https://cellxgene.cziscience.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#8282ff", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path><polyline points="16 3 21 3 21 8"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> View Portal <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                  <a href="https://cellxgene.cziscience.com/" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#b2b2f5", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path><polyline points="16 3 21 3 21 8"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg> View Portal <span>&rarr;</span>
                   </a>
-                  <a href="https://doi.org/10.1093/nar/gkae1142" target="_blank" rel="noopener noreferrer" style={{ color: "#8282ff", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                    <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> View Paper <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                  <a href="https://doi.org/10.1093/nar/gkae1142" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#b2b2f5", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                    <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> View Paper <span>&rarr;</span>
                   </a>
                 </div>
               </div>
@@ -587,12 +572,12 @@ export default function Home() {
                   <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16px" height="16px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                   BENCHMARKING
                 </div>
-                <h4 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>Benchmarking scRNA-seq Visualisation Tools</h4>
+                <h3 style={{ fontSize: "1.3em", color: "var(--foreground)", marginBottom: "1rem", fontWeight: "700" }}>Benchmarking scRNA-seq Visualisation Tools</h3>
                 <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
                   Extensive evaluation and benchmarking of single-cell RNA-seq data visualisation tools. Published in NARGAB.
                 </p>
-                <a href="https://academic.oup.com/nargab/article/2/3/lqaa052/5877814" target="_blank" rel="noopener noreferrer" style={{ color: "#f97316", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-                  <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Read Paper <span style={{ transition: "transform 0.2s ease" }} onMouseOver={(e) => e.currentTarget.style.transform = "translateX(4px)"} onMouseOut={(e) => e.currentTarget.style.transform = "translateX(0)"}>&rarr;</span>
+                <a href="https://academic.oup.com/nargab/article/2/3/lqaa052/5877814" target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: "#fbbd90", fontWeight: "600", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                  <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Read Paper <span>&rarr;</span>
                 </a>
               </div>
 
@@ -614,15 +599,28 @@ export default function Home() {
                 href="mailto:bc8@sanger.ac.uk"
                 style={{
                   display: "inline-block",
-                  padding: "1.2rem 3rem",
-                  fontSize: "1.1rem",
+                  padding: "1rem 2.5rem",
+                  fontSize: "1rem",
                   fontWeight: "600",
-                  color: "#fff",
-                  background: "var(--accent-cyan)",
+                  color: "var(--foreground)",
+                  background: "rgba(15, 20, 25, 0.65)",
+                  backdropFilter: "blur(20px)",
+                  WebkitBackdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255, 255, 255, 0.05)",
+                  boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.5)",
                   borderRadius: "99px",
                   textDecoration: "none",
                   letterSpacing: "0.05em",
-                  textTransform: "uppercase"
+                  textTransform: "uppercase",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+                  e.currentTarget.style.borderColor = "var(--accent-cyan)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = "rgba(15, 20, 25, 0.65)";
+                  e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)";
                 }}
               >
                 Contact Me
@@ -820,13 +818,13 @@ export default function Home() {
             <p className="footer-text">
               <span className="footer-author">Designed & Built by Batuhan Cakir</span>
               <span className="footer-separator"> &mdash; </span>
-              <span className="footer-vibe" style={{ color: "var(--accent-cyan)", opacity: 0.8 }}>
-                <a href="/llms.txt" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} title="llms.txt">
+              <span className="footer-vibe" style={{ color: "var(--foreground)", opacity: 0.85 }}>
+                <a href="/llms.txt" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt">
                   <span style={{ fontSize: "1.1rem", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
                 </a>
                 <span
                   className="glitch-text"
-                  style={{ cursor: "pointer" }}
+                  style={{ color: "#85c6b9", cursor: "pointer" }}
                   onClick={(e) => {
                     const rect = e.target.getBoundingClientRect();
                     firePSConfetti(rect);

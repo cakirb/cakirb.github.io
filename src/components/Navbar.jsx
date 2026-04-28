@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import SpinningIcosahedron from "./SpinningIcosahedron";
 
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState("");
@@ -23,18 +24,20 @@ export default function Navbar() {
         };
     }, []);
 
-    // Mobile-only: hide navbar when hero is visible, show when scrolled past
+    // Mobile-only: make navbar appear once scrolled past hero, and then keep it visible.
     useEffect(() => {
         const isMobile = () => window.innerWidth <= 768;
-        
+
         const heroObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (!isMobile()) {
                     setMobileVisible(true);
                     return;
                 }
-                // When hero is NOT intersecting (scrolled past), show navbar
-                setMobileVisible(!entry.isIntersecting);
+                // When hero is NOT intersecting (scrolled past), show navbar and don't hide it
+                if (!entry.isIntersecting) {
+                    setMobileVisible(true);
+                }
             });
         }, { threshold: 0.05 });
 
@@ -72,7 +75,6 @@ export default function Navbar() {
     }, [activeSection]);
 
     const navLinks = [
-        { name: "Top", href: "#home", mobileOnly: true },
         { name: "About Me", href: "#about" },
         { name: "Experience", href: "#experience" },
         { name: "Selected Work", href: "#projects" },
@@ -88,7 +90,7 @@ export default function Navbar() {
                 left: "50%",
                 transform: mobileVisible ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(-120%)",
                 width: "calc(100% - 2rem)",
-                maxWidth: "850px",
+                maxWidth: "650px",
                 zIndex: 50,
                 padding: "0.8rem 2rem",
                 transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
@@ -100,11 +102,14 @@ export default function Navbar() {
                 opacity: mobileVisible ? 1 : 0,
             }}
         >
-            <div className="nav-container" style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <a href="#home" style={{ textDecoration: "none", color: "inherit" }} className="social-icon-hover">
-                    <span className="nav-brand" style={{ fontSize: "1.1rem", fontWeight: "700", letterSpacing: "-0.05em", whiteSpace: "nowrap" }}>
-                        Batuhan_Cakir<span style={{ color: "var(--accent-cyan)", opacity: 0.8 }}>_</span>
-                    </span>
+            <div className="nav-container" style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
+                <a href="#home" aria-label="Home" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "0.6rem" }} className="social-icon-hover">
+                    <SpinningIcosahedron />
+                    <style>{`
+                        @media (max-width: 768px) {
+                            .nav-links { margin-left: auto; padding-left: 0.5rem; }
+                        }
+                    `}</style>
                 </a>
 
                 <div ref={navLinksRef} className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center", fontSize: "0.9rem", fontWeight: "500" }}>
@@ -124,22 +129,24 @@ export default function Navbar() {
                                     fontSize: "inherit",
                                     fontWeight: "600",
                                     opacity: isActive ? 1 : 0.8,
+                                    paddingTop: "4px",
+                                    paddingBottom: "4px",
                                     transition: "all 0.2s ease"
                                 }}
                                 onMouseOver={(e) => { e.currentTarget.style.opacity = 1; e.currentTarget.style.color = "var(--accent-cyan)"; }}
-                                onMouseOut={(e) => { 
-                                    e.currentTarget.style.opacity = isActive ? 1 : 0.8; 
-                                    e.currentTarget.style.color = isActive ? "var(--accent-cyan)" : "inherit"; 
+                                onMouseOut={(e) => {
+                                    e.currentTarget.style.opacity = isActive ? 1 : 0.8;
+                                    e.currentTarget.style.color = isActive ? "var(--accent-cyan)" : "inherit";
                                 }}
                             >
                                 {item.name}
-                                <span style={{ 
-                                    position: "absolute", 
-                                    left: 0, 
-                                    bottom: "-4px", 
-                                    height: "2px", 
-                                    width: isActive ? "100%" : "0%", 
-                                    backgroundColor: "var(--accent-cyan)", 
+                                <span style={{
+                                    position: "absolute",
+                                    left: 0,
+                                    bottom: "0px",
+                                    height: "2px",
+                                    width: isActive ? "100%" : "0%",
+                                    backgroundColor: "var(--accent-cyan)",
                                     transition: "width 0.3s ease-out",
                                     borderRadius: "2px"
                                 }} />

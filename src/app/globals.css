@@ -20,7 +20,7 @@
   /* ASCII Animation Colors */
   --ascii-color: rgba(89, 131, 146, 0.15);
   --ascii-highlight: #598392;
-  
+
   --timeline-padding: 4rem;
 }
 
@@ -51,6 +51,8 @@
   /* Dim the particle canvas on mobile — compensates for removed section overlay */
   .three-bg-container {
     opacity: 0.6;
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
@@ -131,7 +133,7 @@ a:hover {
   left: 0;
   width: 1px;
   height: 0%;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(89,131,146,0.6));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(89, 131, 146, 0.6));
   animation: lineGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.0s both;
 }
 
@@ -146,6 +148,14 @@ a:hover {
   background-color: rgba(10, 15, 20, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+.project-link {
+  transition: transform 0.2s ease;
+}
+
+.project-link:hover {
+  transform: translateY(-2px);
 }
 
 /* Scroll Reveal Utilities - V2 Native Vertical */
@@ -186,6 +196,7 @@ a:hover {
   0% {
     width: 0%;
   }
+
   100% {
     width: 105%;
   }
@@ -195,6 +206,7 @@ a:hover {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -214,20 +226,18 @@ a:hover {
   width: 0%;
   height: 80%;
   /* Gradient makes ink darker in center and softer on edges, simulating paper absorption */
-  background: linear-gradient(
-    to bottom,
-    rgba(89, 131, 146, 0.1) 0%,
-    rgba(89, 131, 146, 0.5) 20%,
-    rgba(89, 131, 146, 0.5) 80%,
-    rgba(89, 131, 146, 0.2) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(89, 131, 146, 0.1) 0%,
+      rgba(89, 131, 146, 0.5) 20%,
+      rgba(89, 131, 146, 0.5) 80%,
+      rgba(89, 131, 146, 0.2) 100%);
   z-index: -1;
   /* Slight rotation and asymmetrical borders for hand-drawn feel */
   transform: rotate(-1.5deg);
   border-radius: 3px 8px 4px 6px;
   box-shadow: 0 0 6px rgba(89, 131, 146, 0.3);
   /* Smooth human-like stroke easing, stays for 1.0s, then fades out softly */
-  animation: 
+  animation:
     markerSwipe 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards 4.1s,
     markerFadeOut 0.5s ease-out forwards 5.8s;
 }
@@ -270,6 +280,7 @@ a:hover {
 
 /* Only apply hover effects on devices with a pointer (not touch) */
 @media (hover: hover) and (pointer: fine) {
+
   .social-icon-hover:hover,
   .nav-link-item:hover {
     transform: translateY(-4px);
@@ -344,11 +355,23 @@ a:hover {
   display: block;
 }
 
-/* Desktop: navbar always visible regardless of JS state */
+@keyframes navDesktopAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* Desktop: navbar always visible, appearing after hero animations */
 @media (min-width: 769px) {
   .site-nav {
-    transform: translateX(-50%) translateY(0) !important;
-    opacity: 1 !important;
+    animation: navDesktopAppear 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 2.2s both !important;
   }
 }
 
@@ -361,20 +384,21 @@ a:hover {
   .mobile-only-link {
     display: block !important;
   }
+
   html {
     font-size: 100%;
   }
 
   section {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
   }
 
   /* Hero: full viewport minimum, no header, vertically centered */
   #home {
     min-height: 100dvh !important;
     justify-content: center !important;
-    padding-top: 3rem !important;
+    padding-top: 5rem !important;
     padding-bottom: 3rem !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -384,6 +408,13 @@ a:hover {
   #home h1 {
     font-size: max(3.5rem, 12vw) !important;
     margin-bottom: 1rem !important;
+  }
+
+  .hero-social-icons {
+    gap: 1.3rem !important;
+    justify-content: center;
+    flex-wrap: nowrap !important;
+    width: 100%;
   }
 
   #home h2 {
@@ -421,25 +452,26 @@ a:hover {
     margin-bottom: 1.5rem;
   }
 
-  /* About Me card: tighter padding and smaller text for readability on mobile */
-  #about .glass-panel {
-    padding: 1.5rem !important;
-    border-left: none !important;
-  }
-
+  /* About Me text layout on mobile */
   #about .glass-panel p {
-    font-size: 0.95rem !important;
-    line-height: 1.7 !important;
-    margin-bottom: 1.5rem !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 2rem !important;
   }
 
-  #about h2 {
-    font-size: 2rem !important;
-    margin-bottom: 1.5rem !important;
+  #about h2,
+  #experience h2,
+  #projects h2,
+  #contact h2 {
+    font-size: 2.2rem !important;
+    margin-bottom: 2rem !important;
   }
 
   /* Reduce excessive top padding between sections on mobile */
-  #about, #experience, #projects, #contact {
+  #about,
+  #experience,
+  #projects,
+  #contact {
     padding-top: 4rem !important;
     padding-bottom: 2rem !important;
   }
@@ -475,12 +507,12 @@ a:hover {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .nav-links a {
     font-size: 0.85rem !important;
     white-space: nowrap !important;
   }
-  
+
   .nav-brand {
     display: none !important;
   }
@@ -491,11 +523,39 @@ a:hover {
   }
 
   .nav-links::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: none;
+    /* Chrome, Safari and Opera */
   }
 
-  :root {
-    --timeline-padding: 3.5rem;
+  /* Shift the entire timeline left on mobile so the lines are closer to the edge */
+  .timeline-container {
+    margin-left: -1.1rem !important;
+  }
+
+  /* Make timeline text slightly smaller to fit better on mobile */
+  .timeline-container h3 {
+    font-size: 1.15rem !important;
+    gap: 8px !important;
+  }
+
+  .timeline-container h3 svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .timeline-container p {
+    font-size: 0.9rem !important;
+  }
+
+  .timeline-text-content {
+    font-size: 0.85rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Footer */
+  footer {
+    font-size: 1rem !important;
+    padding-bottom: 4rem !important;
   }
 }
 
@@ -511,24 +571,53 @@ a:hover {
 }
 
 @keyframes heroCascadeFade {
-  0% { opacity: 0; transform: translateY(30px); filter: blur(4px); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(4px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
 }
+
 @keyframes lineGrow {
-  0% { height: 0%; }
-  100% { height: 100%; }
+  0% {
+    height: 0%;
+  }
+
+  100% {
+    height: 100%;
+  }
 }
-.hero-stagger-1 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.0s both; }
-.hero-stagger-2 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both; }
-.hero-stagger-3 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.6s both; }
-.hero-stagger-4 { animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.9s both; }
+
+.hero-stagger-1 {
+  animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.0s both;
+}
+
+.hero-stagger-2 {
+  animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.3s both;
+}
+
+.hero-stagger-3 {
+  animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.6s both;
+}
+
+.hero-stagger-4 {
+  animation: heroCascadeFade 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 1.9s both;
+}
 
 @media (prefers-reduced-motion: reduce) {
+
   .reveal,
   .hero-stagger-1,
   .hero-stagger-2,
   .hero-stagger-3,
-  .hero-stagger-4 {
+  .hero-stagger-4,
+  .site-nav {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
