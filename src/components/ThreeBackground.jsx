@@ -19,6 +19,8 @@ const PostEffects = lazy(() =>
 );
 
 /* eslint-disable react-hooks/purity */
+// Justification: useMemo is used here to initialize static particle attributes once.
+// Populating these arrays requires Math.random() (impure), but it's safe because it only runs once per dependency change.
 
 // --- Particle Background Shader ---
 const ParticleMaterial = {
@@ -523,10 +525,18 @@ const PipelineManager = ({ isMobile }) => {
             let isValid = false;
             let attempts = 0;
             
-            while (!isValid && attempts < 20) {
-                // Spawn slightly more centered to account for static width of DAGs
-                vpX = (Math.random() - 0.5) * (viewport.width - 6);
+            // Calculate the safe gutter bounds (outside the ~1000px text column)
+            const contentHalfWidthVP = (Math.min(1000, window.innerWidth) / window.innerWidth) * (viewport.width / 2);
+            
+            while (!isValid && attempts < 30) {
+                vpX = (Math.random() - 0.5) * (viewport.width - 2);
                 vpY = (Math.random() - 0.5) * viewport.height * 0.8;
+                
+                // Reject if inside the text column
+                if (Math.abs(vpX) < contentHalfWidthVP + 0.5) {
+                    attempts++;
+                    continue;
+                }
                 
                 const collision = active.find(p => {
                     const dx = p.pos[0] - vpX;
@@ -580,13 +590,55 @@ const PipelineManager = ({ isMobile }) => {
 
 export default function ThreeBackground() {
   const [isDark, setIsDark] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   // Detect mobile on resize
   useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    
+    const handleVisibilityChange = () => {
+      setIsVisible(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  // Dim canvas when scrolled past hero
+  useEffect(() => {
+    const handleScroll = () => {
+      // Calculate how far down we've scrolled
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Start dimming after scrolling 10% of the viewport height
+      const fadeStart = windowHeight * 0.1;
+      // Fully dimmed by the time we scroll 50% of the viewport height
+      const fadeEnd = windowHeight * 0.5;
+      
+      if (scrollY <= fadeStart) {
+        setIsHeroVisible(1);
+      } else if (scrollY >= fadeEnd) {
+        setIsHeroVisible(0.15);
+      } else {
+        // Interpolate between 1 and 0.15
+        const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+        setIsHeroVisible(1 - (progress * 0.85));
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Read theme on mount and observe changes
@@ -606,10 +658,17 @@ export default function ThreeBackground() {
   }, []);
 
   return (
-    <div className="three-bg-container" style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -2, pointerEvents: "none" }}>
+    <div className="three-bg-container" style={{ 
+      position: "fixed", top: 0, left: 0, width: "100%", height: "100%", 
+      zIndex: -2, pointerEvents: "none",
+      opacity: isHeroVisible,
+      // Removed CSS transition because we are now driving opacity directly via scroll position
+    }}>
       <Canvas 
         camera={{ position: [0, 0, 10], fov: 75 }}
-        dpr={isMobile ? 1 : [1, 2]}
+        dpr={isMobile ? [1, 2] : [1, 2]} // Restored full resolution for mobile to fix blurry dots
+        // Only pause the frameloop if the tab is hidden
+        frameloop={isVisible ? "always" : "demand"}
       >
       <PipelineManager isMobile={isMobile} />
       <UmapParticles isDark={isDark} isMobile={isMobile} />

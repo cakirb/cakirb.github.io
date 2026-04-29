@@ -17,11 +17,79 @@
   --accent-magenta: #c4879d;
   --accent-glow: 0 0 15px rgba(89, 131, 146, 0.4), 0 0 30px rgba(18, 69, 89, 0.3);
 
+  /* Project Category Accents */
+  --accent-pipeline: #0DC09D;
+  --accent-resource: #8282ff;
+  --accent-publication: #f97316;
+
   /* ASCII Animation Colors */
   --ascii-color: rgba(89, 131, 146, 0.15);
   --ascii-highlight: #598392;
 
   --timeline-padding: 4rem;
+
+  /* Design System Tokens */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+
+  --text-xs: 0.85rem;
+  --text-sm: 0.95rem;
+  --text-base: 1rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.4rem;
+  --text-2xl: 2.5rem;
+  --text-3xl: 3.5rem;
+  --text-display-hero: clamp(3rem, 7.5vw, 6.5rem);
+
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-full: 99px;
+
+  --z-base: 1;
+  --z-nav: 50;
+  --z-modal-backdrop: 9998;
+  --z-modal-content: 9999;
+}
+
+/* Designed Halos for Readability */
+#about h2,
+#experience h2,
+#projects h2 {
+  text-shadow: 0 0 24px rgba(89, 131, 146, 0.3);
+}
+
+#experience h3 {
+  text-shadow: 0 0 16px currentColor;
+}
+
+#contact h2 {
+  text-shadow: 0 0 32px rgba(89, 131, 146, 0.4);
+}
+
+/* Accessibility Focus */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--background);
+  color: var(--accent-cyan);
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* Absolute Scroll Lock Class for Modals */
@@ -34,9 +102,10 @@
 
 /* Readable Solid Sections */
 .section-solid-bg {
-  background-color: var(--section-bg);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /* Reduced opacity and blur for atmosphere over readability based on feedback */
+  background-color: rgba(17, 21, 24, 0.20);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   transition: background-color 0.4s ease;
 }
 
@@ -70,7 +139,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.4s ease, color 0.4s ease;
@@ -83,11 +152,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-display), system-ui, -apple-system, sans-serif;
   font-weight: 600;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.015em;
   /* Extremely tight tracking for premium vibe */
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-sm);
 }
 
 p,
@@ -145,17 +214,40 @@ a:hover {
 
 /* Project cards: dark semi-transparent background, no left accent line */
 .project-card {
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(150, 150, 150, 0.1);
   background-color: rgba(10, 15, 20, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  outline: none;
+  text-decoration: none;
 }
 
-.project-link {
-  transition: transform 0.2s ease;
-}
+.project-card[data-category="pipeline"] { --card-accent: var(--accent-pipeline); }
+.project-card[data-category="resource"] { --card-accent: var(--accent-resource); }
+.project-card[data-category="publication"] { --card-accent: var(--accent-publication); }
 
-.project-link:hover {
+.project-card:hover, .project-card:focus-visible {
+  border-color: var(--card-accent);
+  box-shadow: 0 8px 32px -8px rgba(0,0,0,0.5), 0 0 24px -8px var(--card-accent);
   transform: translateY(-2px);
+}
+
+.project-card .category-label {
+  color: var(--card-accent);
+}
+
+.project-card .project-link {
+  color: var(--card-accent);
+  transition: opacity 0.2s ease;
+}
+
+.project-card .project-link:hover {
+  opacity: 0.8;
 }
 
 /* Scroll Reveal Utilities - V2 Native Vertical */
@@ -177,7 +269,7 @@ a:hover {
 }
 
 .keyword-highlight {
-  font-family: var(--font-jetbrains-mono);
+  font-family: var(--font-mono);
   font-size: 0.9em;
   padding: 0.15em 0.4em;
   border-radius: 4px;
@@ -406,8 +498,10 @@ a:hover {
 
   /* Make hero name larger on mobile */
   #home h1 {
-    font-size: max(3.5rem, 12vw) !important;
+    font-size: clamp(3rem, 15vw, 4.5rem) !important;
     margin-bottom: 1rem !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
   }
 
   .hero-social-icons {

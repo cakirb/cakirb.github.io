@@ -1,10 +1,41 @@
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function SpinningIcosahedron() {
   const canvasRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (document.visibilityState === "visible") {
+        setIsVisible(entry.isIntersecting);
+      }
+    });
+    
+    if (canvasRef.current) {
+      observer.observe(canvasRef.current);
+    }
+    
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== "visible") {
+        setIsVisible(false);
+      } else if (canvasRef.current) {
+        // We rely on IntersectionObserver to set it back to true if intersecting,
+        // but let's just trigger a check
+        setIsVisible(true); 
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -103,7 +134,7 @@ export default function SpinningIcosahedron() {
     render();
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+  }, [isVisible]);
 
   // Using a 128x128 internal canvas for retina sharpness, rendered at 36x36 css size
   return (
