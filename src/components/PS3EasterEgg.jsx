@@ -12,6 +12,31 @@ export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPo
       if (modalRef.current) {
         modalRef.current.focus();
       }
+
+      const handleTabKey = (e) => {
+        if (e.key === 'Tab') {
+          const focusableElements = modalRef.current.querySelectorAll(
+            'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select, [tabindex]:not([tabindex="-1"])'
+          );
+          const firstElement = focusableElements[0];
+          const lastElement = focusableElements[focusableElements.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              lastElement.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              firstElement.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      };
+      
+      document.addEventListener('keydown', handleTabKey);
+      return () => document.removeEventListener('keydown', handleTabKey);
     } else if (previousFocusRef.current) {
       previousFocusRef.current.focus();
     }
@@ -122,62 +147,12 @@ export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPo
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", gap: "40px", marginTop: "1rem" }}>
-            <a href="https://www.instagram.com/batuinngg" target="_blank" rel="noopener noreferrer" className="focus-visible" style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
-              textDecoration: "none", color: "#fff", transition: "transform 0.2s, filter 0.2s, text-shadow 0.2s",
-              filter: "drop-shadow(0 0 8px rgba(255,255,255,0.6))",
-              textShadow: "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)"
-            }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.15)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 15px rgba(255,255,255,1))";
-                e.currentTarget.style.textShadow = "0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
-                e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.transform = "scale(1.15)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 15px rgba(255,255,255,1))";
-                e.currentTarget.style.textShadow = "0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
-                e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
-              }}>
+            <a href="https://www.instagram.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible">
               <InstagramIcon />
               <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Instagram</div>
             </a>
 
-            <a href="https://threads.com/batuinngg" target="_blank" rel="noopener noreferrer" className="focus-visible" style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
-              textDecoration: "none", color: "#fff", transition: "transform 0.2s, filter 0.2s, text-shadow 0.2s",
-              filter: "drop-shadow(0 0 8px rgba(255,255,255,0.6))",
-              textShadow: "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)"
-            }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.15)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 15px rgba(255,255,255,1))";
-                e.currentTarget.style.textShadow = "0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
-                e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.transform = "scale(1.15)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 15px rgba(255,255,255,1))";
-                e.currentTarget.style.textShadow = "0 0 15px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8)";
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.filter = "drop-shadow(0 0 8px rgba(255,255,255,0.6))";
-                e.currentTarget.style.textShadow = "0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.4)";
-              }}>
+            <a href="https://threads.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible">
               <ThreadsIcon />
               <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Threads</div>
             </a>
@@ -185,7 +160,7 @@ export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPo
         </div>
 
         {/* PS3 Back Prompt */}
-        <div style={{
+        <div className="ps3-back-btn" style={{
           position: "absolute",
           bottom: "20px",
           left: "25px",
@@ -201,28 +176,6 @@ export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPo
             <span style={{ fontFamily: "var(--font-body), sans-serif", paddingTop: "1px" }}>BACK</span>
           </div>
         </div>
-
-        {/* Scoped keyframes */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes xmbFlowRibbon {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(33.33%); }
-          }
-          @keyframes xmbWarp {
-            0% { transform: scaleY(1); }
-            50% { transform: scaleY(1.3) translateY(-10px); }
-            100% { transform: scaleY(0.8) translateY(10px); }
-          }
-          @keyframes xmbContentFadeIn {
-            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-        `}} />
       </div>
     </div>
   );

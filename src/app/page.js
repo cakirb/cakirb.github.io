@@ -78,7 +78,7 @@ export default function Home() {
 
       <a href="#main-content" className="skip-link focus-visible">Skip to content</a>
 
-      <main id="main-content" className="section-solid-bg" style={{
+      <main id="main-content" style={{
         position: "relative",
         zIndex: 1,
         width: "100%",
@@ -91,7 +91,11 @@ export default function Home() {
           <About />
           <ExperienceTimeline />
           <ProjectsGrid />
-          <ContactCTA />
+          <ContactCTA 
+            firePSConfetti={firePSConfetti} 
+            setPs3ModalPos={setPs3ModalPos} 
+            setShowPS5Modal={setShowPS5Modal} 
+          />
 
           <PS3EasterEgg 
             showPS5Modal={showPS5Modal} 
@@ -103,27 +107,12 @@ export default function Home() {
             <p className="footer-text">
               <span className="footer-author">Designed & Built by Batuhan Cakir</span>
               <span className="footer-separator"> &mdash; </span>
-              <span className="footer-vibe" style={{ color: "var(--foreground)", opacity: 0.85 }}>
-                <a href="/llms.txt" className="focus-visible" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt">
-                  <span style={{ fontSize: "var(--text-lg)", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
-                </a>
-                <button
-                  className="glitch-text focus-visible"
-                  style={{ color: "#85c6b9", cursor: "pointer", background: "none", border: "none", padding: 0, font: "inherit", outlineOffset: "4px" }}
-                  onClick={(e) => {
-                    const rect = e.target.getBoundingClientRect();
-                    firePSConfetti(rect);
-
-                    let spawnX = e.clientX + 40;
-                    let spawnY = e.clientY;
-                    if (spawnX > window.innerWidth - 450) spawnX = window.innerWidth - 450;
-                    if (spawnY > window.innerHeight - 300) spawnY = window.innerHeight - 300;
-
-                    setPs3ModalPos({ x: spawnX, y: spawnY });
-                    setShowPS5Modal(true);
-                  }}
-                >Vibe-coded</button> with Gemini 3.1 Pro
-              </span>
+                <span className="footer-vibe" style={{ color: "var(--foreground)", opacity: 0.85 }}>
+                  <a href="/llms.txt" className="focus-visible" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt">
+                    <span style={{ fontSize: "var(--text-lg)", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
+                  </a>
+                  Vibe-coded with Gemini 3.1 Pro
+                </span>
             </p>
           </footer>
         </div>

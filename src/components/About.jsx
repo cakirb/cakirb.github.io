@@ -2,9 +2,10 @@
 
 export default function About() {
   return (
-    <section id="about" style={{ minHeight: "80vh", paddingTop: "var(--space-2xl)", paddingBottom: "var(--space-xl)", paddingLeft: "var(--space-md)", paddingRight: "var(--space-md)" }}>
+    <section id="about" style={{ minHeight: "80dvh", paddingTop: "var(--space-2xl)", paddingBottom: "var(--space-xl)", paddingLeft: "var(--space-md)", paddingRight: "var(--space-md)" }}>
       <h2 className="reveal" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", color: "var(--foreground)", marginBottom: "var(--space-lg)", fontWeight: "700" }}>
         About Me
+        <span style={{ color: "var(--accent-cyan)" }}>.</span>
       </h2>
 
       <div className="glass-panel reveal" style={{ maxWidth: "800px" }}>

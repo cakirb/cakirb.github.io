@@ -24,9 +24,10 @@ export default function ExperienceTimeline() {
 
   return (
     <>
-      <section id="experience" style={{ minHeight: "100vh", paddingTop: "var(--space-2xl)", paddingBottom: "var(--space-xl)", paddingLeft: "var(--space-md)", paddingRight: "var(--space-md)" }}>
+      <section id="experience" style={{ minHeight: "100dvh", paddingTop: "var(--space-xl)", paddingBottom: "var(--space-xl)", paddingLeft: "var(--space-md)", paddingRight: "var(--space-md)" }}>
         <h2 className="reveal" style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", color: "var(--foreground)", marginBottom: "var(--space-lg)", fontWeight: "700" }}>
           Experience
+          <span style={{ color: "var(--accent-cyan)" }}>.</span>
         </h2>
 
         <div className="reveal timeline-container" style={{
@@ -91,7 +92,7 @@ export default function ExperienceTimeline() {
           </div>
 
           {/* ENTRY 1: 2024 - Present (Career) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-cyan)", boxShadow: "0 0 10px rgba(18, 69, 89, 0.4)", zIndex: 1
@@ -108,16 +109,16 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Wellcome Sanger Institute
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <li>Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.</li>
-                <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)')} className="focus-visible" style={{ color: "inherit", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: "4px", fontWeight: "600", cursor: "pointer", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--accent-pipeline)"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>nf-scautoqc</a>, with a focus on reproducible analysis and large-scale dataset processing.</li>
+                <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-scautoqc</a>, with a focus on reproducible analysis and large-scale dataset processing.</li>
               </ul>
             </div>
           </div>
 
           {/* ENTRY 2: 2021 - 2024 (Career) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
@@ -134,16 +135,16 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Wellcome Sanger Institute
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li>Supported the curation of datasets for the <a href="#curation-card" onClick={(e) => handleProjectClick(e, 'curation-card', 'var(--accent-resource)')} className="focus-visible" style={{ color: "inherit", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: "4px", fontWeight: "600", cursor: "pointer", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--accent-resource)"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>CZ CELLxGENE Discover portal</a> and contributed to project-specific resources for data access and visualisation.</li>
+                <li>Supported the curation of datasets for the <a href="#curation-card" onClick={(e) => handleProjectClick(e, 'curation-card', 'var(--accent-resource)')} className="timeline-project-link focus-visible" data-target-category="resource">CZ CELLxGENE Discover portal</a> and contributed to project-specific resources for data access and visualisation.</li>
                 <li>Contributed to collaborative single-cell projects across data analysis, curation, and workflow support.</li>
               </ul>
             </div>
           </div>
 
           {/* ENTRY 3: 2021 - Present (Education) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease", zIndex: 20 }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-magenta)", boxShadow: "0 0 10px rgba(89, 131, 146, 0.4)", zIndex: 1
@@ -160,16 +161,16 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-magenta)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Gebze Technical University
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <li>Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.</li>
-                <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => handleProjectClick(e, 'nf-larry-card', 'var(--accent-pipeline)')} className="focus-visible" style={{ color: "inherit", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: "4px", fontWeight: "600", cursor: "pointer", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--accent-pipeline)"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>nf-larry</a> and <a href="#nf-cellsnplite-card" onClick={(e) => handleProjectClick(e, 'nf-cellsnplite-card', 'var(--accent-pipeline)')} className="focus-visible" style={{ color: "inherit", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: "4px", fontWeight: "600", cursor: "pointer", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--accent-pipeline)"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>nf-cellsnplite</a> as part of ongoing thesis work.</li>
+                <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => handleProjectClick(e, 'nf-larry-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-larry</a> and <a href="#nf-cellsnplite-card" onClick={(e) => handleProjectClick(e, 'nf-cellsnplite-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-cellsnplite</a> as part of ongoing thesis work.</li>
               </ul>
             </div>
           </div>
 
           {/* ENTRY 4: 2019 - 2021 (Career) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
@@ -186,7 +187,7 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Gebze Technical University
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <li>Contributed to research projects in bioinformatics and structural biology.</li>
                 <li>Supported teaching in courses including Biostatistics and Heat and Mass Transfer, helping with coursework assessment, quizzes, and student support.</li>
@@ -195,7 +196,7 @@ export default function ExperienceTimeline() {
           </div>
 
           {/* ENTRY 4.5: 2019 (Career) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "career" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "career" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 10px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-cyan)", zIndex: 1
@@ -212,15 +213,15 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-cyan)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Wellcome Sanger Institute
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li><a href="#benchmarking-card" onClick={(e) => handleProjectClick(e, 'benchmarking-card', 'var(--accent-publication)')} className="focus-visible" style={{ color: "inherit", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: "4px", fontWeight: "600", cursor: "pointer", transition: "color 0.2s" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--accent-publication)"} onMouseOut={(e) => e.currentTarget.style.color = "inherit"}>Benchmarked single-cell RNA-seq visualisation tools</a> during an internship with the Cellular Genetics Informatics team.</li>
+                <li><a href="#benchmarking-card" onClick={(e) => handleProjectClick(e, 'benchmarking-card', 'var(--accent-publication)')} className="timeline-project-link focus-visible" data-target-category="publication">Benchmarked single-cell RNA-seq visualisation tools</a> during an internship with the Cellular Genetics Informatics team.</li>
               </ul>
             </div>
           </div>
 
           {/* ENTRY 5: 2017 - 2021 (Education) */}
-          <div style={{ position: "relative", paddingBottom: "var(--space-lg)", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
+          <div style={{ position: "relative", paddingBottom: "var(--space-xl)", opacity: activeTrack === "all" || activeTrack === "education" ? 1 : 0.2, filter: activeTrack === "all" || activeTrack === "education" ? "none" : "blur(2px)", transition: "all 0.4s ease" }}>
             <div style={{
               position: "absolute", left: "calc(var(--timeline-padding, 4rem) * -1 + 34px)", top: "8px", width: "12px", height: "12px", boxSizing: "border-box", borderRadius: "50%",
               background: "var(--background)", border: "3px solid var(--accent-magenta)", zIndex: 1
@@ -237,7 +238,7 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-magenta)", opacity: 1, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Gebze Technical University
             </p>
-            <div className="timeline-text-content" style={{ fontSize: "0.95rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.8rem" }}>
                 <li>Worked on single-cell RNA-seq analysis in stem cell differentiation.
                   <ul style={{ listStyleType: "circle", paddingLeft: "1.2rem", margin: "0.5rem 0 0 0", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -273,21 +274,19 @@ export default function ExperienceTimeline() {
 
       {/* FLOATING RETURN BUTTON */}
       <div
-        className="focus-visible"
+        className="floating-return-btn focus-visible"
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (returnScrollPos !== null) { window.scrollTo({ top: returnScrollPos, behavior: "smooth" }); setReturnScrollPos(null); } } }}
         style={{
           position: "fixed",
           bottom: returnScrollPos !== null ? "40px" : "-100px",
           left: "50%",
-          transform: "translateX(-50%)",
           opacity: returnScrollPos !== null ? 1 : 0,
           pointerEvents: returnScrollPos !== null ? "auto" : "none",
           zIndex: 9999,
           width: "56px",
           height: "56px",
           borderRadius: "50%",
-          background: "rgba(17, 21, 24, 0.85)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           border: "1px solid var(--accent-cyan)",
@@ -295,25 +294,13 @@ export default function ExperienceTimeline() {
           justifyContent: "center",
           alignItems: "center",
           cursor: "pointer",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
           color: "var(--accent-cyan)",
-          transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
         }}
         onClick={() => {
           if (returnScrollPos !== null) {
             window.scrollTo({ top: returnScrollPos, behavior: "smooth" });
             setReturnScrollPos(null);
           }
-        }}
-        onMouseOver={(e) => {
-          e.currentTarget.style.transform = "translateX(-50%) scale(1.1) rotate(-10deg)";
-          e.currentTarget.style.boxShadow = "0 6px 25px rgba(89, 131, 146, 0.4)";
-          e.currentTarget.style.background = "rgba(17, 21, 24, 1)";
-        }}
-        onMouseOut={(e) => {
-          e.currentTarget.style.transform = "translateX(-50%) scale(1) rotate(0deg)";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.5)";
-          e.currentTarget.style.background = "rgba(17, 21, 24, 0.85)";
         }}
         title="Return to Experience"
       >

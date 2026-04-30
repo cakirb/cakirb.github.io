@@ -1,4 +1,4 @@
-import { IBM_Plex_Serif, Geist, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Serif, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ClientThreeBackground from "@/components/ClientThreeBackground";
 import "./globals.css";
@@ -9,8 +9,9 @@ const displayFont = IBM_Plex_Serif({
   subsets: ["latin"],
 });
 
-const bodyFont = Geist({
+const bodyFont = IBM_Plex_Sans({
   variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 

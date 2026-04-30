@@ -90,7 +90,7 @@ export default function Navbar() {
                 left: "50%",
                 transform: mobileVisible ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(-120%)",
                 width: "calc(100% - 2rem)",
-                maxWidth: "650px",
+                maxWidth: "600px",
                 zIndex: 50,
                 padding: "0.8rem 2rem",
                 transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
@@ -105,11 +105,6 @@ export default function Navbar() {
             <div className="nav-container" style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
                 <a href="#home" aria-label="Home" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "0.6rem" }} className="social-icon-hover">
                     <SpinningIcosahedron />
-                    <style>{`
-                        @media (max-width: 768px) {
-                            .nav-links { margin-left: auto; padding-left: 0.5rem; }
-                        }
-                    `}</style>
                 </a>
 
                 <div ref={navLinksRef} className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center", fontSize: "0.9rem", fontWeight: "500" }}>
@@ -120,24 +115,8 @@ export default function Navbar() {
                                 key={item.name}
                                 href={item.href}
                                 data-section={item.href.substring(1)}
+                                data-active={isActive}
                                 className={`nav-link-item ${item.mobileOnly ? 'mobile-only-link' : ''}`}
-                                style={{
-                                    position: "relative",
-                                    color: isActive ? "var(--accent-cyan)" : "inherit",
-                                    textDecoration: "none",
-                                    fontFamily: "inherit",
-                                    fontSize: "inherit",
-                                    fontWeight: "600",
-                                    opacity: isActive ? 1 : 0.8,
-                                    paddingTop: "4px",
-                                    paddingBottom: "4px",
-                                    transition: "all 0.2s ease"
-                                }}
-                                onMouseOver={(e) => { e.currentTarget.style.opacity = 1; e.currentTarget.style.color = "var(--accent-cyan)"; }}
-                                onMouseOut={(e) => {
-                                    e.currentTarget.style.opacity = isActive ? 1 : 0.8;
-                                    e.currentTarget.style.color = isActive ? "var(--accent-cyan)" : "inherit";
-                                }}
                             >
                                 {item.name}
                                 <span style={{

@@ -15,7 +15,7 @@ export default function Hero() {
     <section
       id="home"
       style={{
-        minHeight: "100vh",
+        minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -23,7 +23,7 @@ export default function Hero() {
       }}
     >
       <div style={{ width: "100%" }}>
-        <h1 className="hero-stagger-1" style={{ fontSize: "var(--text-display-hero)", fontWeight: "700", lineHeight: "1.2", marginBottom: "var(--space-md)", whiteSpace: "nowrap", paddingBottom: "0.2em" }}>
+        <h1 className="hero-stagger-1" style={{ fontSize: "var(--text-display-hero)", fontWeight: "700", lineHeight: "1.2", marginBottom: "var(--space-md)", paddingBottom: "0.2em" }}>
           <span style={{ fontFamily: "inherit", background: "linear-gradient(90deg, #f49680 0%, #caa94e 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block" }}>Batuhan Çakır</span>
         </h1>
       </div>

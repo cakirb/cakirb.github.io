@@ -355,7 +355,7 @@ const CyberEdge = ({ startPos, endPos, delay, timeRef, glowColor }) => {
 };
 
 // --- Floating 3D Cyber Pipeline Component ---
-const CyberPipeline = ({ startPos, direction, pipelineType, color }) => {
+const CyberPipeline = ({ startPos, pipelineType, color }) => {
   const groupRef = useRef();
   const timeRef = useRef(0);
   
@@ -506,7 +506,6 @@ const PipelineManager = ({ isMobile }) => {
                     id: 'mobile-pipeline', 
                     spawnTime: Date.now(),
                     pos: [2.0, 3.8, 0], // Positioned safely at the top right, behind less text
-                    direction: 1.0, 
                     type: "mobile-branching", // Special type that won't fade out and will be vertical
                     color: pipelineColors[1] // Green fits well
                 }]);
@@ -556,7 +555,6 @@ const PipelineManager = ({ isMobile }) => {
                 id: Math.random(), 
                 spawnTime: now,
                 pos: [vpX, vpY, 0.5], 
-                direction: 1.0, 
                 type: type,
                 color: color
             }];
@@ -581,7 +579,7 @@ const PipelineManager = ({ isMobile }) => {
         <group>
             {pipelines.map(p => (
                 <Suspense fallback={null} key={p.id}>
-                    <CyberPipeline startPos={p.pos} direction={p.direction} pipelineType={p.type} color={p.color} />
+                    <CyberPipeline startPos={p.pos} pipelineType={p.type} color={p.color} />
                 </Suspense>
             ))}
         </group>
