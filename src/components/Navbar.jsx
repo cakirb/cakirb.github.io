@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import SpinningIcosahedron from "./SpinningIcosahedron";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Navbar() {
     const [activeSection, setActiveSection] = useState("");
@@ -103,7 +104,13 @@ export default function Navbar() {
             }}
         >
             <div className="nav-container" style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
-                <a href="#home" aria-label="Home" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "0.6rem" }} className="social-icon-hover">
+                <a
+                    href="#home"
+                    aria-label="Home"
+                    style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "0.6rem" }}
+                    className="social-icon-hover"
+                    onClick={() => trackEvent("nav_click", { section: "home" })}
+                >
                     <SpinningIcosahedron />
                 </a>
 
@@ -117,6 +124,7 @@ export default function Navbar() {
                                 data-section={item.href.substring(1)}
                                 data-active={isActive}
                                 className={`nav-link-item ${item.mobileOnly ? 'mobile-only-link' : ''}`}
+                                onClick={() => trackEvent("nav_click", { section: item.href.substring(1) })}
                             >
                                 {item.name}
                                 <span style={{

@@ -18,6 +18,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
+## Analytics
+
+This site uses Umami Analytics when `NEXT_PUBLIC_UMAMI_WEBSITE_ID` is configured.
+For GitHub Pages, add `NEXT_PUBLIC_UMAMI_WEBSITE_ID` as a repository variable so the
+deployment workflow can include the public website ID at build time. When the value
+is not set, the analytics script is not loaded.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

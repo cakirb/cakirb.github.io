@@ -1,15 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import ExperienceTimeline from "@/components/ExperienceTimeline";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import ContactCTA from "@/components/ContactCTA";
 import PS3EasterEgg from "@/components/PS3EasterEgg";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Home() {
   const [showPS5Modal, setShowPS5Modal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [privacyPopoverPos, setPrivacyPopoverPos] = useState({ top: 0, left: 0 });
   const [ps3ModalPos, setPs3ModalPos] = useState({ x: 0, y: 0 });
+  const privacyButtonRef = useRef(null);
 
   const firePSConfetti = async (rect, particleMultiplier = 1) => {
     const confettiModule = await import("canvas-confetti");
@@ -55,14 +59,19 @@ export default function Home() {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         setShowPS5Modal(false);
+        setShowPrivacyModal(false);
       }
     };
 
     if (showPS5Modal) {
       document.documentElement.classList.add("no-scroll");
-      window.addEventListener("keydown", handleKeyDown);
     } else {
       document.documentElement.classList.remove("no-scroll");
+    }
+
+    if (showPS5Modal || showPrivacyModal) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
       window.removeEventListener("keydown", handleKeyDown);
     }
 
@@ -70,7 +79,7 @@ export default function Home() {
       document.documentElement.classList.remove("no-scroll");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showPS5Modal]);
+  }, [showPS5Modal, showPrivacyModal]);
 
   return (
     <>
@@ -108,15 +117,72 @@ export default function Home() {
               <span className="footer-author">Designed & Built by Batuhan Cakir</span>
               <span className="footer-separator"> &mdash; </span>
                 <span className="footer-vibe" style={{ color: "var(--foreground)", opacity: 0.85 }}>
-                  <a href="/llms.txt" className="focus-visible" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt">
+                  <a href="/llms.txt" className="focus-visible" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt" onClick={() => trackEvent("llms_txt_click")}>
                     <span style={{ fontSize: "var(--text-lg)", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
                   </a>
                   Vibe-coded with Gemini 3.1 Pro
                 </span>
+              <span className="footer-separator"> &mdash; </span>
+              <button
+                ref={privacyButtonRef}
+                type="button"
+                className="focus-visible"
+                aria-expanded={showPrivacyModal}
+                aria-controls="analytics-popover"
+                style={{
+                  color: "inherit",
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  font: "inherit",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                }}
+                onClick={() => {
+                  const rect = privacyButtonRef.current?.getBoundingClientRect();
+                  const willOpen = !showPrivacyModal;
+                  if (rect) {
+                    setPrivacyPopoverPos({
+                      top: rect.top - 10,
+                      left: Math.min(Math.max(rect.left + rect.width / 2, 150), window.innerWidth - 150),
+                    });
+                  }
+                  if (willOpen) trackEvent("analytics_note_click");
+                  setShowPrivacyModal((current) => !current);
+                }}
+              >
+                Analytics
+              </button>
             </p>
           </footer>
         </div>
       </main>
+
+      {showPrivacyModal && (
+        <aside
+          id="analytics-popover"
+          role="status"
+          style={{
+            position: "fixed",
+            top: privacyPopoverPos.top,
+            left: privacyPopoverPos.left,
+            transform: "translate(-50%, -100%)",
+            zIndex: "var(--z-modal-content, 9999)",
+            width: "min(280px, calc(100vw - 2rem))",
+            padding: "0.85rem 1rem",
+            borderRadius: "var(--radius-md)",
+            background: "rgba(17, 21, 24, 0.96)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            boxShadow: "0 16px 48px rgba(0,0,0,0.45)",
+            color: "var(--foreground)",
+            fontSize: "var(--text-xs)",
+            textAlign: "left",
+          }}
+        >
+          This site uses cookie-free Umami Analytics to understand anonymous usage. It records page
+          views and selected interactions, but no personally identifiable information.
+        </aside>
+      )}
     </>
   );
 }

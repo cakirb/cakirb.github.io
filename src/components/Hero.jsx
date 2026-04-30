@@ -2,6 +2,7 @@
 import {
   GithubIcon, LinkedInIcon, OrcidIcon, ScholarIcon, XIcon, EmailIcon
 } from "./Icons";
+import { trackEvent } from "@/lib/analytics";
 
 // Bluesky Icon Component
 const BlueskyIcon = ({ style, ...props }) => (
@@ -40,25 +41,25 @@ export default function Hero() {
         </p>
 
         <div className="hero-stagger-4 hero-social-icons" style={{ display: "flex", gap: "1.8rem", marginTop: "var(--space-md)", flexWrap: "wrap" }}>
-          <a href="https://x.com/cakirb_" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="X (Twitter)">
+          <a href="https://x.com/cakirb_" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="X (Twitter)" onClick={() => trackEvent("social_link_click", { location: "hero", target: "x" })}>
             <XIcon />
           </a>
-          <a href="https://linkedin.com/in/batuhancakir" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="LinkedIn">
+          <a href="https://linkedin.com/in/batuhancakir" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="LinkedIn" onClick={() => trackEvent("social_link_click", { location: "hero", target: "linkedin" })}>
             <LinkedInIcon />
           </a>
-          <a href="https://bsky.app/profile/cakirb.bsky.social" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="Bluesky">
+          <a href="https://bsky.app/profile/cakirb.bsky.social" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="Bluesky" onClick={() => trackEvent("social_link_click", { location: "hero", target: "bluesky" })}>
             <BlueskyIcon />
           </a>
-          <a href="https://github.com/cakirb" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="GitHub">
+          <a href="https://github.com/cakirb" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="GitHub" onClick={() => trackEvent("social_link_click", { location: "hero", target: "github" })}>
             <GithubIcon />
           </a>
-          <a href="https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="Google Scholar">
+          <a href="https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="Google Scholar" onClick={() => trackEvent("social_link_click", { location: "hero", target: "scholar" })}>
             <ScholarIcon />
           </a>
-          <a href="https://orcid.org/0000-0003-4513-606X" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="ORCID">
+          <a href="https://orcid.org/0000-0003-4513-606X" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="ORCID" onClick={() => trackEvent("social_link_click", { location: "hero", target: "orcid" })}>
             <OrcidIcon />
           </a>
-          <a href="mailto:bc8@sanger.ac.uk" className="social-icon-hover focus-visible" title="Email">
+          <a href="mailto:bc8@sanger.ac.uk" className="social-icon-hover focus-visible" title="Email" onClick={() => trackEvent("contact_click", { location: "hero" })}>
             <EmailIcon />
           </a>
         </div>

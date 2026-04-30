@@ -192,7 +192,7 @@ const UmapParticles = ({ isDark, isMobile }) => {
     }
 
     return [pos, col, del];
-  }, [viewport.width, viewport.height, particleCount]);
+  }, [viewport.width, viewport.height, particleCount, isMobile]);
 
   const statePointer = useRef(new THREE.Vector2(-10, -10));
 
@@ -588,13 +588,14 @@ const PipelineManager = ({ isMobile }) => {
 
 export default function ThreeBackground() {
   const [isDark, setIsDark] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => (
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  ));
   const [isVisible, setIsVisible] = useState(true);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
 
   // Detect mobile on resize
   useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     

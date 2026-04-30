@@ -1,5 +1,7 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
+
 export default function ContactCTA({ firePSConfetti, setPs3ModalPos, setShowPS5Modal }) {
   return (
     <section id="contact" style={{ minHeight: "80dvh", paddingTop: "var(--space-2xl)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", paddingLeft: "var(--space-md)", paddingRight: "var(--space-md)" }}>
@@ -12,6 +14,7 @@ export default function ContactCTA({ firePSConfetti, setPs3ModalPos, setShowPS5M
           className="glitch-text easter-egg-dot focus-visible"
           style={{ color: "var(--foreground)", background: "none", border: "none", padding: 0, font: "inherit", cursor: "pointer", outlineOffset: "4px" }}
           onClick={(e) => {
+            trackEvent("easter_egg_open", { location: "contact" });
             const rect = e.target.getBoundingClientRect();
             if (firePSConfetti) firePSConfetti(rect);
 
@@ -36,6 +39,7 @@ export default function ContactCTA({ firePSConfetti, setPs3ModalPos, setShowPS5M
         <a
           href="mailto:bc8@sanger.ac.uk"
           className="contact-btn focus-visible"
+          onClick={() => trackEvent("contact_click", { location: "contact" })}
         >
           Contact Me
         </a>

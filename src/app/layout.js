@@ -1,6 +1,7 @@
 import { IBM_Plex_Serif, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ClientThreeBackground from "@/components/ClientThreeBackground";
+import UmamiAnalytics from "@/components/UmamiAnalytics";
 import "./globals.css";
 
 const displayFont = IBM_Plex_Serif({
@@ -97,6 +98,7 @@ export default function RootLayout({ children }) {
         <ClientThreeBackground />
         <Navbar />
         {children}
+        <UmamiAnalytics />
       </body>
     </html>
   );

@@ -1,13 +1,27 @@
 "use client";
 import { useState } from "react";
 import { BriefcaseIcon, GraduationIcon } from "./Icons";
+import { trackEvent } from "@/lib/analytics";
 
 export default function ExperienceTimeline() {
   const [activeTrack, setActiveTrack] = useState("all");
   const [returnScrollPos, setReturnScrollPos] = useState(null);
 
-  const handleProjectClick = (e, cardId, glowColor) => {
+  const handleTrackToggle = (track) => {
+    setActiveTrack(activeTrack === track ? "all" : track);
+    trackEvent("timeline_filter_use", { track });
+  };
+
+  const handleTrackKeyDown = (e, track) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleTrackToggle(track);
+    }
+  };
+
+  const handleProjectClick = (e, cardId, glowColor, project) => {
     e.preventDefault();
+    trackEvent("timeline_project_click", { project });
     setReturnScrollPos(window.scrollY);
     const card = document.getElementById(cardId);
     if (card) {
@@ -39,8 +53,8 @@ export default function ExperienceTimeline() {
           <div
             tabIndex={0}
             className="focus-visible"
-            onClick={() => setActiveTrack(activeTrack === "career" ? "all" : "career")}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTrack(activeTrack === "career" ? "all" : "career"); } }}
+            onClick={() => handleTrackToggle("career")}
+            onKeyDown={(e) => handleTrackKeyDown(e, "career")}
             title="Filter Career Experience"
             style={{
               position: "absolute",
@@ -67,8 +81,8 @@ export default function ExperienceTimeline() {
           <div
             tabIndex={0}
             className="focus-visible"
-            onClick={() => setActiveTrack(activeTrack === "education" ? "all" : "education")}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTrack(activeTrack === "education" ? "all" : "education"); } }}
+            onClick={() => handleTrackToggle("education")}
+            onKeyDown={(e) => handleTrackKeyDown(e, "education")}
             title="Filter Education Experience"
             style={{
               position: "absolute",
@@ -112,7 +126,7 @@ export default function ExperienceTimeline() {
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <li>Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.</li>
-                <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-scautoqc</a>, with a focus on reproducible analysis and large-scale dataset processing.</li>
+                <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)', 'nf-scautoqc')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-scautoqc</a>, with a focus on reproducible analysis and large-scale dataset processing.</li>
               </ul>
             </div>
           </div>
@@ -137,7 +151,7 @@ export default function ExperienceTimeline() {
             </p>
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li>Supported the curation of datasets for the <a href="#curation-card" onClick={(e) => handleProjectClick(e, 'curation-card', 'var(--accent-resource)')} className="timeline-project-link focus-visible" data-target-category="resource">CZ CELLxGENE Discover portal</a> and contributed to project-specific resources for data access and visualisation.</li>
+                <li>Supported the curation of datasets for the <a href="#curation-card" onClick={(e) => handleProjectClick(e, 'curation-card', 'var(--accent-resource)', 'cellxgene-curation')} className="timeline-project-link focus-visible" data-target-category="resource">CZ CELLxGENE Discover portal</a> and contributed to project-specific resources for data access and visualisation.</li>
                 <li>Contributed to collaborative single-cell projects across data analysis, curation, and workflow support.</li>
               </ul>
             </div>
@@ -164,7 +178,7 @@ export default function ExperienceTimeline() {
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <li>Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.</li>
-                <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => handleProjectClick(e, 'nf-larry-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-larry</a> and <a href="#nf-cellsnplite-card" onClick={(e) => handleProjectClick(e, 'nf-cellsnplite-card', 'var(--accent-pipeline)')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-cellsnplite</a> as part of ongoing thesis work.</li>
+                <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => handleProjectClick(e, 'nf-larry-card', 'var(--accent-pipeline)', 'nf-larry')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-larry</a> and <a href="#nf-cellsnplite-card" onClick={(e) => handleProjectClick(e, 'nf-cellsnplite-card', 'var(--accent-pipeline)', 'nf-cellsnplite')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-cellsnplite</a> as part of ongoing thesis work.</li>
               </ul>
             </div>
           </div>
@@ -215,7 +229,7 @@ export default function ExperienceTimeline() {
             </p>
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li><a href="#benchmarking-card" onClick={(e) => handleProjectClick(e, 'benchmarking-card', 'var(--accent-publication)')} className="timeline-project-link focus-visible" data-target-category="publication">Benchmarked single-cell RNA-seq visualisation tools</a> during an internship with the Cellular Genetics Informatics team.</li>
+                <li><a href="#benchmarking-card" onClick={(e) => handleProjectClick(e, 'benchmarking-card', 'var(--accent-publication)', 'scrna-visualisation-benchmark')} className="timeline-project-link focus-visible" data-target-category="publication">Benchmarked single-cell RNA-seq visualisation tools</a> during an internship with the Cellular Genetics Informatics team.</li>
               </ul>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { InstagramIcon, ThreadsIcon } from "./Icons";
+import { trackEvent } from "@/lib/analytics";
 
 export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPos }) {
   const modalRef = useRef(null);
@@ -147,12 +148,12 @@ export default function PS3EasterEgg({ showPS5Modal, setShowPS5Modal, ps3ModalPo
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", gap: "40px", marginTop: "1rem" }}>
-            <a href="https://www.instagram.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible">
+            <a href="https://www.instagram.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible" onClick={() => trackEvent("easter_egg_link_click", { target: "instagram" })}>
               <InstagramIcon />
               <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Instagram</div>
             </a>
 
-            <a href="https://threads.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible">
+            <a href="https://threads.com/batuinngg" target="_blank" rel="noopener noreferrer" className="social-icon-egg focus-visible" onClick={() => trackEvent("easter_egg_link_click", { target: "threads" })}>
               <ThreadsIcon />
               <div style={{ fontSize: "0.9rem", fontWeight: "400", letterSpacing: "1px", fontFamily: "'Istok Web', sans-serif" }}>Threads</div>
             </a>
