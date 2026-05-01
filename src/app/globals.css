@@ -43,7 +43,7 @@
   --text-xl: 1.4rem;
   --text-2xl: 2.5rem;
   --text-3xl: 3.5rem;
-  --text-display-hero: clamp(3rem, 7.5vw, 6.5rem);
+  --text-display-hero: clamp(5.8rem, 12vw, 8rem);
 
   --radius-sm: 4px;
   --radius-md: 12px;
@@ -471,8 +471,16 @@ a:hover {
   display: none !important;
 }
 
+.main-container {
+  padding: 0 var(--space-md);
+}
+
 /* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+  .main-container {
+    padding: 0;
+  }
+
   .mobile-only-link {
     display: block !important;
   }
@@ -482,8 +490,8 @@ a:hover {
   }
 
   section {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   /* Hero: full viewport minimum, no header, vertically centered */
@@ -492,13 +500,11 @@ a:hover {
     justify-content: center !important;
     padding-top: 5rem !important;
     padding-bottom: 3rem !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
   }
 
   /* Make hero name larger on mobile */
   #home h1 {
-    font-size: clamp(3rem, 15vw, 4.5rem) !important;
+    font-size: clamp(5rem, 15vw, 4.5rem) !important;
     margin-bottom: 1rem !important;
     white-space: normal !important;
     line-height: 1.2 !important;
@@ -509,15 +515,16 @@ a:hover {
     justify-content: center;
     flex-wrap: nowrap !important;
     width: 100%;
+    margin-top: 0 !important;
   }
 
   #home h2 {
     /* Uses desktop size */
   }
 
-  /* Reduce the inline 4rem gap between position titles and gradient description */
+  /* Hero spacing is handled by the content column gap. */
   #home .hero-stagger-2 {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0 !important;
   }
 
   #home .hero-stagger-2 h2 {
@@ -526,8 +533,8 @@ a:hover {
 
   /* Reduce the gradient paragraph on mobile */
   #home p {
-    font-size: 1.25rem !important;
-    margin-bottom: 2rem !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 0 !important;
     line-height: 1.5 !important;
   }
 
@@ -542,7 +549,7 @@ a:hover {
   }
 
   .glass-panel {
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     margin-bottom: 1.5rem;
   }
 
@@ -566,6 +573,13 @@ a:hover {
   #contact {
     padding-top: 4rem !important;
     padding-bottom: 2rem !important;
+  }
+
+  .project-card {
+    padding: 1.25rem !important;
+    max-width: 340px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   /* Center the PS3 easter egg modal on mobile */
@@ -622,7 +636,7 @@ a:hover {
 
   /* Shift the entire timeline left on mobile so the lines are closer to the edge */
   .timeline-container {
-    margin-left: -1.1rem !important;
+    margin-left: -0.5rem !important;
   }
 
   /* Make timeline text slightly smaller to fit better on mobile */
@@ -646,13 +660,27 @@ a:hover {
 }
 
 @media (max-width: 600px) {
+  .footer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
   .footer-separator {
     display: none;
   }
 
   .footer-vibe {
-    display: block;
-    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .footer-analytics {
+    margin-top: 0;
   }
 }
 

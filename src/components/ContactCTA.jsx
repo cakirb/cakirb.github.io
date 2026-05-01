@@ -33,7 +33,7 @@ export default function ContactCTA({ firePSConfetti, setPs3ModalPos, setShowPS5M
         </button>
       </h2>
       <p className="reveal" style={{ maxWidth: "600px", marginBottom: "var(--space-md)", opacity: 0.9, transitionDelay: "0.2s", fontSize: "var(--text-lg)" }}>
-        Whether you have a question about computational biology, single-cell analysis, or just want to say hi, my inbox is always open.
+        Whether it’s about computational biology, reproducible workflows, single-cell analysis, a shared project idea, or just saying hello, I’m always happy to hear from you.
       </p>
       <div className="reveal" style={{ position: "relative", display: "inline-block" }}>
         <a

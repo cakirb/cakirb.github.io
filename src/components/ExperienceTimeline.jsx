@@ -125,8 +125,9 @@ export default function ExperienceTimeline() {
             </p>
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li>Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.</li>
-                <li>Contributing to scalable pipelines including <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)', 'nf-scautoqc')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-scautoqc</a>, with a focus on reproducible analysis and large-scale dataset processing.</li>
+                <li>Working across single-cell genomics projects, with a focus on computational processing, quality control, and reproducible workflow execution.</li>
+                <li>Building, running, and improving workflows for large-scale single-cell data, including contributions to <a href="#nf-scautoqc-card" onClick={(e) => handleProjectClick(e, 'nf-scautoqc-card', 'var(--accent-pipeline)', 'nf-scautoqc')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-scautoqc</a>.</li>
+                <li>Helping research teams turn complex sequencing datasets into reliable outputs for downstream biological interpretation.</li>
               </ul>
             </div>
           </div>
@@ -177,7 +178,7 @@ export default function ExperienceTimeline() {
             </p>
             <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
               <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <li>Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.</li>
+                <li>Studying lineage-tracing data with a focus on computational analysis, clonal dynamics, and LARRY barcoding.</li>
                 <li>Developing workflows including <a href="#nf-larry-card" onClick={(e) => handleProjectClick(e, 'nf-larry-card', 'var(--accent-pipeline)', 'nf-larry')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-larry</a> and <a href="#nf-cellsnplite-card" onClick={(e) => handleProjectClick(e, 'nf-cellsnplite-card', 'var(--accent-pipeline)', 'nf-cellsnplite')} className="timeline-project-link focus-visible" data-target-category="pipeline">nf-cellsnplite</a> as part of ongoing thesis work.</li>
               </ul>
             </div>
@@ -259,7 +260,7 @@ export default function ExperienceTimeline() {
                     <li><strong>Thesis:</strong> Mathematical Modelling of Molecular Trajectories in Stem Cell Transformation Processes via Bioinformatic Analysis of Single Cell Omics Data <em style={{ opacity: 0.7 }}>(manuscript in review)</em></li>
                   </ul>
                 </li>
-                <li>Completed an internship during MSc.</li>
+                <li>Completed a research internship at the Wellcome Sanger Institute during the MSc, focusing on single-cell RNA-seq visualisation tools.</li>
               </ul>
             </div>
           </div>
@@ -282,6 +283,11 @@ export default function ExperienceTimeline() {
             <p style={{ fontSize: "1rem", color: "var(--accent-magenta)", opacity: 0.8, marginBottom: "1rem", fontWeight: "600", letterSpacing: "0.02em" }}>
               Yildiz Technical University
             </p>
+            <div className="timeline-text-content" style={{ fontSize: "1rem", opacity: 1, lineHeight: "1.8", color: "var(--foreground)" }}>
+              <ul style={{ listStyleType: "square", paddingLeft: "1.2rem", margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <li>Built an interdisciplinary foundation through coursework spanning molecular biology, genetics, engineering, and bioengineering, with additional exposure to areas such as virology and immunology.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>

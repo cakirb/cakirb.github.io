@@ -9,9 +9,10 @@ const PostEffects = lazy(() =>
     default: ({ isDark }) => (
       <mod.EffectComposer disableNormalPass>
         <mod.Bloom
-          luminanceThreshold={0.2}
+          luminanceThreshold={0.5}
+          luminanceSmoothing={0.5}
           mipmapBlur
-          intensity={isDark ? 0.4 : 0.15}
+          intensity={isDark ? 0.3 : 0.1}
         />
       </mod.EffectComposer>
     ),
@@ -87,7 +88,8 @@ const ParticleMaterial = {
       vec3 finalColor = vColor * uModeContrast;
       
       // Make particles noticeably more transparent to reduce overpowering bloom
-      gl_FragColor = vec4(finalColor, vOpacity * 0.25);
+      // Added max() clamp to prevent HDR blowouts on some displays
+      gl_FragColor = vec4(min(finalColor, vec3(1.0)), vOpacity * 0.25);
     }
   `,
   transparent: true,
@@ -360,7 +362,8 @@ const CyberPipeline = ({ startPos, pipelineType, color }) => {
   const timeRef = useRef(0);
   
   // Statically assigned unique color passed to all nodes
-  const glowColor = useMemo(() => new THREE.Color(color).multiplyScalar(1.5), [color]);
+  // Reduced multiplyScalar from 1.5 to 1.1 to prevent HDR blowout
+  const glowColor = useMemo(() => new THREE.Color(color).multiplyScalar(1.1), [color]);
   
   const [graph] = useState(() => {
     // Physical geometric graph representation (Classic DAGs)
@@ -447,7 +450,11 @@ const CyberPipeline = ({ startPos, pipelineType, color }) => {
     
     timeRef.current = state.clock.getElapsedTime() - startTime.current;
     
-    // Instead of drifting across the screen, it stays mostly static to let the data pulses flow
+    // Smooth 3D Translation to make them float across the screen again
+    if (pipelineType !== "mobile-branching") {
+      groupRef.current.position.x += delta * 0.25;
+    }
+    
     // Just a very subtle floating bobbing for "breath"
     groupRef.current.position.y += Math.sin(state.clock.elapsedTime * 2) * delta * 0.05;
 

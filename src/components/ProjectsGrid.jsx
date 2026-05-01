@@ -19,7 +19,7 @@ export default function ProjectsGrid() {
           </div>
           <h3 style={{ fontFamily: "var(--font-body)", fontSize: "1.6em", color: "var(--foreground)", marginBottom: "var(--space-sm)", fontWeight: "700", letterSpacing: "-0.02em" }}>nf-scautoqc</h3>
           <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
-            Automated quality control, doublet detection, and optional integration for single-cell RNA-seq data on HPC environments.
+            A reproducible Nextflow pipeline for automated quality control, doublet detection, and the integration of single-cell RNA-seq datasets.
           </p>
           <a href="https://github.com/cellgeni/nf-scautoqc" target="_blank" rel="noopener noreferrer" className="project-link focus-visible" style={{ fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "8px" }}>
             <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
@@ -34,7 +34,7 @@ export default function ProjectsGrid() {
           </div>
           <h3 style={{ fontFamily: "var(--font-body)", fontSize: "1.6em", color: "var(--foreground)", marginBottom: "var(--space-sm)", fontWeight: "700", letterSpacing: "-0.02em" }}>nf-larry</h3>
           <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
-            Extracts and tracks clonal LARRY barcodes from raw reads, integrating clone lineages directly into gene expression matrices.
+            A reproducible Nextflow pipeline for LARRY barcoding experiments, assigning barcode evidence to cells and generating clone-aware AnnData outputs for downstream analysis.
           </p>
           <a href="https://github.com/cellgeni/nf-larry" target="_blank" rel="noopener noreferrer" className="project-link focus-visible" style={{ fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "8px" }}>
             <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
@@ -49,7 +49,7 @@ export default function ProjectsGrid() {
           </div>
           <h3 style={{ fontFamily: "var(--font-body)", fontSize: "1.6em", color: "var(--foreground)", marginBottom: "var(--space-sm)", fontWeight: "700", letterSpacing: "-0.02em" }}>nf-cellsnplite</h3>
           <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
-            A scalable Nextflow pipeline implementing cellsnp-lite for genotyping single cells from aligned sequencing reads.
+            A Nextflow pipeline for running cellsnp-lite on aligned sequencing reads, supporting single-cell genotyping and downstream demultiplexing workflows.
           </p>
           <a href="https://github.com/cellgeni/nf-cellsnplite/" target="_blank" rel="noopener noreferrer" className="project-link focus-visible" style={{ fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "8px" }}>
             <GithubIcon style={{ width: "18px", height: "18px", transform: "translateY(-1px)" }} /> View Repository <span>&rarr;</span>
@@ -64,7 +64,7 @@ export default function ProjectsGrid() {
           </div>
           <h3 style={{ fontFamily: "var(--font-body)", fontSize: "1.6em", color: "var(--foreground)", marginBottom: "var(--space-sm)", fontWeight: "700", letterSpacing: "-0.02em" }}>CELLxGENE Discover Curation</h3>
           <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
-            Contributed to the curation of the <a href="https://www.covid19cellatlas.org/" target="_blank" rel="noopener noreferrer" className="timeline-project-link focus-visible" data-target-category="resource">COVID-19 Cell Atlas</a> for the CELLxGENE Discover portal, enabling broad access to vital single-cell datasets.
+            Contributed to the curation of <a href="https://www.covid19cellatlas.org/" target="_blank" rel="noopener noreferrer" className="timeline-project-link focus-visible" data-target-category="resource">COVID-19 Cell Atlas</a> datasets for the CELLxGENE Discover portal, helping make single-cell resources easier to access, explore, and reuse.
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", flexWrap: "wrap" }}>
             <a href="https://cellxgene.cziscience.com/" target="_blank" rel="noopener noreferrer" className="project-link focus-visible" style={{ fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "8px" }}>
@@ -84,7 +84,7 @@ export default function ProjectsGrid() {
           </div>
           <h3 style={{ fontFamily: "var(--font-body)", fontSize: "1.6em", color: "var(--foreground)", marginBottom: "var(--space-sm)", fontWeight: "700", letterSpacing: "-0.02em" }}>Benchmarking scRNA-seq Visualisation Tools</h3>
           <p style={{ opacity: 0.85, lineHeight: "1.6", marginBottom: "1.5rem", flexGrow: 1, color: "var(--foreground)" }}>
-            Extensive evaluation and benchmarking of single-cell RNA-seq data visualisation tools. Published in NARGAB.
+            Benchmarked single-cell RNA-seq visualisation tools to evaluate their usability, performance, and suitability for exploring large single-cell datasets. Published in NARGAB.
           </p>
           <a href="https://academic.oup.com/nargab/article/2/3/lqaa052/5877814" target="_blank" rel="noopener noreferrer" className="project-link focus-visible" style={{ fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "8px" }}>
               <svg role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18px" height="18px" style={{ transform: "translateY(-1px)" }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Read Paper <span>&rarr;</span>

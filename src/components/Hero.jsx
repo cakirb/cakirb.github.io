@@ -29,18 +29,18 @@ export default function Hero() {
         </h1>
       </div>
 
-      <div style={{ maxWidth: "1000px" }}>
+      <div style={{ maxWidth: "1000px", display: "flex", flexDirection: "column", gap: "var(--space-md)" }}>
         <div className="hero-stagger-2">
-          <h2 style={{ fontSize: "max(2vw, 1.2rem)", fontWeight: "500", opacity: 0.85, color: "var(--accent-cyan)", marginBottom: "var(--space-lg)" }}>
+          <h2 style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: "500", opacity: 0.85, color: "var(--accent-cyan)", marginBottom: 0 }}>
             Senior Bioinformatician and PhD Candidate
           </h2>
         </div>
 
-        <p className="hero-stagger-3" style={{ fontSize: "var(--text-xl)", color: "var(--foreground)", marginBottom: "var(--space-md)", maxWidth: "800px", lineHeight: "1.6", fontWeight: "400", opacity: 0.9 }}>
-          Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline development. Interested in trajectories, cell-fate transitions, and reproducible workflows.
+        <p className="hero-stagger-3" style={{ fontSize: "clamp(0.85rem, 2vw, 1.4rem)", color: "var(--foreground)", marginBottom: 0, maxWidth: "800px", lineHeight: "1.6", fontWeight: "400", opacity: 0.9 }}>
+          I work across single-cell genomics projects, building and running reproducible analysis workflows while exploring lineage tracing and cell-state dynamics.
         </p>
 
-        <div className="hero-stagger-4 hero-social-icons" style={{ display: "flex", gap: "1.8rem", marginTop: "var(--space-md)", flexWrap: "wrap" }}>
+        <div className="hero-stagger-4 hero-social-icons" style={{ display: "flex", gap: "1.8rem", marginTop: 0, flexWrap: "wrap" }}>
           <a href="https://x.com/cakirb_" target="_blank" rel="noopener noreferrer" className="social-icon-hover focus-visible" title="X (Twitter)" onClick={() => trackEvent("social_link_click", { location: "hero", target: "x" })}>
             <XIcon />
           </a>

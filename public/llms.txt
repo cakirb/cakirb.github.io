@@ -2,7 +2,7 @@
 
 **Senior Bioinformatician and PhD Candidate**
 
-Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline development. Interested in trajectories, cell-fate transitions, and reproducible workflows.
+I work across single-cell genomics projects, building and running reproducible analysis workflows while exploring lineage tracing and cell-state dynamics.
 
 ## Contact & Links
 - **Email:** bc8@sanger.ac.uk
@@ -12,6 +12,8 @@ Specialising in single-cell RNA-seq analysis, lineage tracing, and pipeline deve
 - **GitHub:** [https://github.com/cakirb](https://github.com/cakirb)
 - **Google Scholar:** [https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en](https://scholar.google.com/citations?user=iGaYmB4AAAAJ&hl=en)
 - **ORCID:** [https://orcid.org/0000-0003-4513-606X](https://orcid.org/0000-0003-4513-606X)
+
+Whether it’s about computational biology, reproducible workflows, single-cell analysis, a shared project idea, or just saying hello, I’m always happy to hear from you.
 
 ## About Me
 I’ve been interested in computers from an early age, and I always knew they would shape my future. My interest in coding began during my undergraduate studies, when a MATLAB course made me realise how much I enjoyed solving problems through programming.
@@ -24,45 +26,56 @@ Since then, my work has focused on the space between coding and biology, with pa
 
 ### Career
 - **Senior Bioinformatician** @ Wellcome Sanger Institute (2024 — Present)
-  - Supporting single-cell genomics projects through data processing, workflow development, and computational analysis.
-  - Contributing to scalable pipelines including nf-scautoqc, with a focus on reproducible analysis and large-scale dataset processing.
+  - Working across single-cell genomics projects, with a focus on computational processing, quality control, and reproducible workflow execution.
+  - Building, running, and improving workflows for large-scale single-cell data, including contributions to nf-scautoqc.
+  - Helping research teams turn complex sequencing datasets into reliable outputs for downstream biological interpretation.
 - **Bioinformatician** @ Wellcome Sanger Institute (2021 — 2024)
   - Supported the curation of datasets for the CZ CELLxGENE Discover portal and contributed to project-specific resources for data access and visualisation.
   - Contributed to collaborative single-cell projects across data analysis, curation, and workflow support.
 - **Research Assistant** @ Gebze Technical University (2019 — 2021)
   - Contributed to research projects in bioinformatics and structural biology.
-  - Supported teaching in courses including Biostatistics and Heat and Mass Transfer.
+  - Supported teaching in courses including Biostatistics and Heat and Mass Transfer, helping with coursework assessment, quizzes, and student support.
 - **Visiting Scientist** @ Wellcome Sanger Institute (2019)
   - Benchmarked single-cell RNA-seq visualisation tools during an internship with the Cellular Genetics Informatics team.
 
 ### Education
 - **PhD at Bioinformatics & Systems Biology** @ Gebze Technical University (2021 — Present)
-  - Working on lineage-tracing studies, with a focus on computational analysis and pipeline development for LARRY barcoding.
+  - Studying lineage-tracing data with a focus on computational analysis, clonal dynamics, and LARRY barcoding.
   - Developing workflows including nf-larry and nf-cellsnplite as part of ongoing thesis work.
 - **MSc at Bioinformatics & Systems Biology** @ Gebze Technical University (2017 — 2021)
   - Worked on single-cell RNA-seq analysis in stem cell differentiation.
   - Thesis: Mathematical Modelling of Molecular Trajectories in Stem Cell Transformation Processes via Bioinformatic Analysis of Single Cell Omics Data.
+  - Completed a research internship at the Wellcome Sanger Institute during the MSc, focusing on single-cell RNA-seq visualisation tools.
 - **BSc at Bioengineering** @ Yildiz Technical University (2012 — 2016)
+  - Built an interdisciplinary foundation through coursework spanning molecular biology, genetics, engineering, and bioengineering, with additional exposure to areas such as virology and immunology.
 
 ## Selected Work
 
 ### nf-scautoqc (Pipeline / Nextflow)
-Automated quality control, doublet detection, and optional integration for single-cell RNA-seq data on HPC environments.
+A reproducible Nextflow pipeline for automated quality control, doublet detection, and the integration of single-cell RNA-seq datasets.
 - Repository: [https://github.com/cellgeni/nf-scautoqc](https://github.com/cellgeni/nf-scautoqc)
 
 ### nf-larry (Pipeline / Nextflow)
-Extracts and tracks clonal LARRY barcodes from raw reads, integrating clone lineages directly into gene expression matrices.
+A reproducible Nextflow pipeline for LARRY barcoding experiments, assigning barcode evidence to cells and generating clone-aware AnnData outputs for downstream analysis.
 - Repository: [https://github.com/cellgeni/nf-larry](https://github.com/cellgeni/nf-larry)
 
 ### nf-cellsnplite (Pipeline / Nextflow)
-A scalable Nextflow pipeline implementing cellsnp-lite for genotyping single cells from aligned sequencing reads.
+A Nextflow pipeline for running cellsnp-lite on aligned sequencing reads, supporting single-cell genotyping and downstream demultiplexing workflows.
 - Repository: [https://github.com/cellgeni/nf-cellsnplite/](https://github.com/cellgeni/nf-cellsnplite/)
 
 ### CELLxGENE Discover Curation (Resource)
-Contributed to the curation of the COVID-19 Cell Atlas for the CELLxGENE Discover portal, enabling broad access to vital single-cell datasets.
+Contributed to the curation of COVID-19 Cell Atlas datasets for the CELLxGENE Discover portal, helping make single-cell resources easier to access, explore, and reuse.
 - Portal: [https://cellxgene.cziscience.com/](https://cellxgene.cziscience.com/)
 - Paper: [https://doi.org/10.1093/nar/gkae1142](https://doi.org/10.1093/nar/gkae1142)
 
 ### Benchmarking scRNA-seq Visualisation Tools (Benchmarking)
-Extensive evaluation and benchmarking of single-cell RNA-seq data visualisation tools. Published in NARGAB.
+Benchmarked single-cell RNA-seq visualisation tools to evaluate their usability, performance, and suitability for exploring large single-cell datasets. Published in NARGAB.
 - Paper: [https://academic.oup.com/nargab/article/2/3/lqaa052/5877814](https://academic.oup.com/nargab/article/2/3/lqaa052/5877814)
+
+## AI Usage
+
+This website was designed and developed with AI assistance under my direction.
+
+- **Gemini 3.1 Pro:** Main implementation and iteration support.
+- **Claude Opus 4.7:** Frontend refinement and visual polish.
+- **GPT-5.5:** Analytics additions, copy refinement, and final content review.

@@ -11,9 +11,12 @@ import { trackEvent } from "@/lib/analytics";
 export default function Home() {
   const [showPS5Modal, setShowPS5Modal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
+  const [showAiUsageModal, setShowAiUsageModal] = useState(false);
   const [privacyPopoverPos, setPrivacyPopoverPos] = useState({ top: 0, left: 0 });
+  const [aiUsagePopoverPos, setAiUsagePopoverPos] = useState({ top: 0, left: 0 });
   const [ps3ModalPos, setPs3ModalPos] = useState({ x: 0, y: 0 });
   const privacyButtonRef = useRef(null);
+  const aiUsageButtonRef = useRef(null);
 
   const firePSConfetti = async (rect, particleMultiplier = 1) => {
     const confettiModule = await import("canvas-confetti");
@@ -60,6 +63,7 @@ export default function Home() {
       if (e.key === "Escape") {
         setShowPS5Modal(false);
         setShowPrivacyModal(false);
+        setShowAiUsageModal(false);
       }
     };
 
@@ -69,7 +73,7 @@ export default function Home() {
       document.documentElement.classList.remove("no-scroll");
     }
 
-    if (showPS5Modal || showPrivacyModal) {
+    if (showPS5Modal || showPrivacyModal || showAiUsageModal) {
       window.addEventListener("keydown", handleKeyDown);
     } else {
       window.removeEventListener("keydown", handleKeyDown);
@@ -79,7 +83,24 @@ export default function Home() {
       document.documentElement.classList.remove("no-scroll");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showPS5Modal, showPrivacyModal]);
+  }, [showPS5Modal, showPrivacyModal, showAiUsageModal]);
+
+  useEffect(() => {
+    if (!showPrivacyModal && !showAiUsageModal) return;
+
+    const closeFooterPopovers = () => {
+      setShowPrivacyModal(false);
+      setShowAiUsageModal(false);
+    };
+
+    window.addEventListener("scroll", closeFooterPopovers, { passive: true });
+    window.addEventListener("resize", closeFooterPopovers);
+
+    return () => {
+      window.removeEventListener("scroll", closeFooterPopovers);
+      window.removeEventListener("resize", closeFooterPopovers);
+    };
+  }, [showPrivacyModal, showAiUsageModal]);
 
   return (
     <>
@@ -95,7 +116,7 @@ export default function Home() {
         flexDirection: "column",
         alignItems: "center"
       }}>
-        <div style={{ width: "100%", maxWidth: "1400px", padding: "0 var(--space-md)" }}>
+        <div className="main-container" style={{ width: "100%", maxWidth: "1400px" }}>
           <Hero />
           <About />
           <ExperienceTimeline />
@@ -116,17 +137,46 @@ export default function Home() {
             <p className="footer-text">
               <span className="footer-author">Designed & Built by Batuhan Cakir</span>
               <span className="footer-separator"> &mdash; </span>
-                <span className="footer-vibe" style={{ color: "var(--foreground)", opacity: 0.85 }}>
-                  <a href="/llms.txt" className="focus-visible" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }} aria-label="llms.txt" title="llms.txt" onClick={() => trackEvent("llms_txt_click")}>
-                    <span style={{ fontSize: "var(--text-lg)", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
-                  </a>
-                  Vibe-coded with Gemini 3.1 Pro
-                </span>
+                <button
+                  ref={aiUsageButtonRef}
+                  type="button"
+                  className="footer-vibe focus-visible"
+                  aria-expanded={showAiUsageModal}
+                  aria-controls="ai-usage-popover"
+                  style={{
+                    color: "var(--foreground)",
+                    opacity: 0.85,
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    font: "inherit",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                  }}
+                  onClick={() => {
+                    const rect = aiUsageButtonRef.current?.getBoundingClientRect();
+                    const willOpen = !showAiUsageModal;
+                    if (rect) {
+                      setAiUsagePopoverPos({
+                        top: rect.top - 10,
+                        left: Math.min(Math.max(rect.left + rect.width / 2, 180), window.innerWidth - 180),
+                      });
+                    }
+                    if (willOpen) {
+                      trackEvent("ai_usage_note_click");
+                      setShowPrivacyModal(false);
+                    }
+                    setShowAiUsageModal((current) => !current);
+                  }}
+                >
+                  <span style={{ fontSize: "var(--text-lg)", verticalAlign: "-1px", marginRight: "4px" }}>✦</span>
+                  Vibe-coded under Batu’s direction
+                </button>
               <span className="footer-separator"> &mdash; </span>
               <button
                 ref={privacyButtonRef}
                 type="button"
-                className="focus-visible"
+                className="footer-analytics focus-visible"
                 aria-expanded={showPrivacyModal}
                 aria-controls="analytics-popover"
                 style={{
@@ -148,6 +198,7 @@ export default function Home() {
                     });
                   }
                   if (willOpen) trackEvent("analytics_note_click");
+                  if (willOpen) setShowAiUsageModal(false);
                   setShowPrivacyModal((current) => !current);
                 }}
               >
@@ -157,6 +208,22 @@ export default function Home() {
           </footer>
         </div>
       </main>
+
+      {(showPrivacyModal || showAiUsageModal) && (
+        <div
+          aria-hidden="true"
+          onClick={() => {
+            setShowPrivacyModal(false);
+            setShowAiUsageModal(false);
+          }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: "calc(var(--z-modal-content, 9999) - 1)",
+            background: "transparent",
+          }}
+        />
+      )}
 
       {showPrivacyModal && (
         <aside
@@ -181,6 +248,50 @@ export default function Home() {
         >
           This site uses cookie-free Umami Analytics to understand anonymous usage. It records page
           views and selected interactions, but no personally identifiable information.
+        </aside>
+      )}
+
+      {showAiUsageModal && (
+        <aside
+          id="ai-usage-popover"
+          role="status"
+          style={{
+            position: "fixed",
+            top: aiUsagePopoverPos.top,
+            left: aiUsagePopoverPos.left,
+            transform: "translate(-50%, -100%)",
+            zIndex: "var(--z-modal-content, 9999)",
+            width: "min(360px, calc(100vw - 2rem))",
+            padding: "0.95rem 1rem",
+            borderRadius: "var(--radius-md)",
+            background: "rgba(17, 21, 24, 0.96)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            boxShadow: "0 16px 48px rgba(0,0,0,0.45)",
+            color: "var(--foreground)",
+            fontSize: "var(--text-xs)",
+            textAlign: "left",
+            lineHeight: 1.55,
+          }}
+        >
+          <strong style={{ display: "block", marginBottom: "0.4rem", color: "var(--accent-cyan)" }}>
+            AI usage notes
+          </strong>
+          <p style={{ marginBottom: "0.55rem" }}>
+            This website was designed and developed with AI assistance under my direction.
+          </p>
+          <p style={{ marginBottom: "0.55rem" }}>
+            Gemini 3.1 Pro supported most implementation, Claude Opus 4.7 helped refine the frontend, and GPT-5.5 helped with analytics and copy refinement.
+          </p>
+          <a
+            href="/llms.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-visible"
+            style={{ color: "var(--accent-cyan)", fontWeight: 600 }}
+            onClick={() => trackEvent("llms_txt_click")}
+          >
+            View llms.txt →
+          </a>
         </aside>
       )}
     </>
